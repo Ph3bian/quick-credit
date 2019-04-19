@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Quick Credit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="sidebar">
+            <div class="img-holder">
+                <img src="./img/deal.svg" class="img-logo" alt="">
+            </div>
+            <ul class="">
+                <li class="sidenav-item">
+                    <a href="dashboard.html">
+                        <i class="material-icons">
+                            home
+                        </i> Dashboard</a></li>
+                <li class="sidenav-item  active">
+                    <a href="request.html">
+                        <span class="naira">
+                            <img src="./img/naira.svg" alt="">
+                        </span>
+                        Request Loan</a></li>
+                <li class="sidenav-item"><a href="repayment.html"> <i class="material-icons">
+                            list
+                        </i>Repayment History</a></li>
+                <li class="sidenav-item"><a href="profile.html"><i class="material-icons">
+                            account_circle
+                        </i>Profile</a></li>
+                <li class="sidenav-item"><a href="sign-in.html"><i class="material-icons">
+                            exit_to_app
+                        </i>Logout</a></li>
+
+            </ul>
+        </div>
+
+
+        <div id="rightSideWrapper">
+            <header class="d-flx align-items-center pl-qt">
+                <div class="">
+                    <i class="material-icons">
+                        menu
+                    </i>Request Loan
+                </div>
+
+            </header>
+            <div class="ContentBox">
+                <main>
+                    <div class="column p-1h">
+
+                        <div class="">
+                            <form action="">
+                                <div class="form-header">
+                                    <h2 class="text-center m-0"> REQUEST LOAN</h2>
+                                </div>
+                                <div class="row">
+                                    <div class="item sub-item mr-5">
+                                        <label for="amount">Amount</label>
+                                        <input type="text" name="amount" placeholder="">
+                                    </div>
+                                    <div class="item sub-item ml-5">
+                                        <label for="dor">Date of Repayment</label>
+                                        <input type="text" name="dor" placeholder="">
+                                    </div>
+                                </div>
+                                <div>
+
+                                    <div class="row">
+                                        <div class="item sub-item mr-5">
+                                            <label for="account_no">Account Number</label>
+                                            <input type="text" name="account_no" placeholder="">
+                                        </div>
+                                        <div class="item sub-item ml-5">
+                                            <label for="bank_name">Bank Name</label>
+                                            <input type="text" name="bank_name" placeholder="">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <label for="pension">Pension Number</label>
+                                <input type="text" name="pension" placeholder="">
+                                <h4>Amount to be repaid: &#8358; 440,000 </h4>
+                                <div class="row">
+                                    <div class="item sub-item mr-5">
+                                        <button class="secondary-btn">
+                                            Save as draft
+                                        </button></div>
+                                    <div class="item sub-item ml-5">
+                                        <button class="primary-btn">
+                                            Submit
+                                        </button></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
