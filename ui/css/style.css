@@ -6,6 +6,7 @@ html {
 
 body {
     font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
     margin: 0;
     box-sizing: border-box;
     color: #1e3056;
@@ -157,10 +158,10 @@ input {
     background-color: #f9fbfc;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
     border: 1px solid #dddddd;
-    padding: 0 1rem ;
+    padding: 0 1rem;
     height: 50px;
     margin-bottom: 1.2rem;
-    font-size:0.9rem;
+    font-size: 0.9rem;
     width: 100%;
     outline: none;
 }
@@ -191,13 +192,14 @@ input#search {
     border-bottom-left-radius: 4px;
 }
 
-input:focus , select:focus{
+input:focus, select:focus {
     border-color: #1e3056;
 }
 
 select.option:first-of-type {
     display: none;
-  }
+}
+
 a[type=button], button {
     padding: 10px;
     width: 100%;
@@ -227,15 +229,19 @@ a[type=button], button {
     color: #1e3056;
     border: 1px solid #1e3056;
 }
-.pending{
-    color:#fccc63;
+
+.pending {
+    color: #fccc63;
 }
-.declined{
-    color:#ff0000;
+
+.declined {
+    color: #ff0000;
 }
-.approved{
-    color:#32c079 ;
+
+.approved {
+    color: #32c079;
 }
+
 .width-100 {
     width: 100%;
 }
@@ -306,21 +312,24 @@ a:hover {
 .align-right, .float-r {
     float: right
 }
-.form-select{
-        border: 1px solid #ddd;
-        width: 100%;
-        background-color: #f9fbfc;
-        padding: 0 1rem ;
-        height: 50px;
-        font-size:0.9rem;
-        outline:none;
-        border-radius:0;
-        -webkit-appearance: none;
+
+.form-select {
+    border: 1px solid #ddd;
+    width: 100%;
+    background-color: #f9fbfc;
+    padding: 0 1rem;
+    height: 50px;
+    font-size: 0.9rem;
+    outline: none;
+    border-radius: 0;
+    -webkit-appearance: none;
 }
-select{
-    border-radius:0;
-    -webkit-appearance: none;  
+
+select {
+    border-radius: 0;
+    -webkit-appearance: none;
 }
+
 .mr-1h {
     margin-right: 1.5rem
 }
@@ -344,26 +353,31 @@ select{
 .m-0 {
     margin: 0;
 }
-.mt-0{
-    margin-top:0;
+
+.mt-0 {
+    margin-top: 0;
 }
 
 .my-1h, .m-1h {
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
 }
+
 .mx-1h, .m-1h {
     margin-left: 1.5rem;
     margin-right: 1.5rem;
 }
+
 .my-1, .m-1 {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+
 .mx-1, .m-1 {
     margin-left: 1rem;
     margin-right: 1rem;
 }
+
 .py-h {
     padding: 0.5rem 0;
 }
@@ -409,7 +423,49 @@ select{
     align-items: center;
 }
 
+.sidebar-canvas {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    z-index: 1001;
+    width: 270px;
+    max-width: 100%;
+    background: #333;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    -webkit-transition: -webkit-transform .3s ease-in-out;
+    transition: transform .3s ease-in-out;
+    -ms-scroll-chaining: none;
+}
+
 @media screen and (max-width: 600px) {
+    #sidebar{
+        display: none;
+        width:auto !important;
+    }
+    #rightSideWrapper .ContentBox {
+        margin: auto ;
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        background: white;
+        overflow: scroll;
+    }
+    .sidebarCanvasMenu{
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        -webkit-transition: -webkit-transform .3s ease-in-out;
+        transition: transform .3s ease-in-out;
+        }
+    .pl-qt {
+        padding-left: 1.75rem;
+    }
     .row {
         flex-direction: column;
     }
@@ -474,6 +530,8 @@ select{
     width: 22%;
     margin: 0px;
     background: #ffffff;
+    box-shadow: 0 0 9px rgba(0,0,0,0.1);
+
 }
 
 #rightSideWrapper {
@@ -597,6 +655,10 @@ ul {
     background-color: #fcfcfc;
 }
 
+.txn-list.activity {
+    min-height: unset !important;
+}
+
 .txn-list:hover {
     color: #333333;
     background-color: #f2f2f2;
@@ -712,7 +774,13 @@ p.display-name {
 }
 
 .tab .tablinks.active {
-    border-bottom: 2px solid #38d39e;
+    border-bottom: 2px solid #1e3056;
+}
+
+.tab {
+    padding: 10px 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
 }
 
 form label .question {
