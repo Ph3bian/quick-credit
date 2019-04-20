@@ -222,7 +222,15 @@ a[type=button], button {
     color: #1e3056;
     border: 1px solid #1e3056;
 }
-
+.pending{
+    color:#fccc63;
+}
+.declined{
+    color:#ff0000;
+}
+.approved{
+    color:#32c079 ;
+}
 .width-100 {
     width: 100%;
 }
@@ -317,7 +325,9 @@ a:hover {
 .m-0 {
     margin: 0;
 }
-
+.mt-0{
+    margin-top:0;
+}
 .m-1h {
     margin: 1.5rem;
 }
@@ -457,7 +467,8 @@ header {
     width: 80%;
     max-width: 80%;
     height: calc(100vh - 230px);
-    background: white
+    background: white;
+    overflow: scroll;
 }
 
 main {
