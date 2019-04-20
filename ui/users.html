@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Quick Credit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="sidebar">
+            <div class="img-holder">
+                <img src="./img/deal.svg" class="img-logo" alt="">
+            </div>
+            <ul class="">
+                <li class="sidenav-item"><a href="admin-dashboard.html"> <i class="material-icons">
+                            home
+                        </i> Dashboard</a></li>
+                <li class="sidenav-item active">
+                    <a href="users.html">
+                        <i class="material-icons"> people </i>
+                        Users</a></li>
+                <li class="sidenav-item"><a href="applications.html"> <i class="material-icons">
+                            list
+                        </i>Applications</a></li>
+                <li class="sidenav-item"><a href="admin-profile.html"><i class="material-icons">
+                            account_circle
+                        </i>Profile</a></li>
+                <li class="sidenav-item"><a href="sign-in.html"><i class="material-icons">
+                            exit_to_app
+                        </i>Logout</a>
+                </li>
+
+            </ul>
+        </div>
+
+
+        <div id="rightSideWrapper">
+            <header class="d-flx align-items-center pl-qt">
+                <div class="">
+                    <i class="material-icons">
+                        menu
+                    </i> Users
+                </div>
+            </header>
+            <div class="ContentBox  p-1h">
+                <div class="content-header">
+                    <div class="tab">
+                        <a class="tablinks" id="defaultTab" onclick="openAction(event, 'all')">All</a>
+                        <a class="tablinks" onclick="openAction(event, 'verified')">Verified</a>
+                        <a class="tablinks" onclick="openAction(event, 'unverified')">Unverified</a>
+
+                    </div>
+                    <!-- <h3 class="mt-0">Repayment History Logs </h3> -->
+                </div>
+                <main>
+
+                    <div class="column">
+                        <div id="all" class="tab-item">
+                            <div class="txn-list activity">
+                                <a href="verified-user.html">
+                                    <div class="social-row">
+                                        <span>You verified user #4564577</span>
+                                        <div class="float-r">
+                                            Apr 20 2019 </div>
+                                    </div>
+                                </a>
+
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="verify-user.html">
+                                    <div class="social-row">
+                                        <span>User #4545447 awaiting verification </span>
+                                        <div class="float-r">
+                                            Apr 11th 2019
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="txn-list activity">
+                                <a href="verified-user.html">
+                                    <div class="social-row">
+                                        <span>You verified user #4564000</span>
+                                        <div class="float-r">
+                                            Apr 1st 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="verify-user.html">
+                                    <div class="social-row">
+                                        <span>User #4545332 awaiting verification</span>
+                                        <div class="float-r">
+                                            Apr 10th 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="verified-user.html">
+                                    <div class="social-row">
+                                        <span>You verified user #4564300</span>
+                                        <div class="float-r">
+                                            Apr 1st 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="txn-list activity">
+                                <a href="verified-user.html">
+                                    <div class="social-row">
+                                        <span>You verified user #4564213</span>
+                                        <div class="float-r">
+                                            Apr 1st 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div id="verified" class="tab-item">
+                            <div class="txn-list activity">
+                                <a href="verified-user.html">
+                                    <div class="social-row">
+                                        <span>You verified user #4564577</span>
+                                        <div class="float-r">
+                                            Apr 20 2019 </div>
+                                    </div>
+                                </a>
+
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="verified-user.html">
+                                    <div class="social-row">
+                                        <span>You verified user #4564000</span>
+                                        <div class="float-r">
+                                            Apr 1st 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="verified-user.html">
+                                    <div class="social-row">
+                                        <span>You verified user #4564300</span>
+                                        <div class="float-r">
+                                            Apr 1st 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="txn-list activity">
+                                <a href="verified-user.html">
+                                    <div class="social-row">
+                                        <span>You verified user #4564213</span>
+                                        <div class="float-r">
+                                            Apr 1st 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div id="unverified" class="tab-item">
+                            <div class="txn-list activity">
+                                <a href="verify-user.html">
+                                    <div class="social-row">
+                                        <span>User #45453617 awaiting verification</span>
+                                        <div class="float-r">
+                                            Apr 20 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="verify-user.html">
+
+                                    <div class="social-row">
+                                        <span>User #4545447 awaiting verification </span>
+                                        <div class="float-r">
+                                            Apr 11th 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="verify-user.html">
+                                    <div class="social-row">
+                                        <span>User #4545332 awaiting verification</span>
+                                        <div class="float-r">
+                                            Apr 10th 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="txn-list activity">
+                                <a href="verify-user.html">
+                                    <div class="social-row">
+                                        <span>User #4545402 awaiting verification</span>
+                                        <div class="float-r">
+                                            Apr 1st 2019
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="verify-user.html">
+                                    <div class="social-row">
+                                        <span>User #4545222 awaiting verification </span>
+                                        <div class="float-r">
+                                            Apr 11th 2019
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="verify-user.html">
+                                    <div class="social-row">
+                                        <span>User #4545432 awaiting verification</span>
+                                        <div class="float-r">
+                                            Apr 10th 2019
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="txn-list activity">
+                                <a href="verify-user.html">
+                                    <div class="social-row">
+                                        <span>User #4545400 awaiting verification</span>
+                                        <div class="float-r">
+                                            Apr 1st 2019
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+
+        </div>
+        <script type="text/javascript" src="js/users.controller.js"> </script>
+</body>
+
+</html>

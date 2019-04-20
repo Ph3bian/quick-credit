@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Quick Credit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="sidebar">
+            <div class="img-holder">
+                <img src="./img/deal.svg" class="img-logo" alt="">
+            </div>
+            <ul class="">
+                <li class="sidenav-item"><a href="admin-dashboard.html"> <i class="material-icons">
+                            home
+                        </i> Dashboard</a></li>
+                <li class="sidenav-item active">
+                    <a href="users.html">
+                        <i class="material-icons"> people </i>
+                        Users</a></li>
+                <li class="sidenav-item"><a href="applications.html"> <i class="material-icons">
+                            list
+                        </i>Applications</a></li>
+                <li class="sidenav-item"><a href="admin-profile.html"><i class="material-icons">
+                            account_circle
+                        </i>Profile</a></li>
+                <li class="sidenav-item"><a href="sign-in.html"><i class="material-icons">
+                            exit_to_app
+                        </i>Logout</a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div id="rightSideWrapper">
+            <header class="d-flx align-items-center pl-qt">
+                <div class="">
+                    <i class="material-icons">
+                        menu
+                    </i>Users
+                </div>
+
+            </header>
+            <div class="ContentBox">
+                <main>
+                    <div class="column p-1h">
+
+                        <div class="">
+                            <form action="">
+                                <div class="form-header">
+                                    <h3 class="mt-0">USER VERIFIED
+                                        <span class="align-right"> <a href="users.html"> <i class="material-icons">
+                                                    arrow_back
+                                                </i>Back</a> </span> </h3>
+                                </div>
+                                <div class="row">
+                                    <div class="item sub-item mr-5 ">
+                                        <label for="full name">Name</label>
+                                        <input type="text" disabled name="full name" value="Chukwurah Anwuli"
+                                            placeholder="">
+                                    </div>
+                                    <div class="item sub-item ml-5 mr-5">
+                                        <label for="mobile">Phone number</label>
+                                        <input type="text" disabled name="mobile" value="08087948222" placeholder="">
+                                    </div>
+                                    <div class="item sub-item ml-5">
+                                        <label for="bvn">BVN</label>
+                                        <input type="text" disabled name="bvn" value="22339009909" placeholder="">
+                                    </div>
+                                </div>
+                                <div>
+
+                                    <div class="row">
+                                        <div class="item sub-item mr-5">
+                                            <label for="res_address">Residential Address</label>
+                                            <input type="text" name="res_address"
+                                                value="15, Toyin Street, Ikeja GRA, Lagos" placeholder="">
+                                        </div>
+                                        <div class="item sub-item ml-5">
+                                            <label for="work_address">Work Address</label>
+                                            <input type="text" name="work_address"
+                                                value="15, Oduduwa Crescent, Ikeja GRA, Lagos" placeholder="">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <label for="reason">Reason for Rejection (If any)</label>
+                                <input type="text" name="reason" placeholder="">
+
+                                <div class="row my-1">
+                                    <div class="item sub-item mr-5">
+                                        <button class="secondary-btn">
+                                            RE-OPEN VERIFICATION PROCESS
+                                        </button></div>
+                                  
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
