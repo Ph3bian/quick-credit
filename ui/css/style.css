@@ -159,7 +159,7 @@ a[type=button], button {
     cursor: pointer;
 }
 
-.row.btn-holder a, .btn-holder {
+.row.btn-holder a{
     width: 130px;
 }
 .app-btn { width: 200px!important;}
@@ -197,7 +197,7 @@ a[type=button], button {
 .form-header {border-bottom: 2px solid #1e3056;margin-bottom: 2rem;text-transform: uppercase;}
 .text-center {  text-align: center}
 hr { border: 1px dashed #ddd;margin: 5px 0 20px;}
-.forgot {float: right;font-size: .8rem;margin-bottom: 10px;}
+.forgot {float: right;font-size: .9rem;margin-bottom: 10px;}
 .material-icons {vertical-align: middle;letter-spacing: 13px;padding-bottom: 2px;}
 span.naira { padding-right: 9px;}
 a {text-decoration: none; color: #1e3056;}
