@@ -1,5 +1,6 @@
 const ctrl = document.getElementById("menu");
 const sidebar = document.getElementById("sidebar");
+const defaultTab = document.getElementById("defaultTab")
 let isMobile = false
 const navControl = () => {
     if (!isMobile) {
@@ -25,4 +26,6 @@ const openAction = (evt, action) => {
     document.getElementById(action).style.display = "block";
     evt.currentTarget.className += " active";
 }
-document.getElementById("defaultTab").click();
+if(defaultTab){
+defaultTab.click();
+}
