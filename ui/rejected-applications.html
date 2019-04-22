@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Quick Credit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="sidebar">
+            <div class="img-holder">
+                <img src="./img/deal.svg" class="img-logo" alt="">
+            </div>
+            <ul class="">
+                <li class="sidenav-item"><a href="admin-dashboard.html"> <i class="material-icons">
+                            home
+                        </i> Dashboard</a></li>
+                <li class="sidenav-item">
+                    <a href="users.html">
+                        <i class="material-icons"> people </i>
+                        Users</a></li>
+                <li class="sidenav-item active"><a href="applications.html"> <i class="material-icons">
+                            list
+                        </i>Applications</a></li>
+                <li class="sidenav-item"><a href="admin-profile.html"><i class="material-icons">
+                            account_circle
+                        </i>Profile</a></li>
+                <li class="sidenav-item"><a href="sign-in.html"><i class="material-icons">
+                            exit_to_app
+                        </i>Logout</a>
+                </li>
+
+            </ul>
+        </div>
+
+
+        <div id="rightSideWrapper">
+            <header class="d-flx align-items-center pl-qt">
+                <div class="">
+                    <i class="material-icons menu-click" onclick="navControl()">
+                        menu
+                    </i> Applications
+                </div>
+            </header>
+            <div class="ContentBox  p-1h">
+                <main>
+                    <div class="column p-1h">
+                        <div class="">
+                            <form action="">
+                                <div class="form-header">
+                                    <h3 class="mt-0"> <a href="applications.html"><i class="material-icons">
+                                                chevron_left
+                                            </i></a>LOAN DETAILS</h3>
+                                </div>
+                                <div class="row">
+                                        <div class="item sub-item mr-5">
+                                                <label for="name">Name</label>
+                                                <input type="text" disabled name="name" value="Chukwuneke Ngozi"
+                                                    placeholder="">
+                                            </div>
+                                        <div class="item sub-item ml-5 ">
+                                <label for="status">Status</label>
+                                <input type="text" name="status" value="Approved">
+                                </div>
+                                </div>
+                                <div class="row">
+                                    <div class="item sub-item mr-5 ">
+                                        <label for="amount">Amount</label>
+                                        <input type="text" disabled name="amount" value="&#8358;20,000" placeholder="">
+                                    </div>
+                                    <div class="item sub-item ml-5 mr-5">
+                                        <label for="mobile">Tenor</label>
+                                        <input type="text" disabled name="mobile" value="6 months" placeholder="">
+                                    </div>
+                                    <div class="item sub-item ml-5">
+                                        <label for="createdAt">Date Created</label>
+                                        <input type="text" disabled name="createdAt" value="Jun 13th 2018"
+                                            placeholder="">
+                                    </div>
+                                </div>
+                                <div>
+
+                                    <div class="row">
+                                        <div class="item sub-item mr-5">
+                                            <label for="interest">Interest Amount</label>
+                                            <input type="text" name="interest" value="&#8358;1000" placeholder="">
+                                        </div>
+                                        <div class="item sub-item ml-5 mr-5">
+                                            <label for="total">Balance</label>
+                                            <input type="text" name="total" value="&#8358;21,000" placeholder="">
+                                        </div>
+                                        <div class="item sub-item ml-5">
+                                            <label for="monthlyInstallment">Monthly Installment Amount</label>
+                                            <input type="text" disabled name="monthlyInstallment" value="&#8358;3500"
+                                                placeholder="">
+                                        </div>
+                                    </div>
+                                    <label for="reason">Reason for Rejection (If any)</label>
+                                    <input type="text" name="reason" value="Invalid address, update address and re-apply">
+                                </div>
+                               
+                            </form>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/script.js"> </script>
+
+</body>
+
+</html>
