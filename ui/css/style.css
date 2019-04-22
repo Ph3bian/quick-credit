@@ -428,17 +428,11 @@ select {
     top: 0;
     bottom: 0;
     left: 0;
-    -webkit-transform: translateX(-100%);
-    transform: translateX(-100%);
     z-index: 1001;
     width: 270px;
     max-width: 100%;
     background: #333;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    -webkit-transition: -webkit-transform .3s ease-in-out;
-    transition: transform .3s ease-in-out;
-    -ms-scroll-chaining: none;
 }
 
 @media screen and (max-width: 600px) {
@@ -460,8 +454,6 @@ select {
         bottom: 0;
         left: 0;
         z-index: 1000;
-        -webkit-transition: -webkit-transform .3s ease-in-out;
-        transition: transform .3s ease-in-out;
         }
     .pl-qt {
         padding-left: 1.75rem;
@@ -637,12 +629,6 @@ li.sidenav-item:hover {
     }
 }
 
-.footer {
-    padding: 1rem;
-    background-color: #efefef;
-    text-align: center;
-}
-
 ul {
     list-style-type: none;
     padding: 0;
@@ -673,24 +659,6 @@ ul {
     min-height: 100px;
     font-size: 14px;
 }
-
-.arrange {
-    display: table;
-    table-layout: fixed;
-    margin: 0;
-    min-width: 100%;
-    padding: 0;
-    table-layout: auto;
-}
-
-.table-row {
-    display: table-cell;
-}
-
-.profile-stat.table-row {
-    padding: 16px;
-}
-
 .profile {
     text-align: center;
     padding: 0 16px;
@@ -730,14 +698,9 @@ p.display-name {
     font-weight: bold;
 }
 
-.profile-link {
+.profile-link , .material-icons.menu-click{
     cursor: pointer;
 }
-
-.inliner {
-    display: inline-flex
-}
-
 .avatar {
     width: 130px;
     height: 130px;
@@ -754,35 +717,35 @@ p.display-name {
     vertical-align: baseline;
     margin: 5px 0 0;
 }
-
 .question-text {
     font-size: 1.25rem
 }
-
 .hide {
     display: none;
 }
-
-.tab-item {
+.tab-item, .sub-nav-item {
     display: none;
     padding: 15px 0px;
     border-top: none;
 }
-
-.tab .tablinks {
+.tab .tablinks{
     padding: 10px;
 }
-
-.tab .tablinks.active {
+.tab .tablinks.active, .sublinks.active {
     border-bottom: 2px solid #1e3056;
 }
-
 .tab {
     padding: 10px 0;
     margin-bottom: 15px;
     border-bottom: 1px solid #ddd;
 }
+.sublinks{
+    padding:5px 13px;
+    outline: none;
+}
 
-form label .question {
-    text-align: left
+.sublinks.active{
+background: #1e3056;
+border-radius: 4px;
+color:#ffffff;
 }

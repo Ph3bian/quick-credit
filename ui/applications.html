@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Quick Credit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="sidebar">
+            <div class="img-holder">
+                <img src="./img/deal.svg" class="img-logo" alt="">
+            </div>
+            <ul class="">
+                <li class="sidenav-item"><a href="admin-dashboard.html"> <i class="material-icons">
+                            home
+                        </i> Dashboard</a></li>
+                <li class="sidenav-item">
+                    <a href="users.html">
+                        <i class="material-icons"> people </i>
+                        Users</a></li>
+                <li class="sidenav-item active"><a href="applications.html"> <i class="material-icons">
+                            list
+                        </i>Applications</a></li>
+                <li class="sidenav-item"><a href="admin-profile.html"><i class="material-icons">
+                            account_circle
+                        </i>Profile</a></li>
+                <li class="sidenav-item"><a href="sign-in.html"><i class="material-icons">
+                            exit_to_app
+                        </i>Logout</a>
+                </li>
+
+            </ul>
+        </div>
+
+
+        <div id="rightSideWrapper">
+            <header class="d-flx align-items-center pl-qt">
+                <div class="">
+                    <i class="material-icons menu-click" onclick="navControl()">
+                        menu
+                    </i> Applications
+                </div>
+            </header>
+            <div class="ContentBox  p-1h">
+                <div class="content-header">
+                    <div class="tab">
+                        <a class="tablinks" id="defaultTab" onclick="openAction(event, 'all')">All</a>
+                        <a class="tablinks" onclick="openAction(event, 'pending')">Pending</a>
+                        <a class="tablinks" onclick="openAction(event, 'approved')">Approved</a>
+                        <a class="tablinks" onclick="openAction(event, 'rejected')">Rejected</a>
+                    </div>
+                </div>
+                <main>
+
+                    <div class="column">
+                        <div id="all" class="tab-item">
+                            <div class="txn-list activity">
+                                <a href="update-pending-applications.html">
+                                    <div class="social-row">
+                                        <span>User #45453617 loan application awaiting response</span>
+                                        <div class="float-r">
+                                            Apr 20 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="view-applications.html">
+                                    <div class="social-row">
+                                        <span>User #9045447 Loan &#8358;12,000.00 approved</span>
+                                        <div class="float-r">
+                                            Apr 1st 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="update-pending-applications.html">
+
+                                    <div class="social-row">
+                                        <span>User #4545447 loan application awaiting response </span>
+                                        <div class="float-r">
+                                            Apr 11th 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="txn-list activity">
+                                <a href="update-pending-applications.html">
+
+                                    <div class="social-row">
+                                        <span>User #4545447 loan application awaiting response </span>
+                                        <div class="float-r">
+                                            Apr 11th 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="txn-list activity">
+                                <a href="update-pending-applications.html">
+
+                                    <div class="social-row">
+                                        <span>User #4545447 loan application awaiting response </span>
+                                        <div class="float-r">
+                                            Apr 11th 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+                        <div id="pending" class="tab-item">
+                            <div class="txn-list activity">
+                                <a href="update-pending-applications.html">
+                                    <div class="social-row">
+                                        <span>User #45453617 loan application awaiting response</span>
+                                        <div class="float-r">
+                                            Apr 20 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="update-pending-applications.html">
+
+                                    <div class="social-row">
+                                        <span>User #4545447 loan application awaiting response </span>
+                                        <div class="float-r">
+                                            Apr 11th 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="update-pending-applications.html">
+                                    <div class="social-row">
+                                        <span>User #4545332 loan application awaiting response</span>
+                                        <div class="float-r">
+                                            Apr 10th 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="txn-list activity">
+                                <a href="update-pending-applications.html">
+                                    <div class="social-row">
+                                        <span>User #4545402 loan application awaiting response</span>
+                                        <div class="float-r">
+                                            Apr 1st 2019
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="update-pending-applications.html">
+                                    <div class="social-row">
+                                        <span>User #4545222 loan application awaiting response </span>
+                                        <div class="float-r">
+                                            Apr 11th 2019
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="update-pending-applications.html">
+                                    <div class="social-row">
+                                        <span>User #4545432 loan application awaiting response</span>
+                                        <div class="float-r">
+                                            Apr 10th 2019
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="txn-list activity">
+                                <a href="update-pending-applications.html">
+                                    <div class="social-row">
+                                        <span>User #4545400 loan application awaiting response</span>
+                                        <div class="float-r">
+                                            Apr 1st 2019
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div id="approved" class="tab-item">
+                            <div class="tabs">
+                                <a class="sublinks" id="defaultSubTab"
+                                    onclick="openSubTab(event, 'current')">Current</a>
+                                <a class="sublinks" onclick="openSubTab(event, 'closed')">Repaid</a>
+                            </div>
+                            <div id="current" class="sub-nav-item">
+                                <div class="txn-list activity">
+                                    <a href="verified-user.html">
+                                        <div class="social-row">
+                                            <span>User #4564577 applied for loan</span>
+                                            <div class="float-r">
+                                                Apr 20 2019 </div>
+                                        </div>
+                                    </a>
+
+                                </div>
+                                <div class="txn-list activity">
+                                    <a href="verified-user.html">
+                                        <div class="social-row">
+                                            <span>User #4564577 applied for loan</span>
+                                            <div class="float-r">
+                                                Apr 1st 2019 </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div id="closed" class="sub-nav-item">
+                                <div class="txn-list activity">
+                                    <a href="verified-user.html">
+                                        <div class="social-row">
+                                            <span>User #4564577 made final payment for loan</span>
+                                            <div class="float-r">
+                                                Apr 1st 2019 </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="txn-list activity">
+                                    <a href="verified-user.html">
+                                        <div class="social-row">
+                                            <span>You verified user #4564213</span>
+                                            <div class="float-r">
+                                                Apr 1st 2019 </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="rejected" class="tab-item">
+                            <div class="txn-list activity">
+                                <a href="verify-user.html">
+                                    <div class="social-row">
+                                        <span>User #45453617 awaiting verification</span>
+                                        <div class="float-r">
+                                            Apr 20 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="verify-user.html">
+
+                                    <div class="social-row">
+                                        <span>User #4545447 awaiting verification </span>
+                                        <div class="float-r">
+                                            Apr 11th 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="verify-user.html">
+                                    <div class="social-row">
+                                        <span>User #4545332 awaiting verification</span>
+                                        <div class="float-r">
+                                            Apr 10th 2019 </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="txn-list activity">
+                                <a href="verify-user.html">
+                                    <div class="social-row">
+                                        <span>User #4545402 awaiting verification</span>
+                                        <div class="float-r">
+                                            Apr 1st 2019
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="verify-user.html">
+                                    <div class="social-row">
+                                        <span>User #4545222 awaiting verification </span>
+                                        <div class="float-r">
+                                            Apr 11th 2019
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="txn-list activity">
+                                <a href="verify-user.html">
+                                    <div class="social-row">
+                                        <span>User #4545432 awaiting verification</span>
+                                        <div class="float-r">
+                                            Apr 10th 2019
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="txn-list activity">
+                                <a href="verify-user.html">
+                                    <div class="social-row">
+                                        <span>User #4545400 awaiting verification</span>
+                                        <div class="float-r">
+                                            Apr 1st 2019
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+
+        </div>
+        <script type="text/javascript" src="js/script.js"> </script>
+        <script type="text/javascript" src="js/applications.controller.js"> </script>
+
+</body>
+
+</html>
