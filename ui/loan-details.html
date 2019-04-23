@@ -21,9 +21,9 @@
                         </i> Dashboard</a></li>
                 <li class="sidenav-item">
                     <a href="request.html">
-                        <span class="naira">
-                            <img src="./img/naira.svg" alt="naira logo">
-                        </span> Request Loan</a></li>
+                            <span class="naira">
+                                    &#8358;
+                            </span> Request Loan</a></li>
                 <li class="sidenav-item active"><a href="repayment.html"> <i class="material-icons">
                             list
                         </i>Repayment History</a></li>
@@ -37,22 +37,21 @@
 
             </ul>
         </div>
-
-
         <div id="rightSideWrapper">
             <header class="d-flx align-items-center pl-qt">
                 <div class="">
-                    <i class="material-icons">
+                    <i class="material-icons" id="menu" onclick="navControl()">
                         menu
                     </i> Repayment History
                 </div>
             </header>
             <div class="ContentBox  p-1h">
                 <div class="content-header">
-                    <h3 class="mt-0">Loan Details
-                        <span class="align-right"> <a href="repayment.html"> <i class="material-icons">
-                                    arrow_back
-                                </i>Back</a> </span> </h3>
+                    <h3 class="mt-0">
+                            <a href="repayment.html"><i class="material-icons">
+                                    chevron_left
+                                </i></a>Loan Details
+                        </h3>
 
                 </div>
                 <main>
@@ -98,12 +97,12 @@
                         </div>
                         <hr>
                         <div class="social-row">
-                                <span>Reason for Rejection</span>
-                                <div class="float-r">
-    
-                                    Invalid pension number supplied</div>
-                            </div>
-                            <hr>
+                            <span>Reason for Rejection</span>
+                            <div class="float-r">
+
+                                Invalid pension number supplied</div>
+                        </div>
+                        <hr>
                     </div>
 
 
@@ -113,12 +112,8 @@
             </div>
 
         </div>
-
-
-
-
-
-        <script src="js/script.js"></script>
+    </div>
+    <script type="text/javascript" src="js/script.js"></script>
 </body>
 
 </html>
