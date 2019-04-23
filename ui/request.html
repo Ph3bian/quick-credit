@@ -23,10 +23,9 @@
                         </i> Dashboard</a></li>
                 <li class="sidenav-item  active">
                     <a href="request.html">
-                        <span class="naira">
-                            <img src="./img/naira.svg" alt="">
-                        </span>
-                        Request Loan</a></li>
+                            <span class="naira">
+                                    &#8358;
+                            </span> Request Loan</a></li>
                 <li class="sidenav-item"><a href="repayment.html"> <i class="material-icons">
                             list
                         </i>Repayment History</a></li>
@@ -44,7 +43,7 @@
         <div id="rightSideWrapper">
             <header class="d-flx align-items-center pl-qt">
                 <div class="">
-                    <i class="material-icons">
+                    <i class="material-icons"  id="menu" onclick="navControl()">
                         menu
                     </i>Request Loan
                 </div>
@@ -57,13 +56,11 @@
                         <div class="">
                             <form action="">
                                 <div class="form-header">
-                                    <h3 class="mt-0">REQUEST LOAN
-                                        <span class="align-right">
-                                            <a href="dashboard.html">
-                                                <i class="material-icons">
-                                                    arrow_back
-                                                </i>Back</a>
-                                        </span>
+                                    <h3 class="mt-0">
+                                            <a href="dashboard.html"><i class="material-icons">
+                                                    chevron_left
+                                                </i></a>REQUEST LOAN
+                                        
                                     </h3>
                                 </div>
                                 <div class="row">
@@ -121,7 +118,7 @@
             </div>
         </div>
     </div>
-
+    <script type="text/javascript" src="js/script.js"></script>
 </body>
 
 </html>

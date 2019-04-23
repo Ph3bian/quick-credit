@@ -21,9 +21,9 @@
                         </i> Dashboard</a></li>
                 <li class="sidenav-item">
                     <a href="request.html">
-                        <span class="naira">
-                            <img src="./img/naira.svg" alt="naira logo">
-                        </span> Request Loan</a></li>
+                            <span class="naira">
+                                    &#8358;
+                            </span> Request Loan</a></li>
                 <li class="sidenav-item active"><a href="repayment.html"> <i class="material-icons">
                             list
                         </i>Repayment History</a></li>
@@ -37,21 +37,20 @@
 
             </ul>
         </div>
-
-
         <div id="rightSideWrapper">
             <header class="d-flx align-items-center pl-qt">
                 <div class="">
-                    <i class="material-icons">
+                    <i class="material-icons" id="menu" onclick="navControl()">
                         menu
                     </i> Repayment History
                 </div>
             </header>
-            <div class="ContentBox  p-1h">
-                   <div class="content-header"> <h3 class="mt-0">Repayment History Logs </h3>
-                    </div>
+            <div class="ContentBox p-1h">
+                <div class="content-header">
+                    <h3 class="mt-0">Repayment History Logs </h3>
+                </div>
                 <main>
-                        
+
                     <div class="column">
                         <div class="txn-list">
                             <a href="loan-details.html">
@@ -84,25 +83,27 @@
                             </a>
                         </div>
                         <div class="txn-list">
-                                <a href="loan-details.html">
-                                    <div class="social-row">
-                                        <span>REAL ESTATE LOAN</span>
-                                        <div class="float-r declined"><img src="./img/declined.svg" />
-                                            Declined</div>
-                                    </div>
-    
-                                    <div class="social-row">
-                                        <span> &#8358;80,000,000.00</span>
-                                        <div class="float-r">
-                                            Dec 24 2018 </div>
-                                    </div>
-                                </a>
+                            <a href="loan-details.html">
+                                <div class="social-row">
+                                    <span>REAL ESTATE LOAN</span>
+                                    <div class="float-r declined"><img src="./img/declined.svg" />
+                                        Declined</div>
+                                </div>
+
+                                <div class="social-row">
+                                    <span> &#8358;80,000,000.00</span>
+                                    <div class="float-r">
+                                        Dec 24 2018 </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </main>
             </div>
 
         </div>
+    </div>
+    <script type="text/javascript" src="js/script.js"></script>
 </body>
 
 </html>

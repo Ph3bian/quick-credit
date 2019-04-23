@@ -182,7 +182,7 @@ a[type=button], button {
 }
 
 .pending {
-    color: #fccc63;
+    color: #ff7e00;
 }
 
 .declined {
@@ -199,7 +199,7 @@ a[type=button], button {
 hr { border: 1px dashed #ddd;margin: 5px 0 20px;}
 .forgot {float: right;font-size: .9rem;margin-bottom: 10px;}
 .material-icons {vertical-align: middle;letter-spacing: 13px;padding-bottom: 2px;}
-span.naira { padding-right: 9px;}
+span.naira {     padding: 0px 16px 0px 3px;font-size: 19px;letter-spacing: 0px;}
 a {text-decoration: none; color: #1e3056;}
 a:hover {color: #1e3056;}
 .align-right, .float-r {float: right}
