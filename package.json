@@ -1,0 +1,33 @@
+{
+  "name": "quick-credit",
+  "version": "1.0.0",
+  "description": "Quick Credit is an online lending platform that provides short term soft loans to individuals",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-watch server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ph3bian/quick-credit.git"
+  },
+  "author": "Phebian Chukwurah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ph3bian/quick-credit/issues"
+  },
+  "homepage": "https://github.com/Ph3bian/quick-credit#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-watch": "^2.0.7",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.16.4",
+    "express-validator": "^5.3.1"
+  }
+}
