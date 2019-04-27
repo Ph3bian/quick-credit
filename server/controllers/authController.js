@@ -24,6 +24,7 @@ export default class AuthController {
     User.push(data);
     return res.status(201).json({
       success: true,
+      message: 'Great! Sign up successful',
       data,
     });
   }
