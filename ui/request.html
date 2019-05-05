@@ -23,9 +23,9 @@
                         </i> Dashboard</a></li>
                 <li class="sidenav-item  active">
                     <a href="request.html">
-                            <span class="naira">
-                                    &#8358;
-                            </span> Request Loan</a></li>
+                        <span class="naira">
+                            &#8358;
+                        </span> Request Loan</a></li>
                 <li class="sidenav-item"><a href="repayment.html"> <i class="material-icons">
                             list
                         </i>Repayment History</a></li>
@@ -43,7 +43,7 @@
         <div id="rightSideWrapper">
             <header class="d-flx align-items-center pl-qt">
                 <div class="">
-                    <i class="material-icons"  id="menu" onclick="navControl()">
+                    <i class="material-icons" id="menu" onclick="navControl()">
                         menu
                     </i>Request Loan
                 </div>
@@ -57,10 +57,10 @@
                             <form action="">
                                 <div class="form-header">
                                     <h3 class="mt-0">
-                                            <a href="dashboard.html"><i class="material-icons">
-                                                    chevron_left
-                                                </i></a>REQUEST LOAN
-                                        
+                                        <a href="dashboard.html"><i class="material-icons">
+                                                chevron_left
+                                            </i></a>REQUEST LOAN
+
                                     </h3>
                                 </div>
                                 <div class="row">
@@ -69,8 +69,8 @@
                                         <input type="text" name="amount" placeholder="">
                                     </div>
                                     <div class="item sub-item ml-5 mr-5">
-                                        <label for="bvn">Type</label>
-                                        <select type="text" name="gender" class="form-select input" placeholder="">
+                                        <label for="loanType">Type</label>
+                                        <select type="text" name="loanType" class="form-select input" placeholder="">
                                             <option value="">Select Category</option>
                                             <option value="SF">School fees </option>
                                             <option value="RE">Real estate</option>
@@ -81,27 +81,35 @@
                                         </select>
                                     </div>
                                     <div class="item sub-item ml-5">
-                                        <label for="dor">Date of Repayment</label>
-                                        <input type="text" name="dor" placeholder="">
+                                        <label for="tenor">Tenor for Repayment</label>
+                                        <select type="text" name="tenor" class="form-select input" placeholder="">
+                                            <option value="">Select Period</option>
+                                            <option value="1">1 month </option>
+                                            <option value="2">2 months </option>
+                                            <option value="3">3 months </option>
+                                            <option value="4">4 months </option>
+                                            <option value="5">5 months </option>
+                                            <option value="6">6 months </option>
+                                            <option value="7">7 months </option>
+                                            <option value="8">8 months </option>
+                                            <option value="9">9 months </option>
+                                            <option value="10">10 months </option>
+                                            <option value="11">11 months </option>
+                                            <option value="12">12 months </option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div>
-                                    <div class="row">
-                                        <div class="item sub-item mr-5">
-                                            <label for="account_no">Account Number</label>
-                                            <input type="text" name="account_no" placeholder="">
-                                        </div>
-                                        <div class="item sub-item ml-5">
-                                            <label for="bank_name">Bank Name</label>
-                                            <input type="text" name="bank_name" placeholder="">
-                                        </div>
+                                <label for="accountNo">Account Number</label>
+                                <input type="text" name="accountNo" placeholder="">
 
-                                    </div>
-                                </div>
-                                <label for="pension">Pension Number</label>
-                                <input type="text" name="pension" placeholder="">
-                                <h4>Amount to be repaid: &#8358; 440,000 </h4>
-                                <div class="row">
+                                <label for="bank_name">Bank Name</label>
+                                <input type="text" name="bank_name" placeholder="">
+
+                                <label for="repaymentAmount">Amount to be repaid</label>
+                                <input type="text" name="repaymentAmount" disabled value="&#8358; 440,000.00 ">
+
+                                <!-- <h4>Amount to be repaid: &#8358; 440,000 </h4> -->
+                                <div class="row mt-2h">
                                     <div class="item sub-item mr-5">
                                         <button class="secondary-btn">
                                             Save as draft
