@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-html {height: 100%}
+html {height: 100%; overflow: auto}
 body {font-family: 'Poppins', sans-serif;font-size: 0.9rem;margin: 0;box-sizing: border-box;
     color: #1e3056;display: flex; display: -webkit-flex ; -webkit-flex: 1; -ms-flex: 1;flex: 1;
-    flex-direction: column;background: #f1f7ff;}
+    flex-direction: column;height:100%; overflow-x: hidden;}
+    body#landing{ background: #f1f7ff; }
 *, *:before, *:after {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -21,35 +22,17 @@ body {font-family: 'Poppins', sans-serif;font-size: 0.9rem;margin: 0;box-sizing:
 
 /***** nav-bar styling ****/
 
-nav {
-    position: relative;
-    height: 50px;
-}
+nav {position: relative;height: 50px;}
 
-.navbar {
-    padding: 10px 40px;
-    background: #f1f7ff!important;
-}
+.navbar {padding: 10px 40px;background: #f1f7ff!important;}
 
-nav .headernav .nav-icon {
-    display: none;
-    color: #38d39e;
-    font-size: 20px;
-}
+nav .headernav .nav-icon {display: none;color: #38d39e;font-size: 20px;}
 
-img {
-    max-width: 100%;
-    height: auto;
-}
+img {max-width: 100%;height: auto;}
 
-a.nav-item {
-    padding: 5px 15px
-}
+a.nav-item {padding: 5px 15px}
 
-a.nav-item:hover {
-    border-bottom: 2px solid #1e3056;
-    width: 80px;
-}
+a.nav-item:hover {border-bottom: 2px solid #1e3056;width: 80px;}
 
 .nav-container {
     display: flex;
@@ -164,7 +147,7 @@ a[type=button], button {
 }
 .app-btn { width: 200px!important;}
 .update-btn{width: 90px!important; font-size: .9rem;}
-.primary-btn, .secondary-btn:hover { color: #fff;background: linear-gradient(to right, #507bf5 0, #04c3e1 100%);}
+.primary-btn, .secondary-btn:hover { color: #fff;background: linear-gradient(to right, #507bf5 0, #04c3e1 100%);border: 1px}
 .secondary-btn {background: transparent;color: #1e3056;border: 1px solid #1e3056;}
 
 .btn-right {right: 0;position: absolute;top: 6px;}
@@ -184,6 +167,9 @@ a:hover {color: #1e3056;}
 .align-right, .float-r {float: right}.sub-text{color:#657786;}
 .form-select { border: 1px solid #ddd;width: 100%;background-color: #f9fbfc;padding: 0 1rem;
     height: 50px;font-size: 0.9rem;outline: none;border-radius: 0;-webkit-appearance: none;}
+    .form-select{
+         background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat right #f9fbfc; 
+        }
 select { border-radius: 0; -webkit-appearance: none;}
 .mr-1h {margin-right: 1.5rem}
 .ml-1h { margin-left: 1.5rem}
@@ -191,7 +177,7 @@ select { border-radius: 0; -webkit-appearance: none;}
 .mx-auto { margin: 0 auto;}
 .mb-2h {margin-bottom: 2.5rem;}
 .m-0 {margin: 0;}
-.mt-0 { margin-top: 0;}
+.mt-0 { margin-top: 0;}.mt-2h { margin-top: 2.5rem;}
 .my-1h, .m-1h { margin-top: 1.5rem;margin-bottom: 1.5rem;}
 .mx-1h, .m-1h { margin-left: 1.5rem;margin-right: 1.5rem;}
 .my-1, .m-1 {margin-top: 1rem; margin-bottom: 1rem;}
@@ -211,6 +197,7 @@ select { border-radius: 0; -webkit-appearance: none;}
 }
 @media screen and (max-width: 600px) {
     #sidebar {display: none;width: auto !important;}
+    i#menu {position: absolute;right: 0;}
     #rightSideWrapper .ContentBox {margin: auto;width: 100%;max-width: 100%;height: 100%;background: white;overflow: scroll;}
     .sidebarCanvasMenu {position: fixed;top: 0; bottom: 0;left: 0; z-index: 1000;}
     .pl-qt { padding-left: 1.75rem;}
@@ -227,11 +214,11 @@ select { border-radius: 0; -webkit-appearance: none;}
     .modal-content{margin: 5% auto !important; width:100% !important;}
 }
 .wrapper {height: 100vh;background-color: #f4f4f4;}
-#sidebar {height: 100%;width: 22%;margin: 0px;background: #ffffff;box-shadow: 0 0 9px rgba(0, 0, 0, 0.1);}
+#sidebar {height: 100%;width: 25%;margin: 0px;background: #ffffff;box-shadow: 0 0 9px rgba(0, 0, 0, 0.1); animation-name: sideBarOpen; animation-duration: 1s; transition: 0.8s ease}
 #rightSideWrapper {width: 100%;}
 header {width: 100%;height: 70px;background: #ffffff;border-bottom: 1px solid rgba(0, 0, 0, .12);}
 .card {background: #fff;color: #1e3056;box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);padding: 20px;}
-.ContentBox {margin: 80px auto;width: 80%;max-width: 80%;height: calc(100vh - 230px);background: white;overflow: scroll;}
+.ContentBox {margin: 40px auto;width: 90%;max-width: 90%;height: calc(100vh - 150px);background: white;overflow:auto;}
 main {order: 1; flex: 1 1 100%;}
 .hero-section {height: 70vh;}
 .hero-image {width: 600px;}
@@ -241,7 +228,7 @@ h1 {font-weight: 400;color: #1e3056;line-height: 55px;margin: 0;padding: 0;}
 .sidenav-item {padding: 15px 20px;}
 li.sidenav-item.active {background: #f1f7ff;color: #1e3056;font-weight: bold;outline: 0;}
 li.sidenav-item:hover { background: #f2f2f2;}
-.placeholder {margin-bottom: 20px;height: 250px;align-items: center;justify-content: center;
+.placeholder {margin-bottom: 20px;height: 46vh;align-items: center;justify-content: center;
 display: flex;padding: 30px 30px;background: transparent;border: 1px dashed #e5e5e5}
 @media all and (min-width: 800px) {
     h1 {font-size: 45px;}
@@ -284,3 +271,4 @@ thead tr {line-height: 30px;}
 .modal-content{background: #ffffff; margin: 10% auto; padding: 20px; width:55%; box-shadow: 0px 8px 30px 0px rgba(0, 0, 0, .2); animation-name: modalOpen; animation-duration: 1s}
 .closeBtn{float: right; font-size: 1.75rem; margin-top: -6px;} .closeBtn:hover, .closeBtn:focus{cursor: pointer; color:#000000; text-decoration: none; }
 @keyframes modalOpen{from{opacity: 0}to{opacity: 1}};
+@keyframes sideBarOpen{from{opacity: 0}to{opacity: 1}};
