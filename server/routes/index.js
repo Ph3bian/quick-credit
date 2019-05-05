@@ -5,5 +5,5 @@ import LoanController from '../controllers/loanController';
 const router = new Router();
 router.post('/signup', AuthController.signUp);
 router.post('/signin', AuthController.signIn);
-router.post('/loan', LoanController.requestLoan);
+router.post('/loans', LoanController.requestLoan);
 export default router;
