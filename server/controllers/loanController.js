@@ -12,7 +12,6 @@ export default class LoanController {
         error: validateErrors.map(e => ({ field: e.param, message: e.msg })),
       });
     }
-    // const { user } = req.user;
     const {
       amount,
       tenor,
@@ -55,11 +54,27 @@ export default class LoanController {
     });
   }
 
-
   static fetchLoans(req, res) {
     res.status(200).json({
       success: true,
       data: Loans,
+    });
+  }
+
+  static fetchLoan(req, res) {
+    const { id } = req.params;
+    // eslint-disable-next-line eqeqeq
+    const finder = input => input.id == id;
+    const loan = Loans.find(finder);
+    if (loan) {
+      return res.status(200).json({
+        success: true,
+        data: loan,
+      });
+    }
+    return res.status(404).json({
+      success: true,
+      error: 'Error, loan application does not exist',
     });
   }
 }
