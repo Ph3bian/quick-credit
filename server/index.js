@@ -1,11 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
+import morgan from 'morgan';
 import router from './routes';
 
 
 const app = express();
-
+// morgan is used for logging
+app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(expressValidator());
 
