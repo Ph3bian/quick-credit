@@ -19,7 +19,7 @@ export default class AuthController {
     const data = {
       id: parseInt((Math.random() * 1000000).toFixed(), 10),
       status: 'unverified',
-      user,
+      ...user,
       token,
       isAdmin,
     };
@@ -43,14 +43,12 @@ export default class AuthController {
     }
     const { email } = req.body;
 
-    const user = User.find(input => input.data.user.email === email);
+    const user = User.find(input => input.email === email);
 
     if (user) {
       return res.status(200).json({
         success: true,
-        data: {
-          user,
-        },
+        data: user,
       });
     }
     return res.status(404).json({

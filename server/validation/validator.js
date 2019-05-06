@@ -22,4 +22,8 @@ export default class Validator {
     req.checkBody('loanType', 'tenor is required').notEmpty();
     req.checkBody('accountNo', 'tenor is required').notEmpty();
   }
+
+  static verifyUser(req) {
+    req.check('email', 'Valid email address required').notEmpty().isEmail();
+  }
 }

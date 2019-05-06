@@ -39,8 +39,8 @@ export default class LoanController {
       repaid,
       accountNo,
     };
-    const user = User.find(input => input.data.id === userId);
-    const { firstname, lastname, email } = user.data.user;
+    const user = User.find(input => input.id === userId);
+    const { firstname, lastname, email } = user;
 
     Loans.push(data); // populate in memory storage of loans
     return res.status(201).json({
