@@ -8,5 +8,6 @@ router.post('/signup', AuthController.signUp);
 router.post('/signin', AuthController.signIn);
 router.post('/loans', LoanController.requestLoan);
 router.get('/loans', LoanController.fetchLoans);
+router.get('/loans/:id', LoanController.fetchLoan);
 router.patch('/users/:email/verify', UserController.verifyUser);
 export default router;
