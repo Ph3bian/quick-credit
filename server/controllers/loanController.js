@@ -77,4 +77,31 @@ export default class LoanController {
       error: 'Error, loan application does not exist',
     });
   }
+
+  static updateLoan(req, res) {
+    const { id } = req.params;
+    const { status } = req.body;
+    // eslint-disable-next-line eqeqeq
+    const finder = input => input.id == id;
+    const loan = Loans.find(finder);
+    if (loan) {
+      if (status === 'approved' || status === 'rejected') {
+        return res.status(200).json({
+          success: true,
+          data: {
+            ...loan,
+            status,
+          },
+        });
+      }
+      return res.status(400).json({
+        success: false,
+        error: 'Error! status can only be approved or rejected',
+      });
+    }
+    return res.status(404).json({
+      success: false,
+      error: 'Error, loan application does not exist',
+    });
+  }
 }
