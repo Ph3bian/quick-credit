@@ -55,11 +55,33 @@ export default class LoanController {
   }
 
   static fetchLoans(req, res) {
-    res.status(200).json({
+    const { status, repaid } = req.query;
+
+    Validator.filterLoan(req);
+    const validateErrors = req.validationErrors();
+    if (validateErrors) {
+      return res.status(400).json({
+        success: false,
+        error: 'Oops, Invalid query parameter',
+      });
+    }
+
+    let filteredLoans = Loans.slice();
+
+    if (status && ['approved', 'rejected', 'pending'].includes(status)) {
+      filteredLoans = filteredLoans.filter(loan => loan.status === status);
+    }
+
+    if (repaid && ['true', 'false'].includes(repaid)) {
+      filteredLoans = filteredLoans.filter(loan => loan.repaid.toString() === repaid);
+    }
+
+    return res.status(200).json({
       success: true,
-      data: Loans,
+      data: filteredLoans,
     });
   }
+
 
   static fetchLoan(req, res) {
     const { id } = req.params;
@@ -85,7 +107,7 @@ export default class LoanController {
     const finder = input => input.id == id;
     const loan = Loans.find(finder);
     if (loan) {
-      if (status === 'approved' || status === 'rejected') {
+      if (['approved', 'rejected'].includes(status)) {
         return res.status(200).json({
           success: true,
           data: {

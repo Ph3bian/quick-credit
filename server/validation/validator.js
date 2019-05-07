@@ -26,4 +26,10 @@ export default class Validator {
   static verifyUser(req) {
     req.check('email', 'Valid email address required').notEmpty().isEmail();
   }
+
+  static filterLoan(req) {
+    const { status, repaid } = req.query;
+    if (status) req.check('status').isIn(['approved', 'pending', 'rejected']);
+    if (repaid) req.check('repaid').isIn(['true', 'false']);
+  }
 }
