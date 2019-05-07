@@ -7,7 +7,7 @@ import router from './routes';
 
 const app = express();
 // morgan is used for logging
-// app.use(morgan('combined'));
+app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(expressValidator());
 
