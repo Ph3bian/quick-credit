@@ -10,5 +10,6 @@ router.post('/loans', LoanController.requestLoan);
 router.get('/loans', LoanController.fetchLoans);
 router.get('/loans/:id', LoanController.fetchLoan);
 router.patch('/loans/:id', LoanController.updateLoan);
+router.post('/loans/:loanId/repayment', LoanController.updateRepayment);
 router.patch('/users/:email/verify', UserController.verifyUser);
 export default router;

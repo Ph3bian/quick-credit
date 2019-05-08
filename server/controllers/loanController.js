@@ -1,6 +1,8 @@
+/* eslint-disable eqeqeq */
 import Validator from '../validation/validator';
 import Loans from '../memory/loans';
 import User from '../memory/user';
+import repayments from '../memory/repayments';
 
 export default class LoanController {
   static requestLoan(req, res) {
@@ -37,20 +39,27 @@ export default class LoanController {
       loanType,
       repaid,
       accountNo,
+      userId,
     };
     const user = User.find(input => input.id === userId);
-    const { firstname, lastname, email } = user;
+    if (user) {
+      const { firstname, lastname, email } = user;
 
-    Loans.push(data); // populate in memory storage of loans
-    return res.status(201).json({
-      success: true,
-      message: 'Great! Loan request processing',
-      data: {
-        firstname,
-        lastname,
-        email,
-        ...data,
-      },
+      Loans.push(data); // populate in memory storage of loans
+      return res.status(201).json({
+        success: true,
+        message: 'Great! Loan request processing',
+        data: {
+          firstname,
+          lastname,
+          email,
+          ...data,
+        },
+      });
+    }
+    return res.status(404).json({
+      success: false,
+      error: 'Invalid User details',
     });
   }
 
@@ -85,7 +94,6 @@ export default class LoanController {
 
   static fetchLoan(req, res) {
     const { id } = req.params;
-    // eslint-disable-next-line eqeqeq
     const finder = input => input.id == id;
     const loan = Loans.find(finder);
     if (loan) {
@@ -95,7 +103,7 @@ export default class LoanController {
       });
     }
     return res.status(404).json({
-      success: true,
+      success: false,
       error: 'Error, loan application does not exist',
     });
   }
@@ -103,7 +111,6 @@ export default class LoanController {
   static updateLoan(req, res) {
     const { id } = req.params;
     const { status } = req.body;
-    // eslint-disable-next-line eqeqeq
     const finder = input => input.id == id;
     const loan = Loans.find(finder);
     if (loan) {
@@ -124,6 +131,41 @@ export default class LoanController {
     return res.status(404).json({
       success: false,
       error: 'Error, loan application does not exist',
+    });
+  }
+
+  static updateRepayment(req, res) {
+    const { loanId } = req.params;
+    const finder = input => input.id == loanId;
+    const index = Loans.findIndex(finder);
+    if (index < 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Error! Loan application does not exist',
+      });
+    }
+
+    const previousbalance = Loans[index].balance;
+    const {
+      amount, paidAmount, monthlyInstallment, userId,
+    } = req.body;
+    const createdOn = new Date();
+    const balance = previousbalance - parseInt(paidAmount, 10);
+    Loans[index].balance = balance;
+    const data = {
+      id: parseInt((Math.random() * 1000000).toFixed(), 10),
+      amount,
+      paidAmount,
+      monthlyInstallment,
+      userId,
+      createdOn,
+      balance,
+      loanId,
+    };
+    repayments.push(data);
+    return res.status(200).json({
+      success: true,
+      data,
     });
   }
 }
