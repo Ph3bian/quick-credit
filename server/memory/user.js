@@ -24,7 +24,7 @@ export default [
     isAdmin: false,
   },
   {
-    id: 612332,
+    id: '612332',
     status: 'unverified',
     firstname: 'Nantha',
     lastname: 'J',
