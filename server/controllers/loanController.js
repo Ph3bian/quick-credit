@@ -168,4 +168,15 @@ export default class LoanController {
       data,
     });
   }
+
+  static fetchRepayments(req, res) {
+    const { loanId } = req.params;
+    const finder = input => input.loanId == loanId;
+    const repaymentsHistory = repayments.filter(finder);
+    
+    return res.status(200).json({
+      success: true,
+      data: repaymentsHistory,
+    });
+  }
 }
