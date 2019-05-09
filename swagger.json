@@ -1,4 +1,5 @@
 {
+  "swagger": "2.0",
 	"info": {
 		"name": "Quick Credit",
 		"description": "Quick Credit is an online lending platform that provides short term soft loans to individuals.",
