@@ -5,6 +5,7 @@
     "description": "Quick Credit is an online lending platform that provides short term soft loans to individuals.",
     "version": "1.0.0"
   },
+  "host": "https://q-credit.herokuapp.com",
   "basePath": "/api/v1/",
   "schemes": [
     "http",
@@ -34,7 +35,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "User object that needs to be added to the app",
+            "description": "User information to create an account",
             "required": true,
             "schema": {
               "$ref": "#/definitions/NewUser"
@@ -93,8 +94,42 @@
         "tags": [
           "loans"
         ],
-        "summary": "Create loan application",
+        "summary": "Request for loan",
         "operationId": "addLoan",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Loan information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewLoan"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Loan requested Successfully"
+          },
+          "400": {
+            "description": "Required fields can not be empty"
+          }
+        }
+      }
+    },
+    "/loans": {
+      "get": {
+        "tags": [
+          "loans"
+        ],
+        "summary": "View loan applications",
+        "operationId": "getLoans",
         "consumes": [
           "application/json"
         ],
