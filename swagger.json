@@ -1,21 +1,24 @@
 {
   "swagger": "2.0",
   "info": {
-    "name": "Quick Credit",
+    "title": "Quick Credit",
     "description": "Quick Credit is an online lending platform that provides short term soft loans to individuals.",
     "version": "1.0.0"
   },
-  "host": "https://q-credit.herokuapp.com",
-  "basePath": "/api/v1/",
-  "schemes": [
-    "http",
-    "https"
-  ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
+  "externalDocs": {
+    "description": "Find out more about Quick Credit",
+    "url": "https://ph3bian.github.io/quick-credit/ui"
+  },
+
+  "tags": [
+    {
+      "name": "Quick Credit",
+      "description": "Everything about your Loans",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://ph3bian.github.io/quick-credit/ui"
+      }
+    }
   ],
   "paths": {
     "/signup": {
@@ -24,196 +27,333 @@
           "auth"
         ],
         "summary": "Create new user",
-        "operationId": "addUser",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "User information to create an account",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/NewUser"
+        "operationId": "createUser",
+        "requestBody": {
+          "description": "User information to create an account",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/xml": {
+              "schema": {
+               "$ref": "#/components/schemas/User"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "201": {
             "description": "User Sign Up Successful"
           },
-          "400": {
-            "description": "Required fields can not be empty"
+           "400": {
+            "description": "Required fields can not be empty",
+            "content": {}
           }
         }
+        
       }
     },
-    "/signin": {
+     "/signin": {
       "post": {
         "tags": [
           "auth"
         ],
-        "summary": "User sign in",
+        "summary": "User Sign In",
         "operationId": "userSignIn",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "User log in",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/UserSignIn"
+        "requestBody": {
+          "description": "User sign",
+          "content": {
+            "application/json": {
+              "schema": {
+               "$ref": "#/definitions/UserSignIn"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/definitions/UserSignIn"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
-            "description": "login successful"
+            "description": "User Sign In Successful"
           },
-          "400": {
-            "description": "Required fields can not be empty"
+           "400": {
+            "description": "Required fields can not be empty",
+            "content": {}
           },
-          "404": {
+           "404": {
             "description": "User does not exist"
           }
         }
       }
     },
-    "/loans": {
+     "/loans": {
       "post": {
         "tags": [
           "loans"
         ],
-        "summary": "Request for loan",
-        "operationId": "addLoan",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Loan information",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/NewLoan"
+        "summary": "User requests for loan",
+        "operationId": "createLoan",
+        "requestBody": {
+          "description": "User apply for loans",
+          "content": {
+            "application/json": {
+              "schema": {
+               "$ref": "#/definitions/Loan"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/definitions/Loan"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "201": {
-            "description": "Loan requested Successfully"
+          "description": "Loan requested Successfully"
           },
-          "400": {
-            "description": "Required fields can not be empty"
+           "400": {
+            "description": "Required fields can not be empty",
+            "content": {}
+          },
+           "404": {
+            "description": "Invalid User details"
           }
         }
-      }
-    },
-    "/loans": {
+      },
       "get": {
         "tags": [
           "loans"
         ],
-        "summary": "View loan applications",
+        "summary": "View all loan applications",
         "operationId": "getLoans",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
+       "parameters": [
           {
-            "in": "body",
-            "name": "body",
-            "description": "Loan information",
+            "name": "status",
+            "in":"query",
+            "description": "Status values that need to be considered for filter",
             "required": true,
-            "schema": {
-              "$ref": "#/definitions/NewLoan"
+            "style": "form",
+            "explode": true,
+           "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "default": "pending",
+                "enum": [
+                  "available",
+                  "pending",
+                  "rejected"
+                ]
+              }
             }
           }
         ],
         "responses": {
-          "201": {
-            "description": "Loan requested Successfully"
+           "200": {
+            "description": "Get loans successful "
           },
-          "400": {
-            "description": "Required fields can not be empty"
+           "400": {
+             "description":  "Invalid query parameters",
+            "content": {}
           }
         }
       }
-    }
-  },
-  "definitions": {
-    "NewUser": {
-      "type": "object",
-      "required": [
-        "firstName",
-        "lastName",
-        "email",
-        "password",
-        "address",
-        "bvn"
-      ],
-      "properties": {
-        "firstName": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        },
-        "address": {
-          "type": "string"
-        },
-        "bvn": {
-          "type": "string"
+    },
+    "/loans/:id": {
+      "get": {
+        "tags": [
+          "loans"
+        ],
+        "summary": "Get specific loans",
+        "description": "View loan with Id",
+        "operationId": "getLoan",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Get loan by Id",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "$ref": "#/components/schemas/Loan"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Loan"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Loan"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Id value",
+            "content": {}
+          }
         }
       },
-      "xml": {
-        "name": "NewUser"
+      "patch": {
+        "tags": [
+          "loans"
+        ],
+        "summary": "Get specific loans",
+        "description": "Update Loan status",
+        "operationId": "patchLoan",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Approve loan by Id",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "default":"pending",
+                "enum": [
+                  "approved",
+                  "pending",
+                  "rejected"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Loan"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Loan"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status"
+          }
+        }
       }
     },
-    "UserSignIn": {
-      "type": "object",
-      "required": [
-        "email",
-        "password"
-      ],
-      "properties": {
-        "email": {
-          "type": "string",
-          "example":"joy@gmail.comr"
+    "/loans/:loanId/repayment": {
+      "post": {
+        "tags": [
+          "loan"
+        ],
+        "summary": "Update loan repayment",
+        "description": "Update loan, updating balance",
+        "operationId": "updateRepayment",
+        "parameters": [
+          {
+            "name": "tags",
+            "in": "path",
+            "description": "Update repayment by loanId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Loan"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Loan"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid loanId value",
+            "content": {}
+          }
         },
-        "password": {
-          "type": "string"     
-      },
-      "xml": {
-        "name": "UserSignIn"
+        "deprecated": true
       }
     }
-  
+   
   },
-  "NewLoan": {
+  "components": {
+    "schemas": {
+   
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "bvn": {
+            "type": "string"
+          },
+        },
+        "xml": {
+          "name": "User"
+        }
+      },
+       "Loan": {
     "type": "object",
     "required": [
       "amount",
@@ -240,8 +380,10 @@
       }
     },
     "xml": {
-      "name": "NewLoan"
+      "name": "Loan"
     }
   }
-}
+    }
+   
+  }
 }
