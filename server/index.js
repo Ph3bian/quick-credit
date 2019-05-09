@@ -1,7 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
+import swaggerUi from 'swagger-ui-express';
 import morgan from 'morgan';
+import swaggerDocument from '../swagger.json';
 import router from './routes';
 
 
@@ -10,6 +12,7 @@ const app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(expressValidator());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 app.get('/', (req, res) => {
