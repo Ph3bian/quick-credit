@@ -4,12 +4,9 @@
   "description": "Quick Credit is an online lending platform that provides short term soft loans to individuals",
   "main": "index.js",
   "scripts": {
-    "start":  "node dist/index.js",
-    "start:dev": "nodemon --quiet --exec babel-node server/index.js",
+    "start": "nodemon --quiet --exec babel-node server/index.js",
     "test": "nyc --reporter=html --reporter=text  --require @babel/register --require @babel/polyfill mocha server/test/tests.js --exit",
-    "build": "babel -d dist server/",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "heroku-postbuild": "npm run build"
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
