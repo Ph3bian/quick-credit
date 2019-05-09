@@ -347,7 +347,7 @@
           },
           "bvn": {
             "type": "string"
-          },
+          }
         },
         "xml": {
           "name": "User"
