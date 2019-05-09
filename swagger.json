@@ -5,6 +5,8 @@
     "description": "Quick Credit is an online lending platform that provides short term soft loans to individuals.",
     "version": "1.0.0"
   },
+  "host": "https://q-credit.herokuapp.com/",
+  "basePath": "/api/v1/",
   "externalDocs": {
     "description": "Find out more about Quick Credit",
     "url": "https://ph3bian.github.io/quick-credit/ui"
@@ -68,12 +70,12 @@
           "content": {
             "application/json": {
               "schema": {
-               "$ref": "#/definitions/UserSignIn"
+               "$ref": "#/components/schemas/User"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/definitions/UserSignIn"
+                "$ref": "#/components/schemas/User"
               }
             }
           },
@@ -105,12 +107,12 @@
           "content": {
             "application/json": {
               "schema": {
-               "$ref": "#/definitions/Loan"
+               "$ref": "#/components/schemas/Loan"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/definitions/Loan"
+                "$ref": "#/components/schemas/Loan"
               }
             }
           },
@@ -365,9 +367,9 @@
         "tags": [
           "loans"
         ],
-        "summary": "Finds Pets by status",
-        "description": "Multiple status values can be provided with comma separated strings",
-        "operationId": "findPetsByStatus",
+        "summary": "Query loans by status or repaid",
+        "description": "Multiple status or repaid values can be provided with comma separated strings",
+        "operationId": "QueryLoansByStatusOrRepaid",
         "parameters": [
           {
             "name": ["status", "repaid"],
@@ -456,75 +458,6 @@
           },
           "400": {
             "description": "Invalid email supplied",
-            "content": {}
-          },
-          "404": {
-            "description": "User not found",
-            "content": {}
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Updated user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "updateUser",
-        "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "description": "name that need to be updated",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Updated user object",
-          "content": {
-            "*/*": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "400": {
-            "description": "Invalid user supplied",
-            "content": {}
-          },
-          "404": {
-            "description": "User not found",
-            "content": {}
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Delete user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "deleteUser",
-        "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "description": "The name that needs to be deleted",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Invalid username supplied",
             "content": {}
           },
           "404": {
