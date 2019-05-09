@@ -48,14 +48,13 @@ export default class AuthController {
     if (user) {
       return res.status(200).json({
         success: true,
+        message: 'Great! login successful',
         data: user,
       });
     }
     return res.status(404).json({
       success: false,
-      data: {
-        message: `User with this email address ${email} does not exist`,
-      },
+      error: `User with this email address ${email} does not exist`,
     });
   }
 }
