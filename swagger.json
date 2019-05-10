@@ -104,6 +104,13 @@
         ],
         "summary": "User requests for loan",
         "operationId": "createLoan",
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -134,11 +141,18 @@
         ],
         "summary": "View all loan applications",
         "operationId": "getLoans",
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "status",
             "in": "query",
-            "description": "Status values that need to be considered for filter",
+            "description": "Status is either of the options;approved, pending or rejected",
             "style": "form",
             "explode": true,
             "schema": {
@@ -147,7 +161,7 @@
                 "type": "string",
                 "default": "pending",
                 "enum": [
-                  "available",
+                  "approved",
                   "pending",
                   "rejected"
                 ]
@@ -157,7 +171,7 @@
           {
             "name": "repaid",
             "in": "query",
-            "description": "Repaid values that need to be considered for filter",
+            "description": "Repaid values include either true or false",
             "style": "form",
             "explode": true,
             "schema": {
@@ -184,7 +198,7 @@
         }
       }
     },
-    "/loans/:id": {
+    "/loans/{id}": {
       "get": {
         "tags": [
           "loans"
@@ -192,6 +206,13 @@
         "summary": "Get specific loans",
         "description": "View loan with Id",
         "operationId": "getLoan",
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -201,7 +222,15 @@
             "style": "form",
             "explode": true,
             "schema": {
-              "$ref": "#/components/schemas/Loan"
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "example": 409163
+                }
+              }
             }
           }
         ],
@@ -240,6 +269,13 @@
         "summary": "Update loans status",
         "description": "Update Loan status to either approved or rejected",
         "operationId": "patchLoan",
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -299,7 +335,7 @@
         }
       }
     },
-    "/loans/:loanId/repayment": {
+    "/loans/{loanId}/repayment": {
       "post": {
         "tags": [
           "loans"
@@ -307,15 +343,29 @@
         "summary": "Update loan repayment",
         "description": "Update loan, updating balance",
         "operationId": "updateRepayment",
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "loanId",
             "in": "path",
-            "description": "Update repayment by loanId",
+            "description": "Enter loan id",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "required": [
+                "loanId"
+              ],
+              "properties": {
+                "loanId": {
+                  "type": "integer",
+                  "example": 409163
+                }
+              }
             }
           }
         ],
@@ -342,7 +392,7 @@
         }
       }
     },
-    "/loans/:loanId/repayments": {
+    "/loans/{loanId}/repayments": {
       "get": {
         "tags": [
           "loans"
@@ -350,15 +400,29 @@
         "summary": "Update loan repayment",
         "description": "Update loan, updating balance",
         "operationId": "updateRepayment",
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "loanId",
             "in": "path",
-            "description": "View loan repayment history",
+            "description": "Enter loan id",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "required": [
+                "loanId"
+              ],
+              "properties": {
+                "loanId": {
+                  "type": "integer",
+                  "example": 409163
+                }
+              }
             }
           }
         ],
@@ -380,62 +444,6 @@
           },
           "400": {
             "description": "Invalid loanId value",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/loans?status=approved&repaid=true": {
-      "get": {
-        "tags": [
-          "loans"
-        ],
-        "summary": "Query loans by status or repaid",
-        "description": "Multiple status or repaid values can be provided with comma separated strings",
-        "operationId": "QueryLoansByStatusOrRepaid",
-        "parameters": [
-          {
-            "name": [
-              "status",
-              "repaid"
-            ],
-            "in": "query",
-            "description": "Status and repaid values that need to be considered for filter",
-            "required": true,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "default": "pending",
-                "enum": [
-                  "approved",
-                  "pending",
-                  "rejected"
-                ]
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/Loan"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Loan"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid status value",
             "content": {}
           }
         }
@@ -448,6 +456,13 @@
         ],
         "summary": "Update user status",
         "operationId": "patchUser",
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "email",
