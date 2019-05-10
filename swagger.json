@@ -11,7 +11,6 @@
     "description": "Find out more about Quick Credit",
     "url": "https://ph3bian.github.io/quick-credit/ui"
   },
-
   "tags": [
     {
       "name": "Quick Credit",
@@ -40,7 +39,7 @@
             },
             "application/xml": {
               "schema": {
-               "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/User"
               }
             }
           },
@@ -50,15 +49,14 @@
           "201": {
             "description": "User Sign Up Successful"
           },
-           "400": {
+          "400": {
             "description": "Required fields can not be empty",
             "content": {}
           }
         }
-        
       }
     },
-     "/signin": {
+    "/signin": {
       "post": {
         "tags": [
           "auth"
@@ -70,12 +68,12 @@
           "content": {
             "application/json": {
               "schema": {
-               "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/UserSignIn"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/UserSignIn"
               }
             }
           },
@@ -85,17 +83,17 @@
           "200": {
             "description": "User Sign In Successful"
           },
-           "400": {
+          "400": {
             "description": "Required fields can not be empty",
             "content": {}
           },
-           "404": {
+          "404": {
             "description": "User does not exist"
           }
         }
       }
     },
-     "/loans": {
+    "/loans": {
       "post": {
         "tags": [
           "loans"
@@ -107,7 +105,7 @@
           "content": {
             "application/json": {
               "schema": {
-               "$ref": "#/components/schemas/Loan"
+                "$ref": "#/components/schemas/Loan"
               }
             },
             "application/xml": {
@@ -120,13 +118,13 @@
         },
         "responses": {
           "201": {
-          "description": "Loan requested Successfully"
+            "description": "Loan requested Successfully"
           },
-           "400": {
+          "400": {
             "description": "Required fields can not be empty",
             "content": {}
           },
-           "404": {
+          "404": {
             "description": "Invalid User details"
           }
         }
@@ -137,15 +135,15 @@
         ],
         "summary": "View all loan applications",
         "operationId": "getLoans",
-       "parameters": [
+        "parameters": [
           {
             "name": "status",
-            "in":"query",
+            "in": "query",
             "description": "Status values that need to be considered for filter",
             "required": true,
             "style": "form",
             "explode": true,
-           "schema": {
+            "schema": {
               "type": "array",
               "items": {
                 "type": "string",
@@ -160,11 +158,11 @@
           }
         ],
         "responses": {
-           "200": {
+          "200": {
             "description": "Get loans successful "
           },
-           "400": {
-             "description":  "Invalid query parameters",
+          "400": {
+            "description": "Invalid query parameters",
             "content": {}
           }
         }
@@ -238,7 +236,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "default":"pending",
+                "default": "pending",
                 "enum": [
                   "approved",
                   "pending",
@@ -372,7 +370,10 @@
         "operationId": "QueryLoansByStatusOrRepaid",
         "parameters": [
           {
-            "name": ["status", "repaid"],
+            "name": [
+              "status",
+              "repaid"
+            ],
             "in": "query",
             "description": "Status and repaid values that need to be considered for filter",
             "required": true,
@@ -398,18 +399,14 @@
             "content": {
               "application/xml": {
                 "schema": {
-                  "type": "array",
-                  "items": {
                     "$ref": "#/components/schemas/Loan"
-                  }
+                  
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
                     "$ref": "#/components/schemas/Loan"
-                  }
+                  
                 }
               }
             }
@@ -419,10 +416,9 @@
             "content": {}
           }
         }
-      
       }
     },
-     "/user/:email/verify": {
+    "/user/:email/verify": {
       "patch": {
         "tags": [
           "user"
@@ -472,6 +468,15 @@
     "schemas": {
       "User": {
         "type": "object",
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "password",
+          "address",
+          "name",
+          "bvn"
+        ],
         "properties": {
           "id": {
             "type": "integer",
@@ -503,70 +508,90 @@
           "name": "User"
         }
       },
-       "Loan": {
-    "type": "object",
-    "required": [
-      "amount",
-      "tenor",
-      "loanType",
-      "accountNo",
-      "userId"
-    ],
-    "properties": {
-      "amount": {
-        "type": "integer"
-      },
-      "tenor": {
-        "type": "integer"
-      },
-      "loanType": {
-        "type": "string"
-      },
-      "accountNo": {
-        "type": "string"
-      },
-      "userId": {
-        "type": "string"
-      },
-      "status": {
-        "type": "string"
-      },
-      "repaid": {
-        "type": "string"
-      },
-      "balance": {
-        "type": "float"
-      },
-      "id": {
-        "type": "integer"
+      "UserSignIn": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "example":"joy@gmail.comr"
+          },
+          "password": {
+            "type": "string"     
+        },
+        "xml": {
+          "name": "UserSignIn"
+        }
       }
+  
     },
-    "xml": {
-      "name": "Loan"
-    }
-  }, "Repayments": {
-    "type": "object",
-    "properties": {
-      "id": {
-        "type": "integer",
-        "format": "int64"
+      "Loan": {
+        "type": "object",
+        "required": [
+          "amount",
+          "tenor",
+          "loanType",
+          "accountNo",
+          "userId"
+        ],
+        "properties": {
+          "amount": {
+            "type": "integer"
+          },
+          "tenor": {
+            "type": "integer"
+          },
+          "loanType": {
+            "type": "string"
+          },
+          "accountNo": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "repaid": {
+            "type": "string"
+          },
+          "balance": {
+            "type": "float"
+          },
+          "id": {
+            "type": "integer"
+          }
+        },
+        "xml": {
+          "name": "Loan"
+        }
       },
-      "createdOn": {
-        "type": "dateTime"
-      },
-      "loanId": {
-        "type": "integer",
-        "format": "int64"
-      }, 
-      "amount": {
-        "type": "float"
+      "Repayments": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "createdOn": {
+            "type": "dateTime"
+          },
+          "loanId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "amount": {
+            "type": "float"
+          }
+        },
+        "xml": {
+          "name": "Repayments"
+        }
       }
-    },
-    "xml": {
-      "name": "Repayments"
     }
-  }
-    }
-   
   }
 }
