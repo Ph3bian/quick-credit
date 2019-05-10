@@ -524,10 +524,6 @@
           "bvn"
         ],
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
           "firstname": {
             "type": "string"
           },
@@ -606,9 +602,6 @@
           },
           "balance": {
             "type": "integer"
-          },
-          "id": {
-            "type": "integer"
           }
         },
         "xml": {
@@ -638,10 +631,6 @@
       "Repayments": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
           "createdOn": {
             "type": "dateTime"
           },
