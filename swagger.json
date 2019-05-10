@@ -5,7 +5,7 @@
     "description": "Quick Credit is an online lending platform that provides short term soft loans to individuals.",
     "version": "1.0.0"
   },
-  "host": "https://q-credit.herokuapp.com",
+  "host": "q-credit.herokuapp.com",
   "basePath": "/api/v1/",
   "externalDocs": {
     "description": "Find out more about Quick Credit",
