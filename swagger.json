@@ -153,6 +153,24 @@
                 ]
               }
             }
+          },
+          {
+            "name": "repaid",
+            "in": "query",
+            "description": "Repaid values that need to be considered for filter",
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "default": "false",
+                "enum": [
+                  "true",
+                  "false"
+                ]
+              }
+            }
           }
         ],
         "responses": {
@@ -242,7 +260,8 @@
                 ]
               }
             }
-          },{
+          },
+          {
             "in": "body",
             "name": "body",
             "description": "Update loans status",
@@ -405,14 +424,12 @@
             "content": {
               "application/xml": {
                 "schema": {
-                    "$ref": "#/components/schemas/Loan"
-                  
+                  "$ref": "#/components/schemas/Loan"
                 }
               },
               "application/json": {
                 "schema": {
-                    "$ref": "#/components/schemas/Loan"
-                  
+                  "$ref": "#/components/schemas/Loan"
                 }
               }
             }
@@ -424,7 +441,7 @@
         }
       }
     },
-    "/user/:email/verify": {
+    "/user/{email}/verify": {
       "patch": {
         "tags": [
           "user"
@@ -438,7 +455,15 @@
             "description": "Update user status by email ",
             "required": true,
             "schema": {
-              "type": "string"
+              "required": [
+                "email"
+              ],
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "hello@gmail.com"
+                }
+              }
             }
           }
         ],
@@ -523,17 +548,16 @@
         "properties": {
           "email": {
             "type": "string",
-            "example":"joy@gmail.comr"
+            "example": "joy@gmail.com"
           },
           "password": {
-            "type": "string"     
-        },
-        "xml": {
-          "name": "UserSignIn"
+            "type": "string"
+          },
+          "xml": {
+            "name": "UserSignIn"
+          }
         }
-      }
-  
-    },
+      },
       "Loan": {
         "type": "object",
         "required": [
@@ -566,7 +590,7 @@
             "type": "string"
           },
           "balance": {
-            "type": "float"
+            "type": "integer"
           },
           "id": {
             "type": "integer"
