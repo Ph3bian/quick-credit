@@ -65,22 +65,24 @@
         ],
         "summary": "User Sign In",
         "operationId": "userSignIn",
-        "requestBody": {
-          "description": "User sign",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserSignIn"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/UserSignIn"
-              }
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User sign in",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UserSignIn"
             }
-          },
-          "required": true
-        },
+          }
+        ],
         "responses": {
           "200": {
             "description": "User Sign In Successful"
@@ -102,22 +104,17 @@
         ],
         "summary": "User requests for loan",
         "operationId": "createLoan",
-        "requestBody": {
-          "description": "User apply for loans",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Loan"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/Loan"
-              }
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User requests for Loan",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Loan"
             }
-          },
-          "required": true
-        },
+          }
+        ],
         "responses": {
           "201": {
             "description": "Loan requested Successfully"
@@ -142,7 +139,6 @@
             "name": "status",
             "in": "query",
             "description": "Status values that need to be considered for filter",
-            "required": true,
             "style": "form",
             "explode": true,
             "schema": {
@@ -245,6 +241,14 @@
                   "rejected"
                 ]
               }
+            }
+          },{
+            "in": "body",
+            "name": "body",
+            "description": "Update loans status",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UpdateLoan"
             }
           }
         ],
@@ -570,6 +574,26 @@
         },
         "xml": {
           "name": "Loan"
+        }
+      },
+      "UpdateLoan": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "approved",
+              "pending",
+              "rejected"
+            ]
+          }
+        },
+        "xml": {
+          "name": "UpdateLoan"
         }
       },
       "Repayments": {
