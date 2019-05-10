@@ -29,22 +29,24 @@
         ],
         "summary": "Create new user",
         "operationId": "createUser",
-        "requestBody": {
-          "description": "User information to create an account",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
+        "consumes": [
+          "application/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that needs to be added to the app",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/User"
             }
-          },
-          "required": true
-        },
+          }
+        ],
         "responses": {
           "201": {
             "description": "User Sign Up Successful"
