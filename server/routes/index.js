@@ -13,4 +13,12 @@ router.patch('/loans/:id', LoanController.updateLoan);
 router.post('/loans/:loanId/repayment', LoanController.updateRepayment);
 router.get('/loans/:loanId/repayments', LoanController.fetchRepayments);
 router.patch('/users/:email/verify', UserController.verifyUser);
+
+// eslint-disable-next-line no-unused-vars
+router.use((error, req, res, next) => {
+  res.status(500).json({
+    success: false,
+    error: error.message,
+  });
+});
 export default router;
