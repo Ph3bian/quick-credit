@@ -2,6 +2,7 @@ import { Router } from 'express';
 import AuthController from '../controllers/authController';
 import LoanController from '../controllers/loanController';
 import UserController from '../controllers/userController';
+import ErrorHandler from '../errorHandler/errorHandler';
 
 const router = new Router();
 router.post('/signup', AuthController.signUp);
@@ -14,11 +15,5 @@ router.post('/loans/:loanId/repayment', LoanController.updateRepayment);
 router.get('/loans/:loanId/repayments', LoanController.fetchRepayments);
 router.patch('/users/:email/verify', UserController.verifyUser);
 
-// eslint-disable-next-line no-unused-vars
-router.use((error, req, res, next) => {
-  res.status(500).json({
-    success: false,
-    error: error.message,
-  });
-});
+router.use(ErrorHandler);
 export default router;

@@ -40,6 +40,19 @@ describe('the signup /signup api endpoint', () => {
     assert.equal(data.address, payload.address);
     assert.equal(data.status, 'unverified');
   });
+  it('handle error', async () => {
+    const payload = {
+      firstname: 'Nantha',
+      lastname: 'J',
+      email: 'joy@gmail.com',
+      password: 4,
+      address: 'ikeja Gra',
+      bvn: '22307021876',
+    };
+    const { body, status } = await request(app).post('/api/v1/signup').send(payload);
+    assert.equal(status, 500);
+    assert.ok(body.error);
+  });
   it('signup returns a 400 ', async () => {
     const payload = {};
     const response = await request(app).post('/api/v1/signup').send(payload);
