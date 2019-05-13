@@ -155,18 +155,13 @@
             "description": "Status: approved, pending or rejected",
             "style": "form",
             "explode": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "default": "pending",
-                "enum": [
-                  "approved",
-                  "pending",
-                  "rejected"
-                ]
-              }
-            }
+            "type": "string",
+            "enum": [
+              "approved",
+              "pending",
+              "rejected"
+            ]
+
           },
           {
             "name": "repaid",
@@ -174,17 +169,11 @@
             "description": "Repaid: true or false",
             "style": "form",
             "explode": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "default": "false",
-                "enum": [
-                  "true",
-                  "false"
-                ]
-              }
-            }
+            "type": "boolean",
+            "enum": [
+              true,
+              false
+            ]
           }
         ],
         "responses": {
