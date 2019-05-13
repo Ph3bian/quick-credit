@@ -231,7 +231,7 @@ h1 {font-weight: 400;color: #1e3056;line-height: 55px;margin: 0;padding: 0;}
 .sidenav-item {padding: 15px 20px;}
 li.sidenav-item.active {background: #f1f7ff;color: #1e3056;font-weight: bold;outline: 0;}
 li.sidenav-item:hover { background: #f2f2f2;}
-.placeholder {margin-bottom: 20px;height: 46vh;align-items: center;justify-content: center;
+.placeholder {height: 43vh;align-items: center;justify-content: center;
 display: flex;padding: 30px 30px;background: transparent;border: 1px dashed #e5e5e5}
 @media all and (min-width: 800px) {
     h1 {font-size: 45px;}
