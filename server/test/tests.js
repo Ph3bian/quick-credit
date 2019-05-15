@@ -2,7 +2,7 @@ import assert from 'assert';
 import request from 'supertest';
 import app from '../index';
 
-describe('the Welcome/api endpoint', () => {
+describe('the / api endpoint', () => {
   it('Welcome message', async () => {
     const response = await request(app).get('/');
     assert.equal(response.text, 'Hello from Quick Credit');

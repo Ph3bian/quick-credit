@@ -13,36 +13,57 @@
     <div class="wrapper">
         <div id="sidebar">
             <div class="img-holder">
-                <img src="./img/deal.svg" class="img-logo" alt="">
+                    <a href="index.html">
+                            <img src="./img/deal.svg" class="img-logo" alt="">
+                    </a>
             </div>
-            <ul class="">
-                <li class="sidenav-item"><a href="dashboard.html"> <i class="material-icons">
-                            home
-                        </i> Dashboard</a></li>
-                <li class="sidenav-item">
-                    <a href="request.html">
-                            <span class="naira">
+          
+            <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <div class="sidenav-item">
+                                 <i class="material-icons">
+                                    home
+                                </i> Dashboard</div>
+                        </a>
+                    </li>
+    
+                    <li> 
+                        <a href="request.html">
+                            <div class="sidenav-item">
+                                <span class="naira">
                                     &#8358;
-                            </span> Request Loan</a></li>
-                <li class="sidenav-item active"><a href="repayment.html"> <i class="material-icons">
-                            list
-                        </i>Repayment History</a></li>
-                <li class="sidenav-item"><a href="profile.html"><i class="material-icons">
-                            account_circle
-                        </i>Profile</a></li>
-                <li class="sidenav-item"><a href="sign-in.html"><i class="material-icons">
-                            exit_to_app
-                        </i>Logout</a>
-                </li>
-
-            </ul>
+                                </span> Request Loan</div>
+                        </a></li>
+                    <li>
+                        <a href="repayment.html">
+                            <div class="sidenav-item active"> <i class="material-icons">
+                                    list
+                                </i>Repayment History</div>
+                        </a>
+                    </li>
+    
+                    <li><a href="profile.html">
+                            <div class="sidenav-item"><i class="material-icons">
+                                    account_circle
+                                </i>Profile </div>
+                        </a></li>
+                    <li><a href="sign-in.html">
+                            <div class=" sidenav-item"><i class="material-icons">
+                                    exit_to_app
+                                </i>Logout</div>
+                        </a>
+                    </li>
+    
+                </ul>
         </div>
         <div id="rightSideWrapper">
             <header class="d-flx align-items-center pl-qt">
                 <div class="">
-                    <i class="material-icons" id="menu" onclick="navControl()">
+                    <i class="material-icons menu-click" id="menu" onclick="navControl()">
                         menu
-                    </i> Repayment History
+                    </i> 
+                    <!-- Repayment History -->
                 </div>
             </header>
             <div class="ContentBox  p-1h">
