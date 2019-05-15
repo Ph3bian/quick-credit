@@ -15,11 +15,11 @@ app.use(expressValidator());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
-app.get('/', (req, res) => {
-  res.status(200).send('Hello from Quick Credit');
-});
+app.get('/', (req, res) => res.status(200).send('Hello from Quick Credit'));
 
 app.use('/api/v1', router);
+app.get('*', (req, res) => res.status(404).send('Not found'));
+
 
 app.listen(process.env.PORT || 3100);
 

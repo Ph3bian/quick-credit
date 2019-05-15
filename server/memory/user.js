@@ -1,6 +1,6 @@
 export default [
   {
-    id: '571878',
+    id: 571878,
     status: 'unverified',
     firstname: 'Joey',
     lastname: 'Jane',
@@ -12,7 +12,7 @@ export default [
     isAdmin: false,
   },
   {
-    id: '571878',
+    id: 571978,
     status: 'unverified',
     firstname: 'Samantha',
     lastname: 'J',
@@ -24,7 +24,7 @@ export default [
     isAdmin: false,
   },
   {
-    id: '612332',
+    id: 612332,
     status: 'unverified',
     firstname: 'Nantha',
     lastname: 'J',

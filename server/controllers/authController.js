@@ -1,60 +1,67 @@
 import bcrypt from 'bcryptjs';
-import Validator from '../validation/validator';
+import jwt from 'jsonwebtoken';
+import config from '../config/index';
 import User from '../memory/user';
 
 export default class AuthController {
+  /**
+ * Create user account: POST /auth/signup
+ * @param {req} req express req object
+ * @param {res} res express res object
+ */
+
   static signUp(req, res) {
-    Validator.user(req);
-    const validateErrors = req.validationErrors();
-    if (validateErrors) {
-      return res.status(400).json({
-        success: false,
-        error: validateErrors.map(e => ({ field: e.param, message: e.msg })),
-      });
-    }
     const user = req.body;
-    const token = 'Bearer 1234567899999888';
     const isAdmin = false;
     user.password = bcrypt.hashSync(user.password, 10);
+
     const data = {
       id: parseInt((Math.random() * 1000000).toFixed(), 10),
       status: 'unverified',
       ...user,
-      token,
       isAdmin,
+
     };
     User.push(data);
+    const token = jwt.sign({ id: data.id }, config.jwtSecret);
+    delete data.password;
     return res.status(201).json({
+      status: 201,
       success: true,
-      message: 'Great! Sign up successful',
-      data,
+      message: 'Sign up successful',
+      data: {
+        ...data,
+        token,
+      },
     });
   }
 
+  /**
+  * Login a user: POST /auth/signin
+  * @param {req} req express req object
+  * @param {res} res express res object
+  */
   static signIn(req, res) {
-    Validator.userSignIn(req);
-    const validateErrors = req.validationErrors();
-
-    if (validateErrors) {
-      return res.status(400).json({
-        success: false,
-        error: validateErrors.map(e => ({ field: e.param, message: e.msg })),
-      });
-    }
     const { email } = req.body;
-
     const user = User.find(input => input.email === email);
 
+    const token = jwt.sign({ id: user.id }, config.jwtSecret);
     if (user) {
+      delete user.password;
       return res.status(200).json({
+        status: 200,
         success: true,
-        message: 'Great! login successful',
-        data: user,
+        message: 'Login successful',
+        data: {
+          ...user,
+          token,
+        },
       });
     }
     return res.status(404).json({
+      status: 404,
       success: false,
-      error: `User with this email address ${email} does not exist`,
+      error: 'Invalid email address or password',
     });
   }
 }
