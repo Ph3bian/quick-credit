@@ -34,3 +34,4 @@ const openAction = (evt, action) => {
 if (defaultTab) {
   defaultTab.click();
 }
+

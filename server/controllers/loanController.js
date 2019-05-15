@@ -72,6 +72,7 @@ export default class LoanController {
 
     let filteredLoans = Loans.slice();
 
+
     if (status && ['approved', 'rejected', 'pending'].includes(status)) {
       filteredLoans = filteredLoans.filter(loan => loan.status === status);
     }
