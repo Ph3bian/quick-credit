@@ -89,11 +89,12 @@ input {
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
     border: 1px solid #dddddd;
     padding: 0 1rem;
-    height: 50px;
+    height: 40px;
     margin-bottom: 1.2rem;
     font-size: 0.9rem;
     width: 100%;
     outline: none;
+    border-radius: 4px;
 }
 .update input{ height:35px; margin-bottom:0 }
 
@@ -132,14 +133,8 @@ select.option:first-of-type {
 }
 
 a[type=button], button {
-    padding: 10px;
-    width: 100%;
-    text-align: center;
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, .2);
-    cursor: pointer;
+    padding: 10px;width: 100%;text-align: center;font-size: 15px;font-weight: 600;
+    text-decoration: none;box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, .2);cursor: pointer;border-radius: 4px;
 }
 
 .row.btn-holder a{
@@ -149,7 +144,7 @@ a[type=button], button {
 .update-btn{width: 90px!important; font-size: .9rem;}
 .primary-btn, .secondary-btn:hover { color: #fff;background: linear-gradient(to right, #507bf5 0, #04c3e1 100%);border: 1px}
 .secondary-btn {background: transparent;color: #1e3056;border: 1px solid #1e3056;}
-
+.required{color:#ff0000;}
 .btn-right {right: 0;position: absolute;top: 6px;}
 .pending {color: #ff7e00;}
 .declined {color: #ff0000;}
@@ -166,9 +161,9 @@ a {text-decoration: none; color: #1e3056;}
 a:hover {color: #1e3056;}
 .align-right, .float-r {float: right}.sub-text{color:#657786;}
 .form-select { border: 1px solid #ddd;width: 100%;background-color: #f9fbfc;padding: 0 1rem;
-    height: 50px;font-size: 0.9rem;outline: none;border-radius: 0;-webkit-appearance: none;}
+    height: 40px;font-size: 0.9rem;outline: none;border-radius: 4px;-webkit-appearance: none;}
     .form-select{
-         background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat right #f9fbfc; 
+ background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat right #f9fbfc; 
         }
 select { border-radius: 0; -webkit-appearance: none;}
 .mr-1h {margin-right: 1.5rem}
@@ -196,9 +191,16 @@ select { border-radius: 0; -webkit-appearance: none;}
 .sidebar-canvas {position: fixed;top: 0;bottom: 0;left: 0;z-index: 1001;width: 270px;max-width: 100%;background: #333;overflow-y: auto;
 }
 @media screen and (max-width: 600px) {
+    .navbar {
+        box-shadow : 1px 1px 0 rgba(30,48,86,0.3)
+    }
+.item.mb-2h {
+        margin-bottom: 0 !important;
+        margin-top: 2rem;
+    }
     section.row.m-40.content-centered.hero {text-align: center;}
     #sidebar {display: none;width: auto !important;}
-    i#menu {position: absolute;right: 0;}
+    i#menu {position: absolute;right: 0;  cursor: pointer;}
     #rightSideWrapper .ContentBox {margin: auto;width: 100%;max-width: 100%;height: 100%;background: white;overflow: scroll;}
     .sidebarCanvasMenu {position: fixed;top: 0; bottom: 0;left: 0; z-index: 1000;}
     .pl-qt { padding-left: 1.75rem;}
@@ -229,9 +231,9 @@ h1 {font-weight: 400;color: #1e3056;line-height: 55px;margin: 0;padding: 0;}
 #sidebar .img-holder {padding: 15px 20px;border-bottom: 2px solid #1e3056;width: 100%;}
 #sidebar .img-logo {margin: 0 auto;display: flex;}
 .sidenav-item {padding: 15px 20px;}
-li.sidenav-item.active {background: #f1f7ff;color: #1e3056;font-weight: bold;outline: 0;}
+.sidenav-item.active {background: #f1f7ff;color: #1e3056;font-weight: bold;outline: 0;}
 li.sidenav-item:hover { background: #f2f2f2;}
-.placeholder {height: 43vh;align-items: center;justify-content: center;
+.placeholder {height:calc(100vh - 25rem) ;align-items: center;justify-content: center;
 display: flex;padding: 30px 30px;background: transparent;border: 1px dashed #e5e5e5}
 @media all and (min-width: 800px) {
     h1 {font-size: 45px;}
@@ -240,6 +242,7 @@ display: flex;padding: 30px 30px;background: transparent;border: 1px dashed #e5e
     .item.sub-item.ml-5, .f-g-4.ml-5  {margin-left: 5px;}
     .form-content {max-width: 35rem;}
 }
+
 ul {list-style-type: none;padding: 0;margin: 0;}
 .txn-list {border: 1px solid #ddd;margin-top: -1px; background-color: #fcfcfc;}
 .txn-list.activity {min-height: unset !important;}
@@ -256,7 +259,7 @@ p.display-name {margin: .4rem}
 .social-row {vertical-align: baseline;margin: 5px 0 0;}
 .hide {display: none;}
 .tab-item, .sub-nav-item {display: none; padding: 15px 0px;border-top: none;}
-.tab .tablinks {padding: 10px;}
+.tab .tablinks {padding: 10px; cursor: pointer;}
 .tab .tablinks.active, .sublinks.active {border-bottom: 2px solid #1e3056;}
 .tab {padding: 10px 0; margin-bottom: 15px; border-bottom: 1px solid #ddd;}
 .sublinks {padding: 5px 13px;outline: none;}
@@ -275,3 +278,9 @@ thead tr {line-height: 30px;}
 .closeBtn{float: right; font-size: 1.75rem; margin-top: -6px;} .closeBtn:hover, .closeBtn:focus{cursor: pointer; color:#000000; text-decoration: none; }
 @keyframes modalOpen{from{opacity: 0}to{opacity: 1}};
 @keyframes sideBarOpen{from{opacity: 0}to{opacity: 1}};
+.group { position: relative;} .currency-prefix {color:#384047;position: absolute;    top: 10px;
+left: 10px;}.currency-prefix input{padding-left:27px} .group { position: relative;} .group input[type="number"] { padding-left: 22px;
+}select{color:#384047}
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {-webkit-appearance: none; margin: 0;}
+input[type="number"] { -moz-appearance: textfield;}
+

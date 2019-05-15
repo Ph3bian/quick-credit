@@ -13,37 +13,51 @@
     <div class="wrapper">
         <div id="sidebar">
             <div class="img-holder">
-                <img src="./img/deal.svg" class="img-logo" alt="">
+                <a href="index.html">
+                    <img src="./img/deal.svg" class="img-logo" alt="">
+                </a>
             </div>
-            <ul class="">
-                <li class="sidenav-item">
+            <ul>
+                <li>
                     <a href="dashboard.html">
-                        <i class="material-icons">
-                            home
-                        </i> Dashboard</a></li>
-                <li class="sidenav-item">
-                    <a href="request.html">
-                        <span class="naira">
-                            &#8358;
-                        </span> Request Loan</a></li>
-                <li class="sidenav-item"><a href="repayment.html"> <i class="material-icons">
-                            list
-                        </i>Repayment History</a></li>
-                <li class="sidenav-item active"><a href="profile.html"><i class="material-icons">
-                            account_circle
-                        </i>Profile</a></li>
-                <li class="sidenav-item"><a href="sign-in.html"><i class="material-icons">
-                            exit_to_app
-                        </i>Logout</a></li>
+                        <div class="sidenav-item"> <i class="material-icons">
+                                home
+                            </i> Dashboard</div>
+                    </a>
+                </li>
 
+                <li>
+                    <a href="request.html">
+                        <div class="sidenav-item">
+                            <span class="naira">
+                                &#8358;
+                            </span> Request Loan</div>
+                    </a></li>
+                <li>
+                    <a href="repayment.html">
+                        <div class="sidenav-item"> <i class="material-icons">
+                                list
+                            </i>Repayment History</div>
+                    </a>
+                </li>
+                <li><a href="profile.html">
+                        <div class="sidenav-item active"><i class="material-icons">
+                                account_circle
+                            </i>Profile </div>
+                    </a></li>
+                <li><a href="sign-in.html">
+                        <div class=" sidenav-item">
+                            <i class="material-icons">
+                                exit_to_app
+                            </i>Logout</div>
+                    </a>
+                </li>
             </ul>
         </div>
-
-
         <div id="rightSideWrapper">
             <header class="d-flx align-items-center pl-qt">
                 <div class="">
-                    <i class="material-icons" id="menu" onclick="navControl()">
+                    <i class="material-icons menu-click" id="menu" onclick="navControl()">
                         menu
                     </i>PROFILE
                 </div>
@@ -87,7 +101,7 @@
 
                                     <div class="item sub-item ml-5">
                                         <button class="primary-btn">
-                                          SUBMIT
+                                            SUBMIT
                                         </button></div>
                                 </div>
                             </form>
@@ -95,31 +109,31 @@
                     </div>
 
                     <div class="column p-1h">
-                            <div class="">
-                                <form action="">
-                                        <h3 class="mt-0">CHANGE PASSWORD
-                                        </h3>
-                                    <div class="row">
-                                        <div class="item sub-item mr-5">
-                                            <label for="current">Current Password</label>
-                                            <input type="password" name="current" >
-                                        </div>
-                                        <div class="item sub-item ml-5">
-                                            <label for="new">New Password</label>
-                                            <input type="password" name="name" >
-                                        </div>
+                        <div class="">
+                            <form action="">
+                                <h3 class="mt-0">CHANGE PASSWORD
+                                </h3>
+                                <div class="row">
+                                    <div class="item sub-item mr-5">
+                                        <label for="current">Current Password</label>
+                                        <input type="password" name="current">
                                     </div>
-    
-                                    <div class="row">
-    
-                                        <div class="item sub-item ml-5">
-                                            <button class="primary-btn">
-                                               SUBMIT
-                                            </button></div>
+                                    <div class="item sub-item ml-5">
+                                        <label for="new">New Password</label>
+                                        <input type="password" name="name">
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="item sub-item ml-5">
+                                        <button class="primary-btn">
+                                            SUBMIT
+                                        </button></div>
+                                </div>
+                            </form>
                         </div>
+                    </div>
                 </main>
             </div>
         </div>

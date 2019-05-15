@@ -14,7 +14,9 @@
         <section class="row">
             <div class="mx-auto">
                 <div class="tx-c my-1">
-                    <img src="./img/deal.svg" class="img-logo" alt="">
+                        <a href="index.html">
+                                <img src="./img/deal.svg" class="img-logo" alt="">
+                        </a>
                 </div>
                 <div class="form-content shadow-1 auto">
                     <form action="">
@@ -23,17 +25,17 @@
                         </div>
                         <div class="row">
                             <div class="item sub-item mr-5">
-                                <label for="fname">First Name</label>
+                                <label for="fname">First Name <span class="required">*</span></label>
                                 <input type="text" name="fname" placeholder="">
                             </div>
                             <div class="item sub-item ml-5">
-                                <label for="lname">Last Name</label>
+                                <label for="lname">Last Name<span class="required">*</span></label>
                                 <input type="text" name="lname" placeholder="">
                             </div>
                         </div>
                         <div class="row">
                             <div class="item sub-item mr-5">
-                                <label for="email">Email address</label>
+                                <label for="email">Email address<span class="required">*</span></label>
                                 <input type="email" name="email" placeholder="">
                             </div>
                             <div class="item sub-item ml-5">
@@ -44,9 +46,9 @@
                         <label for="address">Residential Address</label>
                         <input type="text" name="address" placeholder="">
 
-                        <label for="password">Password</label>
+                        <label for="password">Password<span class="required">*</span></label>
                         <input type="password" name="password" placeholder="">
-                        <span class="forgot"><a href="sign-in.html">Sign-in?</a></span>
+                        <span class="forgot"><a href="sign-in.html">Already have an account?</a></span>
                         <button class="primary-btn" type="button" onclick="window.location.href='dashboard.html'">
                             Submit
                         </button>

@@ -1,6 +1,7 @@
 const ctrl = document.getElementById("menu");
 const sidebar = document.getElementById("sidebar");
-const defaultTab = document.getElementById("defaultTab")
+const defaultTab = document.getElementById("defaultTab");
+const tableRow= document.querySelectorAll('.border-table tr')
 let isMobile = false
 const navControl = () => {
     if (!isMobile) {
@@ -29,3 +30,4 @@ const openAction = (evt, action) => {
 if(defaultTab){
 defaultTab.click();
 }
+
