@@ -15,7 +15,7 @@ describe('the signup /signup api endpoint', () => {
   it('returns a newly created user', async () => {
     const payload = {
       firstname: 'Nantha',
-      lastname: 'J',
+      lastname: 'Jer',
       email: 'joy@gmail.com',
       password: 'hello78090',
       address: 'ikeja Gra',
@@ -27,6 +27,7 @@ describe('the signup /signup api endpoint', () => {
       message,
       success,
     } = body;
+  
     assert.equal(status, 201);
     assert.equal(message, 'Great! Sign up successful');
     assert.equal(success, true);
@@ -40,7 +41,6 @@ describe('the signup /signup api endpoint', () => {
     assert.equal(data.email, payload.email);
     assert.equal(data.address, payload.address);
     assert.equal(data.status, 'unverified');
-    assert.ok(user.length + 1);
   });
   it('handle error', async () => {
     const payload = {
@@ -53,6 +53,7 @@ describe('the signup /signup api endpoint', () => {
     };
     const { body, status } = await request(app).post('/api/v1/signup').send(payload);
     assert.equal(status, 400);
+    assert.equal(body.success, false);
     assert.ok(body.error);
   });
   it('signup returns a 400 ', async () => {
