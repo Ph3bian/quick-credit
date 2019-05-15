@@ -1,19 +1,15 @@
 /* eslint-disable eqeqeq */
-import Validator from '../validation/validator';
 import Loans from '../memory/loans';
 import User from '../memory/user';
 import repayments from '../memory/repayments';
 
 export default class LoanController {
+  /**
+ * Create a loan application: POST /loans
+ * @param {req} req express req object
+ * @param {res} res express res object
+ */
   static requestLoan(req, res) {
-    Validator.requestLoan(req);
-    const validateErrors = req.validationErrors();
-    if (validateErrors) {
-      return res.status(400).json({
-        success: false,
-        error: validateErrors.map(e => ({ field: e.param, message: e.msg })),
-      });
-    }
     const {
       amount,
       tenor,
@@ -40,6 +36,7 @@ export default class LoanController {
       repaid,
       accountNo,
       userId,
+      interest,
     };
     const user = User.find(input => input.id === userId);
     if (user) {
@@ -47,6 +44,7 @@ export default class LoanController {
 
       Loans.push(data); // populate in memory storage of loans
       return res.status(201).json({
+        status: 201,
         success: true,
         message: 'Great! Loan request processing',
         data: {
@@ -58,25 +56,21 @@ export default class LoanController {
       });
     }
     return res.status(404).json({
+      status: 404,
       success: false,
       error: 'Invalid User details',
     });
   }
 
+  /**
+ * Get all loan applications: GET /loans
+ * @param {req} req express req object
+ * @param {res} res express res object
+ */
   static fetchLoans(req, res) {
     const { status, repaid } = req.query;
 
-    Validator.filterLoan(req);
-    const validateErrors = req.validationErrors();
-    if (validateErrors) {
-      return res.status(400).json({
-        success: false,
-        error: 'Oops, Invalid query parameter',
-      });
-    }
-
     let filteredLoans = Loans.slice();
-
 
     if (status && ['approved', 'rejected', 'pending'].includes(status)) {
       filteredLoans = filteredLoans.filter(loan => loan.status === status);
@@ -87,12 +81,17 @@ export default class LoanController {
     }
 
     return res.status(200).json({
+      status: 200,
       success: true,
       data: filteredLoans,
     });
   }
 
-
+  /**
+ * Get specific loan application: GET /loans/<:loan-id>
+ * @param {req} req express req object
+ * @param {res} res express res object
+ */
   static fetchLoan(req, res) {
     const { id } = req.params;
     const finder = input => input.id == id;
@@ -109,6 +108,11 @@ export default class LoanController {
     });
   }
 
+  /**
+ * Approve or reject a loan application: PATCH /loans/<:loan-id>
+ * @param {req} req express req object
+ * @param {res} res express res object
+ */
   static updateLoan(req, res) {
     const { id } = req.params;
     const { status } = req.body;
@@ -125,22 +129,30 @@ export default class LoanController {
         });
       }
       return res.status(400).json({
+        status: 400,
         success: false,
         error: 'Error! status can only be approved or rejected',
       });
     }
     return res.status(404).json({
+      status: 404,
       success: false,
       error: 'Error, loan application does not exist',
     });
   }
 
+  /**
+ *Create a loan repayment record: POST /loans/<:loan-id>/repayment
+ * @param {req} req express req object
+ * @param {res} res express res object
+ */
   static updateRepayment(req, res) {
     const { loanId } = req.params;
     const finder = input => input.id == loanId;
     const index = Loans.findIndex(finder);
     if (index < 0) {
       return res.status(400).json({
+        status: 400,
         success: false,
         error: 'Error! Loan application does not exist',
       });
@@ -165,16 +177,23 @@ export default class LoanController {
     };
     repayments.push(data);
     return res.status(200).json({
+      status: 200,
       success: true,
       data,
     });
   }
 
+  /**
+ *View loan repayment history: GET /loans/<:loan-id>/repayments
+ * @param {req} req express req object
+ * @param {res} res express res object
+ */
   static fetchRepayments(req, res) {
     const { loanId } = req.params;
     const finder = input => input.loanId == loanId;
     const repaymentsHistory = repayments.filter(finder);
     return res.status(200).json({
+      status: 200,
       success: true,
       data: repaymentsHistory,
     });

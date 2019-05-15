@@ -76,16 +76,16 @@
                                 </div>
                                 <div class="row">
                                     <div class="item sub-item mr-5">
-                                            <label for="loanType">Amount</label>
+                                            <label for="loanType">Amount<span class="required">*</span></label>
                                             <div class="group">
                                                 <span class="currency-prefix">&#8358;</span>
-                                        <input type="number" value="" min="1000"  oninput="validity.valid||(value=value.replace(/\D+/g, ''))"/>
+                                        <input type="number" value="" min="1000" required  oninput="validity.valid||(value=value.replace(/\D+/g, ''))"/>
                                             </div>
                                         
                                     </div>
                                     <div class="item sub-item ml-5 mr-5">
-                                        <label for="loanType">Type </label>
-                                        <select type="text" name="loanType" class="form-select input" placeholder="">
+                                        <label for="loanType">Type</label>
+                                        <select type="text" name="loanType" class="form-select input" required placeholder="">
                                             <option value="">Select Category</option>
                                             <option value="SF">School fees </option>
                                             <option value="RE">Real estate</option>
@@ -97,7 +97,7 @@
                                     </div>
                                     <div class="item sub-item ml-5">
                                         <label for="tenor">Tenor for Repayment <span class="required">*</span></label>
-                                        <select type="text" name="tenor" class="form-select input" placeholder="">
+                                        <select type="text" name="tenor" class="form-select input" required placeholder="">
                                             <option value="">Select Period</option>
                                             <option value="1">1 month </option>
                                             <option value="2">2 months </option>
@@ -116,17 +116,14 @@
                                 </div>
                                 <div class="row">
                                     <div class="item sub-item mr-5">
-                                        <label for="accountNo">Account Number</label>
+                                        <label for="accountNo">Account Number<span class="required">*</span></label>
                                         <input type="number" value="" min="0"  oninput="validity.valid||(value=value.replace(/\D+/g, ''))"/>
                                     </div>
                                     <div class="item sub-item ml-5">
-                                        <label for="bank_name">Bank Name</label>
+                                        <label for="bank_name">Bank Name<span class="required">*</span></label>
                                         <input type="text" name="bank_name" placeholder="">
                                     </div>
                                 </div>
-
-
-
 
                                 <label for="repaymentAmount">Amount to be repaid (Amount + Interest)</label>
                                 <input type="text" name="repaymentAmount" disabled value="&#8358; 440,000.00 ">

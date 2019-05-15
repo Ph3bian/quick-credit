@@ -1,7 +1,7 @@
 import assert from 'assert';
 import request from 'supertest';
 import app from '../index';
-import user from '../memory/user';
+// import user from '../memory/user';
 
 describe('GET / ', () => {
   it('Welcome message', async () => {
@@ -10,8 +10,15 @@ describe('GET / ', () => {
     assert.equal(response.statusCode, 200);
   });
 });
+describe('GET Wrong route ', () => {
+  it('Welcome message', async () => {
+    const response = await request(app).get('/aiol');
+    assert.equal(response.text, 'Not found');
+    assert.equal(response.statusCode, 404);
+  });
+});
 
-describe('the signup /signup api endpoint', () => {
+describe('the signup /auth/signup api endpoint', () => {
   it('returns a newly created user', async () => {
     const payload = {
       firstname: 'Nantha',
@@ -21,28 +28,26 @@ describe('the signup /signup api endpoint', () => {
       address: 'ikeja Gra',
       bvn: '22307021876',
     };
-    const { body, status } = await request(app).post('/api/v1/signup').send(payload);
+    const { body, status } = await request(app).post('/api/v1/auth/signup').send(payload);
     const {
       data,
       message,
       success,
     } = body;
-  
     assert.equal(status, 201);
-    assert.equal(message, 'Great! Sign up successful');
+    assert.equal(message, 'Sign up successful');
     assert.equal(success, true);
     assert.equal(data.isAdmin, false);
     assert.ok(data.id);
-    assert.ok(data.password);
+    assert.ok(data.token);
     assert.equal(data.bvn, payload.bvn);
-    assert.equal(data.token, 'Bearer 1234567899999888');
     assert.equal(data.firstname, payload.firstname);
     assert.equal(data.lastname, payload.lastname);
     assert.equal(data.email, payload.email);
     assert.equal(data.address, payload.address);
     assert.equal(data.status, 'unverified');
   });
-  it('handle error', async () => {
+  it('Invalid password length', async () => {
     const payload = {
       firstname: 'Nantha',
       lastname: 'J',
@@ -51,42 +56,42 @@ describe('the signup /signup api endpoint', () => {
       address: 'ikeja Gra',
       bvn: '22307021876',
     };
-    const { body, status } = await request(app).post('/api/v1/signup').send(payload);
-    assert.equal(status, 400);
+    const { body, status } = await request(app).post('/api/v1/auth/signup').send(payload);
+    assert.equal(status, 422);
     assert.equal(body.success, false);
     assert.ok(body.error);
   });
-  it('signup returns a 400 ', async () => {
+  it('signup returns a 422 ', async () => {
     const payload = {};
-    const response = await request(app).post('/api/v1/signup').send(payload);
-    assert.equal(response.status, 400);
+    const response = await request(app).post('/api/v1/auth/signup').send(payload);
+    assert.equal(response.status, 422);
     assert.equal(response.body.success, false);
     assert.ok(response.body.error);
   });
   it('invalid password length ', async () => {
     const payload = {};
-    const response = await request(app).post('/api/v1/signup').send(payload);
-    assert.equal(response.status, 400);
+    const response = await request(app).post('/api/v1/auth/signup').send(payload);
+    assert.equal(response.status, 422);
     assert.equal(response.body.success, false);
     assert.ok(response.body.error);
   });
 });
 
-describe('the signin /signin endpoint', () => {
+describe('the signin /auth/signin endpoint', () => {
   it('the user signin', async () => {
     const payload = {
       email: 'joy@gmail.com',
-      password: 'hello',
+      password: 'hello78900',
     };
-    const { body, status } = await request(app).post('/api/v1/signin').send(payload);
+    const { body, status } = await request(app).post('/api/v1/auth/signin').send(payload);
     const {
       data,
       message,
       success,
     } = body;
     assert.equal(success, true);
-    assert.equal(message, 'Great! login successful');
-    assert.ok(data.password);
+    assert.equal(message, 'Login successful');
+    assert.ok(data.token);
     assert.equal(data.email, payload.email);
     assert.ok(data.status);
     assert.ok(data.id);
@@ -94,24 +99,25 @@ describe('the signin /signin endpoint', () => {
     assert.ok(data.lastname);
     assert.equal(status, 200);
   });
-  it('returns a 400 ', async () => {
+  it('returns a 422 ', async () => {
     const payload = {};
-    const { body, status } = await request(app).post('/api/v1/signin').send(payload);
+    const { body, status } = await request(app).post('/api/v1/auth/signin').send(payload);
     assert.equal(body.success, false);
     assert.ok(body.error);
-    assert.equal(status, 400);
+    assert.equal(status, 422);
   });
-  it('returns a 404 ', async () => {
+  it('returns a 500 ', async () => {
     const payload = {
       email: 'joy6@gmail.com',
       password: 'hello',
     };
-    const { body, status } = await request(app).post('/api/v1/signin').send(payload);
+    const { body, status } = await request(app).post('/api/v1/auth/signin').send(payload);
     assert.equal(body.success, false);
-    assert.equal(body.error, `User with this email address ${payload.email} does not exist`);
-    assert.equal(status, 404);
+    assert.ok(body.error);
+    assert.equal(status, 500);
   });
 });
+
 
 describe('the repayment history /loans/:loanId/repayments api endpoint', () => {
   it('View loan repayment history', async () => {
@@ -180,22 +186,22 @@ describe('GET /loans', () => {
     assert.equal(status, 200);
   });
 
-  it('Get all loans returns 400', async () => {
+  it('Get all loans returns 422', async () => {
     const { body, status } = await request(app).get('/api/v1/loans?status=approveds');
     assert.equal(body.success, false);
     assert.ok(body.error);
-    assert.equal(status, 400);
+    assert.equal(status, 422);
     assert.equal(body.error, 'Oops, Invalid query parameter');
   });
 
-  it('Get all loans returns 400 on invalid querys', async () => {
+  it('Get all loans returns 422 on invalid querys', async () => {
     const { body, status } = await request(app).get('/api/v1/loans?status').query({ status: 'approvedy', repaid: 'truei' });
-    assert.equal(status, 400);
+    assert.equal(status, 422);
     assert.equal(body.error, 'Oops, Invalid query parameter');
   });
-  it('Get all loans returns 400 on invalid status query parmeter', async () => {
+  it('Get all loans returns 422 on invalid status query parmeter', async () => {
     const { body, status } = await request(app).get('/api/v1/loans?status').query({ status: 'approvedy' });
-    assert.equal(status, 400);
+    assert.equal(status, 422);
     assert.equal(body.error, 'Oops, Invalid query parameter');
   });
 });
@@ -207,7 +213,8 @@ describe('POST /loans api endpoint', () => {
       tenor: 8,
       loanType: 'SF',
       accountNo: '2048801364',
-      userId: '612332',
+      bankName: 'Skyebank',
+      userId: 571878,
     };
 
     const { body, status } = await request(app).post('/api/v1/loans/').send(payload);
@@ -215,14 +222,29 @@ describe('POST /loans api endpoint', () => {
     assert.ok(body.data);
     assert.equal(status, 201);
   });
+  it('Create a loan application', async () => {
+    const payload = {
+      amount: 10000,
+      tenor: 8,
+      loanType: 'SF',
+      accountNo: '2048801364',
+      bankName: 'Skyebank',
+      userId: '612332',
+    };
+
+    const { body, status } = await request(app).post('/api/v1/loans/').send(payload);
+    assert.equal(body.success, false);
+    assert.ok(body.error);
+    assert.equal(status, 404);
+  });
   it('Create a loan application returns 400', async () => {
     const payload = {};
     const { body, status } = await request(app).post('/api/v1/loans/').send(payload);
     assert.equal(body.success, false);
     assert.ok(body.error);
-    assert.equal(status, 400);
+    assert.equal(status, 422);
   });
-  it('Create a loan application returns 404', async () => {
+  it('Create a loan application returns 422', async () => {
     const payload = {
       amount: 10000,
       tenor: 8,
@@ -233,8 +255,23 @@ describe('POST /loans api endpoint', () => {
     const { body, status } = await request(app).post('/api/v1/loans/').send(payload);
     assert.equal(body.success, false);
     assert.ok(body.error);
-    assert.equal(status, 404);
-    assert.equal(body.error, 'Invalid User details');
+    assert.equal(status, 422);
+    assert.ok(body.error);
+  });
+  it('Create a loan application', async () => {
+    const payload = {
+      amount: -10000,
+      tenor: '',
+      loanType: 'SF',
+      accountNo: '2048801364',
+      bankName: 'Skyebank',
+      userId: '612332',
+    };
+    const { body, status } = await request(app).post('/api/v1/loans/').send(payload);
+    assert.equal(body.success, false);
+    assert.ok(body.error);
+    assert.equal(status, 422);
+    assert.ok(body.error);
   });
 });
 
@@ -303,7 +340,7 @@ describe('PATCH /users/<:user-email>/verify', () => {
     const { body, status } = await request(app).patch(`/api/v1/users/${params}/verify`);
     assert.equal(body.success, false);
     assert.ok(body.error);
-    assert.equal(status, 400);
+    assert.equal(status, 422);
   });
   it('Mark a user as verified returns 404', async () => {
     const params = 'jiiioy@gmail.com';
@@ -311,6 +348,6 @@ describe('PATCH /users/<:user-email>/verify', () => {
     assert.equal(body.success, false);
     assert.ok(body.error);
     assert.equal(status, 404);
-    assert.equal(body.error, `User with ${params} not found, confirm email address`);
+    assert.equal(body.error, 'User does not exist');
   });
 });

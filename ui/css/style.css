@@ -283,4 +283,5 @@ left: 10px;}.currency-prefix input{padding-left:27px} .group { position: relativ
 }select{color:#384047}
 input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {-webkit-appearance: none; margin: 0;}
 input[type="number"] { -moz-appearance: textfield;}
+table tr{ cursor: pointer;}
 

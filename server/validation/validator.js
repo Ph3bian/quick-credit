@@ -19,9 +19,15 @@ export default class Validator {
 
   static requestLoan(req) {
     req.checkBody('amount', 'Amount is required').notEmpty();
+    req.checkBody('amount', 'Minimum amount is ₦1000 required').isInt({ min: 1000 });
     req.checkBody('tenor', 'tenor is required').notEmpty();
-    req.checkBody('loanType', 'tenor is required').notEmpty();
-    req.checkBody('accountNo', 'tenor is required').notEmpty();
+    req.checkBody('tenor', 'minimum tenor required is 1month').isInt({ min: 1 });
+    req.checkBody('loanType', 'Select loan type').isAlpha();
+    req.checkBody('loanType', 'Invalid Loan type').isAlpha().isLength({ min: 2, max: 2 });
+    req.checkBody('accountNo', 'Account no. is required').notEmpty();
+    req.checkBody('accountNo', 'Minimum account no. length is 10 characters').isLength({ min: 10, max: 10 });
+    req.checkBody('bankName', 'Bank name is required').notEmpty();
+    req.checkBody('bankName', 'Enter valid name of  bank').isAlpha();
   }
 
   static verifyUser(req) {
