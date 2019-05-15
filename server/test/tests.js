@@ -2,7 +2,6 @@ import assert from 'assert';
 import request from 'supertest';
 import app from '../index';
 // import user from '../memory/user';
-
 describe('GET / ', () => {
   it('Welcome message', async () => {
     const response = await request(app).get('/');
