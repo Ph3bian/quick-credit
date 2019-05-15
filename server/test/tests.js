@@ -1,8 +1,9 @@
 import assert from 'assert';
 import request from 'supertest';
 import app from '../index';
+import user from '../memory/user';
 
-describe('the / api endpoint', () => {
+describe('GET / ', () => {
   it('Welcome message', async () => {
     const response = await request(app).get('/');
     assert.equal(response.text, 'Hello from Quick Credit');
@@ -16,7 +17,7 @@ describe('the signup /signup api endpoint', () => {
       firstname: 'Nantha',
       lastname: 'J',
       email: 'joy@gmail.com',
-      password: 'hello',
+      password: 'hello78090',
       address: 'ikeja Gra',
       bvn: '22307021876',
     };
@@ -39,6 +40,7 @@ describe('the signup /signup api endpoint', () => {
     assert.equal(data.email, payload.email);
     assert.equal(data.address, payload.address);
     assert.equal(data.status, 'unverified');
+    assert.ok(user.length + 1);
   });
   it('handle error', async () => {
     const payload = {
@@ -50,10 +52,17 @@ describe('the signup /signup api endpoint', () => {
       bvn: '22307021876',
     };
     const { body, status } = await request(app).post('/api/v1/signup').send(payload);
-    assert.equal(status, 500);
+    assert.equal(status, 400);
     assert.ok(body.error);
   });
   it('signup returns a 400 ', async () => {
+    const payload = {};
+    const response = await request(app).post('/api/v1/signup').send(payload);
+    assert.equal(response.status, 400);
+    assert.equal(response.body.success, false);
+    assert.ok(response.body.error);
+  });
+  it('invalid password length ', async () => {
     const payload = {};
     const response = await request(app).post('/api/v1/signup').send(payload);
     assert.equal(response.status, 400);

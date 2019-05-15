@@ -5,7 +5,7 @@ export default class Validator {
     req.checkBody('lastname', 'Last name is required').notEmpty().isLength({ min: 2 });
     req.checkBody('lastname', 'Last name Must be alphabets').isAlpha();
     req.checkBody('email', 'Valid email is required').notEmpty().isEmail();
-    req.checkBody('password', 'Password is required').notEmpty()
+    req.checkBody('password', 'Password is required').notEmpty();
     req.checkBody('password', 'Password must be 6 characters or more').isLength({ min: 6 });
     req.checkBody('address', 'Address is required').notEmpty();
     req.checkBody('bvn', 'BVN is required').notEmpty();
