@@ -28,6 +28,7 @@ describe('the signup /auth/signup api endpoint', () => {
       bvn: '22307021876',
     };
     const { body, status } = await request(app).post('/api/v1/auth/signup').send(payload);
+    console.log(body, '==>', status);
     const {
       data,
       message,
@@ -83,6 +84,7 @@ describe('the signin /auth/signin endpoint', () => {
       password: 'hello78900',
     };
     const { body, status } = await request(app).post('/api/v1/auth/signin').send(payload);
+    console.log(body, "root to this", status);
     const {
       data,
       message,
