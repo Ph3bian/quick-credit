@@ -2,7 +2,6 @@ import assert from 'assert';
 import request from 'supertest';
 import app from '../index';
 // import user from '../memory/user';
-
 describe('GET / ', () => {
   it('Welcome message', async () => {
     const response = await request(app).get('/');
@@ -34,6 +33,7 @@ describe('the signup /auth/signup api endpoint', () => {
       message,
       success,
     } = body;
+  
     assert.equal(status, 201);
     assert.equal(message, 'Sign up successful');
     assert.equal(success, true);
@@ -72,6 +72,13 @@ describe('the signup /auth/signup api endpoint', () => {
     const payload = {};
     const response = await request(app).post('/api/v1/auth/signup').send(payload);
     assert.equal(response.status, 422);
+    assert.equal(response.body.success, false);
+    assert.ok(response.body.error);
+  });
+  it('invalid password length ', async () => {
+    const payload = {};
+    const response = await request(app).post('/api/v1/signup').send(payload);
+    assert.equal(response.status, 400);
     assert.equal(response.body.success, false);
     assert.ok(response.body.error);
   });
