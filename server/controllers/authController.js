@@ -35,7 +35,7 @@ export default class AuthController {
       if (e.constraint === 'users_email_key') {
         return res.status(422).json({
           status: 422,
-          error: 'Email has already been taken.',
+          error: 'Email has already been taken',
         });
       }
 

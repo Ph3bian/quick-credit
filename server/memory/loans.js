@@ -1,7 +1,7 @@
 export default [
   {
-    firstname: 'Joey',
-    lastname: 'Jane',
+    firstName: 'Joey',
+    lastName: 'Jane',
     email: 'hello@gmail.com',
     id: '409163',
     createdOn: '2019-05-07T22:56:42.610Z',
@@ -16,8 +16,8 @@ export default [
     userId: '571878',
   },
   {
-    firstname: 'Nantha',
-    lastname: 'J',
+    firstName: 'Nantha',
+    lastName: 'J',
     email: 'joy@gmail.com',
     id: '827350',
     createdOn: '2019-05-07T22:57:48.507Z',

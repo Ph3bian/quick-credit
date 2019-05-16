@@ -1,7 +1,33 @@
 import assert from 'assert';
 import request from 'supertest';
 import app from '../index';
-// import user from '../memory/user';
+import connection  from '../database/connection';
+
+const mockUser = {
+  firstName: 'Ntha',
+  lastName: 'Jer',
+  email: 'rojerr0y9@gmail.com',
+  password: 'hello78090',
+  address: 'ikeja Gra',
+  bvn: '22307021876',
+};
+let token = '';
+
+// before(async () => {
+//   const { body, status } = await request(app).post('/api/v1/auth/signup').send(mockUser);
+//   const {
+//     data,
+//     message,
+//     success,
+//   } = body;
+
+//   // eslint-disable-next-line prefer-destructuring
+//   token = data.token;
+// });
+
+beforeEach(async () => {
+await connection.query('TRUNCATE  users;');
+});
 describe('GET / ', () => {
   it('Welcome message', async () => {
     const response = await request(app).get('/');
@@ -20,12 +46,12 @@ describe('GET Wrong route ', () => {
 describe('the signup /auth/signup api endpoint', () => {
   it('returns a newly created user', async () => {
     const payload = {
-      firstname: 'Nantha',
-      lastname: 'Jer',
-      email: 'joy@gmail.com',
+      firstName: 'Nanri',
+      lastName: 'Jri',
+      email: 'i82opl@gmail.com',
       password: 'hello78090',
       address: 'ikeja Gra',
-      bvn: '22307021876',
+      bvn: '22307087690',
     };
     const { body, status } = await request(app).post('/api/v1/auth/signup').send(payload);
     const {
@@ -33,24 +59,24 @@ describe('the signup /auth/signup api endpoint', () => {
       message,
       success,
     } = body;
+
     assert.equal(status, 201);
     assert.equal(message, 'Sign up successful');
     assert.equal(success, true);
-    assert.equal(data.isAdmin, false);
     assert.ok(data.id);
     assert.ok(data.token);
     assert.equal(data.bvn, payload.bvn);
-    assert.equal(data.firstname, payload.firstname);
-    assert.equal(data.lastname, payload.lastname);
+    assert.equal(data.firstname, payload.firstName);
+    assert.equal(data.lastname, payload.lastName);
     assert.equal(data.email, payload.email);
     assert.equal(data.address, payload.address);
     assert.equal(data.status, 'unverified');
   });
   it('Invalid password length', async () => {
     const payload = {
-      firstname: 'Nantha',
-      lastname: 'J',
-      email: 'joy@gmail.com',
+      firstName: 'Nantha',
+      lastName: 'J',
+      email: 'joy34@gmail.com',
       password: 4,
       address: 'ikeja Gra',
       bvn: '22307021876',
@@ -94,8 +120,8 @@ describe('the signin /auth/signin endpoint', () => {
     assert.equal(data.email, payload.email);
     assert.ok(data.status);
     assert.ok(data.id);
-    assert.ok(data.firstname);
-    assert.ok(data.lastname);
+    assert.ok(data.firstName);
+    assert.ok(data.lastName);
     assert.equal(status, 200);
   });
   it('returns a 422 ', async () => {
@@ -120,7 +146,9 @@ describe('the signin /auth/signin endpoint', () => {
 
 describe('the repayment history /loans/:loanId/repayments api endpoint', () => {
   it('View loan repayment history', async () => {
-    const { body, status } = await request(app).get('/api/v1/loans/5661233/repayments');
+    const { body, status } = await request(app)
+      .get('/api/v1/loans/5661233/repayments')
+      .send({ token });
     assert.equal(body.success, true);
     assert.ok(body.data);
     assert.equal(status, 200);
@@ -136,7 +164,7 @@ describe('the POST /loans/<:loan-id>/repayment', () => {
       paidAmount: '1000',
     };
     const params = '827350';
-    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send(payload);
+    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send(payload, { token });
     assert.equal(body.success, true);
     assert.ok(body.data);
     assert.ok(body.data.id);
@@ -156,7 +184,8 @@ describe('the POST /loans/<:loan-id>/repayment', () => {
       paidAmount: '1000',
     };
     const params = '827350';
-    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send(payload);
+    console.log(body, "loanererr")
+    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send(payload, { token });
     assert.equal(body.success, true);
     assert.ok(body.data);
     assert.ok(body.data.id);
@@ -170,7 +199,7 @@ describe('the POST /loans/<:loan-id>/repayment', () => {
   });
   it('Create a loan repayment record returns 400', async () => {
     const params = '82735099';
-    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`);
+    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send({ token });
     assert.equal(body.success, false);
     assert.ok(body.error);
     assert.equal(status, 400);
@@ -186,7 +215,7 @@ describe('GET /loans', () => {
   });
 
   it('Get all loans returns 422', async () => {
-    const { body, status } = await request(app).get('/api/v1/loans?status=approveds');
+    const { body, status } = await request(app).get('/api/v1/loans?status=approveds').send({ token });
     assert.equal(body.success, false);
     assert.ok(body.error);
     assert.equal(status, 422);
@@ -194,7 +223,7 @@ describe('GET /loans', () => {
   });
 
   it('Get all loans returns 422 on invalid querys', async () => {
-    const { body, status } = await request(app).get('/api/v1/loans?status').query({ status: 'approvedy', repaid: 'truei' });
+    const { body, status } = await request(app).get('/api/v1/loans?status').query({ status: 'approvedy', repaid: 'truei' }).send({ token });
     assert.equal(status, 422);
     assert.equal(body.error, 'Oops, Invalid query parameter');
   });

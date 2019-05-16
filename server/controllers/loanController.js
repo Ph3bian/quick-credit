@@ -40,7 +40,7 @@ export default class LoanController {
     };
     const user = User.find(input => input.id === userId);
     if (user) {
-      const { firstname, lastname, email } = user;
+      const { firstName, lastName, email } = user;
 
       Loans.push(data); // populate in memory storage of loans
       return res.status(201).json({
@@ -48,8 +48,8 @@ export default class LoanController {
         success: true,
         message: 'Great! Loan request processing',
         data: {
-          firstname,
-          lastname,
+          firstName,
+          lastName,
           email,
           ...data,
         },

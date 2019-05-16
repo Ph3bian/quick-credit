@@ -2,8 +2,8 @@ export default [
   {
     id: 571878,
     status: 'unverified',
-    firstname: 'Joey',
-    lastname: 'Jane',
+    firstName: 'Joey',
+    lastName: 'Jane',
     email: 'hello@gmail.com',
     password: 'hello',
     address: 'ikeja Gra',
@@ -14,8 +14,8 @@ export default [
   {
     id: 571978,
     status: 'unverified',
-    firstname: 'Samantha',
-    lastname: 'J',
+    firstName: 'Samantha',
+    lastName: 'J',
     email: 'sammyJ@gmail.com',
     password: '$2a$10$OOdD4PC4cSjk8pmRM.Wzgux8MLrgilxg3XMpmH80h4zkb/MOrE.gK',
     address: 'ikeja Gra',
@@ -26,8 +26,8 @@ export default [
   {
     id: 612332,
     status: 'unverified',
-    firstname: 'Nantha',
-    lastname: 'J',
+    firstName: 'Nantha',
+    lastName: 'J',
     email: 'joy@gmail.com',
     password: '$2a$10$n1JM5Zi3M3ELzdyNYbHXCOIJMA4PMZ0VOm/QKYaFEGC5npWtzHffS',
     address: 'ikeja Gra',

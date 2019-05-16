@@ -3,6 +3,7 @@ import client from '../database/connection';
 import config from '../config/index';
 
 export default async (req, res, next) => {
+
   const { token } = req.body || req.query || req.headers;
 
   try {
@@ -19,6 +20,6 @@ export default async (req, res, next) => {
     next();
 
   } catch (e) {
-    return res.status(401).json({ status: 401, error: 'Unauthenticated' });
+    return res.status(401).json({ status: 401, error: 'Unauthenticated User' });
   }
 };

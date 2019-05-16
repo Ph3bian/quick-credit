@@ -22,12 +22,8 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 `).then((res) => {
-  console.log(res);
-
   client.end();
 })
   .catch((error) => {
-    console.log(error);
-
     client.end();
   });
