@@ -9,7 +9,9 @@
     "test": "nyc --reporter=html --reporter=text  --require @babel/register --require @babel/polyfill mocha server/test/tests.js --exit",
     "build": "babel -d dist server/",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "connect": "DB_USERNAME=user babel-node ./server/database/connection.js",
+    "migrate": "babel-node ./server/database/migration.js"
   },
   "repository": {
     "type": "git",
@@ -48,6 +50,7 @@
     "express-validator": "^5.3.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
+    "pg": "^7.11.0",
     "swagger-ui-express": "^4.0.2"
   }
 }

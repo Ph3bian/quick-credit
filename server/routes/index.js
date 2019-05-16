@@ -1,4 +1,5 @@
 import { Router } from 'express';
+// import authMiddleware from '../middleware/auth';
 import AuthController from '../controllers/authController';
 import LoanController from '../controllers/loanController';
 import UserController from '../controllers/userController';

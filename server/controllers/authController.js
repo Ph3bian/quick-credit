@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from '../config/index';
 import User from '../memory/user';
+import client from '../database/connection';
 
 export default class AuthController {
   /**
@@ -11,30 +12,40 @@ export default class AuthController {
  */
 
   static signUp(req, res) {
-    const user = req.body;
-    const isAdmin = false;
-    user.password = bcrypt.hashSync(user.password, 10);
+    const {
+      email, firstName, lastName, password, address, bvn,
+    } = req.body;
+    client.query({
+      text: 'INSERT INTO users(firstName, lastName, address, email, password, bvn) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      values: [firstName, lastName, address, email, bcrypt.hashSync(password, 10), bvn],
+    }).then(({ rows }) => {
+      delete rows[0].password;
+      return res.status(201).json({
+        status: 201,
+        success: true,
+        message: 'Sign up successful',
+        data: {
+          ...rows[0],
+          token: jwt.sign({
+            id: rows[0].id,
+          }, config.jwtSecret),
+        },
+      });
+    }).catch((e) => {
+      if (e.constraint === 'users_email_key') {
+        return res.status(422).json({
+          status: 422,
+          error: 'Email has already been taken',
+        });
+      }
 
-    const data = {
-      id: parseInt((Math.random() * 1000000).toFixed(), 10),
-      status: 'unverified',
-      ...user,
-      isAdmin,
-
-    };
-    User.push(data);
-    const token = jwt.sign({ id: data.id }, config.jwtSecret);
-    delete data.password;
-    return res.status(201).json({
-      status: 201,
-      success: true,
-      message: 'Sign up successful',
-      data: {
-        ...data,
-        token,
-      },
+      return res.status(400).json({
+        status: 400,
+        error: e,
+      });
     });
   }
+
 
   /**
   * Login a user: POST /auth/signin
@@ -46,22 +57,22 @@ export default class AuthController {
     const user = User.find(input => input.email === email);
 
     const token = jwt.sign({ id: user.id }, config.jwtSecret);
-    if (user) {
-      delete user.password;
-      return res.status(200).json({
-        status: 200,
-        success: true,
-        message: 'Login successful',
-        data: {
-          ...user,
-          token,
-        },
+    if (!user) {
+      return res.status(404).json({
+        status: 404,
+        success: false,
+        error: 'Invalid email address or password',
       });
     }
-    return res.status(404).json({
-      status: 404,
-      success: false,
-      error: 'Invalid email address or password',
+    delete user.password;
+    return res.status(200).json({
+      status: 200,
+      success: true,
+      message: 'Login successful',
+      data: {
+        ...user,
+        token,
+      },
     });
   }
 }

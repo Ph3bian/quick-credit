@@ -1,8 +1,13 @@
 language: node_js
 node_js: 
   - stable
+services:
+  - postgresql
 install:
   - npm install
+before_script:
+  - psql -c 'create database postgres_credit;' -U postgres
+  - npm run migrate
 script:
   - npm test
 after_success:

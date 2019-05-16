@@ -1,9 +1,9 @@
 export default class Validator {
   static user(req) {
-    req.checkBody('firstname', 'First name is required').notEmpty().isLength({ min: 2 });
-    req.checkBody('firstname', 'First name must be alphabets').isAlpha();
-    req.checkBody('lastname', 'Last name is required').notEmpty().isLength({ min: 2 });
-    req.checkBody('lastname', 'Last name Must be alphabets').isAlpha();
+    req.checkBody('firstName', 'First name is required').notEmpty().isLength({ min: 2 });
+    req.checkBody('firstName', 'First name must be alphabets').isAlpha();
+    req.checkBody('lastName', 'Last name is required').notEmpty().isLength({ min: 2 });
+    req.checkBody('lastName', 'Last name Must be alphabets').isAlpha();
     req.checkBody('email', 'Valid email is required').notEmpty().isEmail();
     req.checkBody('password', 'Password is required').notEmpty();
     req.checkBody('password', 'Password must be 6 characters or more').isLength({ min: 6 });
