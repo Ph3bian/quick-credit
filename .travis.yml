@@ -6,7 +6,7 @@ services:
 install:
   - npm install
 before_script:
-  - psql -c 'create database postgres;' -U postgres
+  - psql -c 'create database postgres_credit;' -U postgres
 script:
   - npm test
 after_success:
