@@ -12,6 +12,7 @@ export default class AuthController {
  */
 
   static signUp(req, res) {
+    console.log(req.body, 'sign up not going so well');
     userModel.create(req.body)
       .then(({ rows }) => {
         // eslint-disable-next-line no-param-reassign

@@ -90,27 +90,20 @@ export default class LoanController {
     const { status } = req.body;
     const finder = input => input.id == id;
     const loan = Loans.find(finder);
-    if (loan) {
-      if (['approved', 'rejected'].includes(status)) {
-        return res.status(200).json({
-          status: 200,
-          success: true,
-          data: {
-            ...loan,
-            status,
-          },
-        });
-      }
-      return res.status(400).json({
-        status: 400,
-        success: false,
-        error: 'Error! status can only be approved or rejected',
+    if (loan && ['approved', 'rejected'].includes(status)) {
+      return res.status(200).json({
+        status: 200,
+        success: true,
+        data: {
+          ...loan,
+          status,
+        },
       });
     }
-    return res.status(404).json({
-      status: 404,
+    return res.status(400).json({
+      status: 400,
       success: false,
-      error: 'Error, loan application does not exist',
+      error: 'Error! status can only be approved or rejected',
     });
   }
 
