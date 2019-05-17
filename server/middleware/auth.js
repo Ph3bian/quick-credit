@@ -6,6 +6,7 @@ export default async (req, res, next) => {
 
   const { token } = req.body || req.query || req.headers;
 
+console.log(req.query)
   try {
     const data = jwt.verify(token, config.jwtSecret);
     const user = await client.query({
