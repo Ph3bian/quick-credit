@@ -5,7 +5,6 @@ import config from '../config/index';
 export default async (req, res, next) => {
 
   const { token } = req.body || req.query || req.headers;
-
   try {
     const data = jwt.verify(token, config.jwtSecret);
     const user = await client.query({
