@@ -127,8 +127,8 @@ describe('the signin /auth/signin endpoint', () => {
     assert.equal(data.email, userPayload.email);
     assert.ok(data.status);
     assert.ok(data.id);
-    assert.ok(data.firstName);
-    assert.ok(data.lastName);
+    assert.ok(data.firstname);
+    assert.ok(data.lastname);
     assert.equal(status, 200);
   });
   it('returns a 422 ', async () => {
@@ -170,7 +170,7 @@ describe('the POST /loans/<:loan-id>/repayment', () => {
       paidAmount: '1000',
     };
     const params = '827350';
-    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send(payload, { token });
+    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send(payload);
     assert.equal(body.success, true);
     assert.ok(body.data);
     assert.ok(body.data.id);
@@ -190,8 +190,7 @@ describe('the POST /loans/<:loan-id>/repayment', () => {
       paidAmount: '1000',
     };
     const params = '827350';
-    console.log(body, "loanererr")
-    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send(payload, { token });
+    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send(payload);
     assert.equal(body.success, true);
     assert.ok(body.data);
     assert.ok(body.data.id);
@@ -221,7 +220,7 @@ describe('GET /loans', () => {
   });
 
   it('Get all loans returns 422', async () => {
-    const { body, status } = await request(app).get('/api/v1/loans?status=approveds').send({ token });
+    const { body, status } = await request(app).get('/api/v1/loans?status=approveds');
     assert.equal(body.success, false);
     assert.ok(body.error);
     assert.equal(status, 422);
@@ -229,7 +228,7 @@ describe('GET /loans', () => {
   });
 
   it('Get all loans returns 422 on invalid querys', async () => {
-    const { body, status } = await request(app).get('/api/v1/loans?status').query({ status: 'approvedy', repaid: 'truei' }).send({ token });
+    const { body, status } = await request(app).get('/api/v1/loans?status').query({ status: 'approvedy', repaid: 'truei' });
     assert.equal(status, 422);
     assert.equal(body.error, 'Oops, Invalid query parameter');
   });
@@ -345,7 +344,6 @@ describe('PATCH /loans/<:loan-id>', () => {
 describe('/GET /loans/<:loan-id>', () => {
   it('Get a specific loan application', async () => {
     const { user, token } = await getToken();
-
     const result = await loanModel.create({ amount: 2000, tenor: 6, interest: 1500, userId: user.id });
     const params = result.rows[0];
     const { body, status } = await request(app).get(`/api/v1/loans/${params.id}`).send({ token });
