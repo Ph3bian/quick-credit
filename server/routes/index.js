@@ -1,5 +1,5 @@
 import { Router } from 'express';
-// import authMiddleware from '../middleware/auth';
+import authMiddleware from '../middleware/auth';
 import AuthController from '../controllers/authController';
 import LoanController from '../controllers/loanController';
 import UserController from '../controllers/userController';
@@ -16,7 +16,7 @@ router.post('/auth/signup', SignUpValidator, AuthController.signUp);
 router.post('/auth/signin', SignInValidator, AuthController.signIn);
 router.post('/loans', requestLoanValidator, LoanController.requestLoan);
 router.get('/loans', fetchLoansValidator, LoanController.fetchLoans);
-router.get('/loans/:id', LoanController.fetchLoan);
+router.get('/loans/:id', authMiddleware, LoanController.fetchLoan);
 router.patch('/loans/:id', LoanController.updateLoan);
 router.post('/loans/:loanId/repayment', LoanController.updateRepayment);
 router.get('/loans/:loanId/repayments', LoanController.fetchRepayments);
