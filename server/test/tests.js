@@ -99,7 +99,6 @@ describe('POST /auth/signup', () => {
       bvn: '22307087690',
     };
     const response = await request(app).post('/api/v1/auth/signup').send(payload);
-    console.log(response, 'here is the response');
     assert.equal(response.status, 422);
     assert.ok(response.body.error);
     assert.equal(response.body.error, 'Email has already been taken');
