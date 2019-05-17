@@ -1,6 +1,5 @@
 /* eslint-disable eqeqeq */
 import loanModel from '../database/models/loan';
-import User from '../memory/user';
 import repayments from '../memory/repayments';
 import Loans from '../memory/loans';
 
@@ -62,6 +61,7 @@ export default class LoanController {
       const loan = result.rows[0];
       if (loan) {
         return res.status(200).json({
+          status: 200,
           success: true,
           data: loan,
         });
@@ -71,11 +71,12 @@ export default class LoanController {
         error: 'Loan application not found',
       });
     }).catch(
+      // eslint-disable-next-line no-unused-vars
       error => res.status(404).json({
         status: 404,
         success: false,
         error: 'Error, loan application does not exist',
-      })
+      }),
     );
   }
 
@@ -92,6 +93,7 @@ export default class LoanController {
     if (loan) {
       if (['approved', 'rejected'].includes(status)) {
         return res.status(200).json({
+          status: 200,
           success: true,
           data: {
             ...loan,

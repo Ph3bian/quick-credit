@@ -6,7 +6,6 @@ export default async (req, res, next) => {
 
   const { token } = req.body || req.query || req.headers;
 
-console.log(req.query)
   try {
     const data = jwt.verify(token, config.jwtSecret);
     const user = await client.query({
@@ -17,9 +16,9 @@ console.log(req.query)
     if (!user.rows) {
       throw new Error();
     }
+    // eslint-disable-next-line prefer-destructuring
     req.user = user.rows[0];
     next();
-
   } catch (e) {
     return res.status(401).json({ status: 401, error: 'Unauthenticated User' });
   }
