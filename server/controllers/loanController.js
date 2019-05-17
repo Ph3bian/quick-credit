@@ -103,7 +103,7 @@ export default class LoanController {
     return res.status(400).json({
       status: 400,
       success: false,
-      error: 'Error! status can only be approved or rejected',
+      error: 'Status can only be approved or rejected',
     });
   }
 
@@ -120,7 +120,7 @@ export default class LoanController {
       return res.status(400).json({
         status: 400,
         success: false,
-        error: 'Error! Loan application does not exist',
+        error: 'Loan application does not exist',
       });
     }
 

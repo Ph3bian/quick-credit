@@ -26,7 +26,7 @@ const getToken = async () => {
   };
 };
 
-// eslint-disable-next-line no-undef
+
 beforeEach(async () => {
   await connection.query('DELETE FROM  loans;');
   await connection.query('DELETE FROM  users;');
@@ -89,6 +89,7 @@ describe('POST /auth/signup', () => {
     assert.ok(response.body.error);
   });
   it('POST /auth/signup: email already exists', async () => {
+    // eslint-disable-next-line no-unused-vars
     const { user } = await getToken();
     const payload = {
       firstName: 'Nanri',
@@ -200,7 +201,7 @@ describe('the POST /loans/<:loan-id>/repayment', () => {
     assert.equal(body.success, false);
     assert.ok(body.error);
     assert.equal(status, 400);
-    assert.equal(body.error, 'Error! Loan application does not exist');
+    assert.equal(body.error, 'Loan application does not exist');
   });
 });
 describe('GET /loans', () => {
@@ -317,7 +318,7 @@ describe('PATCH /loans/<:loan-id>', () => {
     assert.equal(body.success, false);
     assert.ok(body.error);
     assert.equal(status, 400);
-    assert.equal(body.error, 'Error! status can only be approved or rejected');
+    assert.equal(body.error, 'Status can only be approved or rejected');
   });
   it('Approve or reject a loan application returns 400', async () => {
     const payload = {
@@ -328,7 +329,7 @@ describe('PATCH /loans/<:loan-id>', () => {
     assert.equal(body.success, false);
     assert.ok(body.error);
     assert.equal(status, 400);
-    assert.equal(body.error, 'Error, loan application does not exist');
+    assert.equal(body.error, 'Status can only be approved or rejected');
   });
 });
 
