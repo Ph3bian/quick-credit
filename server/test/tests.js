@@ -320,7 +320,7 @@ describe('PATCH /loans/<:loan-id>', () => {
     assert.equal(status, 400);
     assert.equal(body.error, 'Error! status can only be approved or rejected');
   });
-  it('Approve or reject a loan application returns 404', async () => {
+  it('Approve or reject a loan application returns 400', async () => {
     const payload = {
       status: 'rejected',
     };
@@ -328,7 +328,7 @@ describe('PATCH /loans/<:loan-id>', () => {
     const { body, status } = await request(app).patch(`/api/v1/loans/${params}`).send(payload);
     assert.equal(body.success, false);
     assert.ok(body.error);
-    assert.equal(status, 404);
+    assert.equal(status, 400);
     assert.equal(body.error, 'Error, loan application does not exist');
   });
 });
