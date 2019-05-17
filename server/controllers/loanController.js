@@ -1,7 +1,8 @@
 /* eslint-disable eqeqeq */
-import Loans from '../memory/loans';
+import loanModel from '../database/models/loan';
 import User from '../memory/user';
 import repayments from '../memory/repayments';
+import Loans from '../memory/loans';
 
 export default class LoanController {
   /**
@@ -70,6 +71,7 @@ export default class LoanController {
   static fetchLoans(req, res) {
     const { status, repaid } = req.query;
 
+
     let filteredLoans = Loans.slice();
 
     if (status && ['approved', 'rejected', 'pending'].includes(status)) {
@@ -94,18 +96,24 @@ export default class LoanController {
  */
   static fetchLoan(req, res) {
     const { id } = req.params;
-    const finder = input => input.id == id;
-    const loan = Loans.find(finder);
-    if (loan) {
-      return res.status(200).json({
-        success: true,
-        data: loan,
+
+    loanModel.findById(id).then((result) => {
+      const loan = result.rows[0];
+      if (loan) {
+        return res.status(200).json({
+          success: true,
+          data: loan,
+        });
+      }
+      return res.status(404).json({
+        status: 404,
+        message: 'Loan not found',
       });
-    }
-    return res.status(404).json({
-      success: false,
-      error: 'Error, loan application does not exist',
-    });
+    }).catch(
+      error => res.status(404).json({
+        success: false,
+        error: 'Error, loan application does not exist',
+      }));
   }
 
   /**

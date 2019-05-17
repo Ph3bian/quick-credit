@@ -9,6 +9,15 @@ BEGIN
 END
 $$;
 
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'loan_status') THEN
+    CREATE TYPE loan_status AS ENUM ('pending', 'approved', 'rejected');
+    END IF;
+END
+$$;
+
+
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     firstName VARCHAR(255) NOT NULL,
@@ -21,6 +30,18 @@ CREATE TABLE IF NOT EXISTS users (
     bvn VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS loans (
+      id SERIAL PRIMARY KEY,
+      userId INTEGER NOT NULL REFERENCES users (id),
+      createdOn TIMESTAMP NOT NULL,
+      status loan_status DEFAULT 'pending',
+      repaid BOOLEAN DEFAULT false,
+      tenor INTEGER NOT NULL,
+      amount FLOAT(2) NOT NULL,
+      paymentInstallment FLOAT(2) NOT NULL,
+      balance FLOAT(2) NOT NULL,
+      interest FLOAT(2) NOT NULL
+  );
 `).then((res) => {
   client.end();
 })
