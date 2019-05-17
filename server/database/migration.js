@@ -40,7 +40,9 @@ CREATE TABLE IF NOT EXISTS loans (
       amount FLOAT(2) NOT NULL,
       paymentInstallment FLOAT(2) NOT NULL,
       balance FLOAT(2) NOT NULL,
-      interest FLOAT(2) NOT NULL
+      interest FLOAT(2) NOT NULL,
+      loanType VARCHAR(255) NOT NULL,
+      accountNo VARCHAR(255) NOT NULL 
   );
 `).then((res) => {
   client.end();

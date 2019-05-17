@@ -11,55 +11,16 @@ export default class LoanController {
  * @param {res} res express res object
  */
   static requestLoan(req, res) {
-    const {
-      amount,
-      tenor,
-      loanType,
-      accountNo,
-      userId,
-    } = req.body;
-    const createdOn = new Date();
-    const interest = amount * 0.05;
-    const balance = amount + interest;
-    const paymentInstallment = (amount + interest) / tenor;
-    const status = 'pending';
-    const repaid = false;
-    const data = {
-      id: parseInt((Math.random() * 1000000).toFixed(), 10),
-      //   user: user.id, get userId from token & userEmail, userFirstName from db
-      createdOn,
-      balance,
-      paymentInstallment,
-      status,
-      amount,
-      tenor,
-      loanType,
-      repaid,
-      accountNo,
-      userId,
-      interest,
-    };
-    const user = User.find(input => input.id === userId);
-    if (user) {
-      const { firstName, lastName, email } = user;
-
-      Loans.push(data); // populate in memory storage of loans
-      return res.status(201).json({
-        status: 201,
-        success: true,
-        message: 'Great! Loan request processing',
-        data: {
-          firstName,
-          lastName,
-          email,
-          ...data,
-        },
+    loanModel.create(req.body).then(({ rows }) => res.status(201).json({
+      success: true,
+      status: 201,
+      loan: rows[0],
+    })).catch((e) => {
+      res.status(400).json({
+        success: false,
+        status: 400,
+        error: e,
       });
-    }
-    return res.status(404).json({
-      status: 404,
-      success: false,
-      error: 'Invalid User details',
     });
   }
 
@@ -107,13 +68,15 @@ export default class LoanController {
       }
       return res.status(404).json({
         status: 404,
-        message: 'Loan not found',
+        error: 'Loan application not found',
       });
     }).catch(
       error => res.status(404).json({
+        status: 404,
         success: false,
         error: 'Error, loan application does not exist',
-      }));
+      })
+    );
   }
 
   /**
