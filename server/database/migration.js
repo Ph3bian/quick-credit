@@ -17,6 +17,7 @@ BEGIN
 END
 $$;
 
+
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     firstName VARCHAR(255) NOT NULL,
@@ -41,7 +42,6 @@ CREATE TABLE IF NOT EXISTS loans (
       balance FLOAT(2) NOT NULL,
       interest FLOAT(2) NOT NULL
   );
-
 `).then((res) => {
   client.end();
 })

@@ -27,6 +27,7 @@ const getToken = async () => {
   };
 };
 
+
 // before(async () => {
 //   const { body, status } = await request(app).post('/api/v1/auth/signup').send(mockUser);
 //   const {
@@ -42,6 +43,7 @@ const getToken = async () => {
 beforeEach(async () => {
   await connection.query('DELETE FROM  loans;');
   await connection.query('DELETE FROM  users;');
+
 });
 describe('GET / ', () => {
   it('Welcome message', async () => {
@@ -72,11 +74,13 @@ describe('the signup /auth/signup api endpoint', () => {
     assert.equal(success, true);
     assert.ok(data.id);
     assert.ok(data.token);
+
     assert.equal(data.bvn, userPayload.bvn);
     assert.equal(data.firstname, userPayload.firstName);
     assert.equal(data.lastname, userPayload.lastName);
     assert.equal(data.email, userPayload.email);
     assert.equal(data.address, userPayload.address);
+
     assert.equal(data.status, 'unverified');
   });
   it('Invalid password length', async () => {
@@ -123,8 +127,8 @@ describe('the signin /auth/signin endpoint', () => {
     assert.equal(data.email, userPayload.email);
     assert.ok(data.status);
     assert.ok(data.id);
-    assert.ok(data.firstname);
-    assert.ok(data.lastname);
+    assert.ok(data.firstName);
+    assert.ok(data.lastName);
     assert.equal(status, 200);
   });
   it('returns a 422 ', async () => {
@@ -166,7 +170,7 @@ describe('the POST /loans/<:loan-id>/repayment', () => {
       paidAmount: '1000',
     };
     const params = '827350';
-    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send(payload);
+    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send(payload, { token });
     assert.equal(body.success, true);
     assert.ok(body.data);
     assert.ok(body.data.id);
@@ -186,7 +190,8 @@ describe('the POST /loans/<:loan-id>/repayment', () => {
       paidAmount: '1000',
     };
     const params = '827350';
-    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send(payload);
+    console.log(body, "loanererr")
+    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send(payload, { token });
     assert.equal(body.success, true);
     assert.ok(body.data);
     assert.ok(body.data.id);
@@ -216,7 +221,7 @@ describe('GET /loans', () => {
   });
 
   it('Get all loans returns 422', async () => {
-    const { body, status } = await request(app).get('/api/v1/loans?status=approveds');
+    const { body, status } = await request(app).get('/api/v1/loans?status=approveds').send({ token });
     assert.equal(body.success, false);
     assert.ok(body.error);
     assert.equal(status, 422);
@@ -224,7 +229,7 @@ describe('GET /loans', () => {
   });
 
   it('Get all loans returns 422 on invalid querys', async () => {
-    const { body, status } = await request(app).get('/api/v1/loans?status').query({ status: 'approvedy', repaid: 'truei' });
+    const { body, status } = await request(app).get('/api/v1/loans?status').query({ status: 'approvedy', repaid: 'truei' }).send({ token });
     assert.equal(status, 422);
     assert.equal(body.error, 'Oops, Invalid query parameter');
   });

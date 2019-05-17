@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import config from '../config/index';
 import userModel from '../database/models/user';
 
+
 export default class AuthController {
   /**
  * Create user account: POST /auth/signup
