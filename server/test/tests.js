@@ -241,21 +241,21 @@ describe('GET /loans', () => {
 
 describe('POST /loans api endpoint', () => {
   it('Create a loan application', async () => {
+    const { user, token } = await getToken();
     const payload = {
-      amount: 10000,
-      tenor: 8,
+      amount: 2000,
+      tenor: 6,
+      interest: 100,
       loanType: 'SF',
       accountNo: '2048801364',
-      bankName: 'Skyebank',
-      userId: 571878,
+      userId: user.id,
     };
-
     const { body, status } = await request(app).post('/api/v1/loans/').send(payload);
-    assert.equal(body.success, true);
-    assert.ok(body.data);
+    console.log(body);
+    assert.ok(body.loan);
     assert.equal(status, 201);
   });
-  it('Create a loan application', async () => {
+  it('Create a loan application error', async () => {
     const payload = {
       amount: 10000,
       tenor: 8,
@@ -268,7 +268,7 @@ describe('POST /loans api endpoint', () => {
     const { body, status } = await request(app).post('/api/v1/loans/').send(payload);
     assert.equal(body.success, false);
     assert.ok(body.error);
-    assert.equal(status, 404);
+    assert.equal(status, 400);
   });
   it('Create a loan application returns 400', async () => {
     const payload = {};
@@ -277,7 +277,7 @@ describe('POST /loans api endpoint', () => {
     assert.ok(body.error);
     assert.equal(status, 422);
   });
-  it('Create a loan application returns 422', async () => {
+  it('Create a loan application returns 400', async () => {
     const payload = {
       amount: 10000,
       tenor: 8,
@@ -288,10 +288,10 @@ describe('POST /loans api endpoint', () => {
     const { body, status } = await request(app).post('/api/v1/loans/').send(payload);
     assert.equal(body.success, false);
     assert.ok(body.error);
-    assert.equal(status, 422);
+    assert.equal(status, 400);
     assert.ok(body.error);
   });
-  it('Create a loan application', async () => {
+  it('Create a loan application error with negative amount', async () => {
     const payload = {
       amount: -10000,
       tenor: '',
@@ -344,7 +344,7 @@ describe('PATCH /loans/<:loan-id>', () => {
 describe('/GET /loans/<:loan-id>', () => {
   it('Get a specific loan application', async () => {
     const { user, token } = await getToken();
-    const result = await loanModel.create({ amount: 2000, tenor: 6, interest: 1500, userId: user.id });
+    const result = await loanModel.create({ amount: 2000, tenor: 6, interest: 100, userId: user.id, loanType: 'SF', accountNo: '2048801364' });
     const params = result.rows[0];
     const { body, status } = await request(app).get(`/api/v1/loans/${params.id}`).send({ token });
     // assert.equal(body.success, true);

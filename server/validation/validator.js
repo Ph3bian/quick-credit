@@ -26,8 +26,8 @@ export default class Validator {
     req.checkBody('loanType', 'Invalid Loan type').isAlpha().isLength({ min: 2, max: 2 });
     req.checkBody('accountNo', 'Account no. is required').notEmpty();
     req.checkBody('accountNo', 'Minimum account no. length is 10 characters').isLength({ min: 10, max: 10 });
-    req.checkBody('bankName', 'Bank name is required').notEmpty();
-    req.checkBody('bankName', 'Enter valid name of  bank').isAlpha();
+    // req.checkBody('bankName', 'Bank name is required').notEmpty();
+    // req.checkBody('bankName', 'Enter valid name of  bank').isAlpha();
   }
 
   static verifyUser(req) {
