@@ -76,6 +76,7 @@ export default class AuthController {
           status: 401,
           error: 'Incorrect login details',
         });
+
         // eslint-disable-next-line no-unused-vars
       }).catch(error => res.status(500).json({
         status: 500,

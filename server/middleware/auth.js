@@ -8,6 +8,9 @@ export default async (req, res, next) => {
     const { id } = jwt.verify(token, config.jwtSecret);
     const { rows } = await userModel.findById(id);
     const user = rows[0];
+     if (!user) {
+      throw new Error();
+    }
     req.user = user;
     next();
   } catch (error) {

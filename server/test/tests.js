@@ -132,7 +132,9 @@ describe('POST /auth/signin', () => {
     assert.ok(body.error);
     assert.equal(status, 422);
   });
+
   it('POST /auth/signin: returns a 401 ', async () => {
+
     const payload = {
       email: 'joy6@gmail.com',
       password: 'hello',
@@ -181,6 +183,7 @@ describe('the POST /loans/<:loan-id>/repayment', () => {
   it('the POST /loans/<:loan-id>/repayment: Create a loan repayment record', async () => {
     const { user, token } = await getToken();
     await userModel.updateAdminStatus(user.email);
+
     const payload = {
       amount: 10000,
       userId: '612332',
@@ -201,8 +204,10 @@ describe('the POST /loans/<:loan-id>/repayment', () => {
     assert.equal(status, 200);
   });
   it('the POST /loans/<:loan-id>/repayment: returns 400', async () => {
+
     const { user, token } = await getToken();
     await userModel.updateAdminStatus(user.email);
+
     const params = '82735099';
     const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send().set('token', token);
     assert.equal(body.success, false);
@@ -221,8 +226,10 @@ describe('GET /loans', () => {
   });
 
   it('GET /loans: returns 422', async () => {
+
     const { token } = await getToken();
     const { body, status } = await request(app).get('/api/v1/loans?status=approveds').set('token', token);
+
     assert.equal(body.success, false);
     assert.ok(body.error);
     assert.equal(status, 422);
@@ -232,12 +239,15 @@ describe('GET /loans', () => {
   it('GET /loans: returns 422 on invalid querys', async () => {
     const { token } = await getToken();
     const { body, status } = await request(app).get('/api/v1/loans?status').query({ status: 'approvedy', repaid: 'truei' }).set('token', token);
+
     assert.equal(status, 422);
     assert.equal(body.error, 'Oops, Invalid query parameter');
   });
   it('GET /loans: returns 422 on invalid status query parmeter', async () => {
+
     const { token } = await getToken();
     const { body, status } = await request(app).get('/api/v1/loans?status').query({ status: 'approvedy' }).set('token', token);
+
     assert.equal(status, 422);
     assert.equal(body.error, 'Oops, Invalid query parameter');
   });
@@ -250,7 +260,7 @@ describe('GET /loans', () => {
 
 describe('POST /loans', () => {
   it('Create a loan application', async () => {
-    const { user, token } = await getToken();
+    const { user } = await getToken();
     const payload = {
       amount: 2000,
       tenor: 6,
