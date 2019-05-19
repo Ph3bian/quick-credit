@@ -100,7 +100,7 @@ describe('POST /auth/signup', () => {
       bvn: '22307087690',
     };
     const response = await request(app).post('/api/v1/auth/signup').send(payload);
-    assert.equal(response.status, 422);
+    assert.equal(response.status, 409);
     assert.ok(response.body.error);
     assert.equal(response.body.error, 'Email has already been taken');
   });
@@ -206,7 +206,8 @@ describe('the POST /loans/<:loan-id>/repayment', () => {
 });
 describe('GET /loans', () => {
   it('Get all loans', async () => {
-    const { body, status } = await request(app).get('/api/v1/loans');
+    const { token } = await getToken();
+    const { body, status } = await request(app).get('/api/v1/loans').set('token', token);
     assert.equal(body.success, true);
     assert.ok(body.data);
     assert.equal(status, 200);

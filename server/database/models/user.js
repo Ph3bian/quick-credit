@@ -17,4 +17,15 @@ export default {
     text: 'SELECT * FROM users WHERE email = $1 LIMIT 1',
     values: [email],
   }),
+  findById: id => client.query({
+    text: 'SELECT * FROM users WHERE id = $1',
+    values: [id],
+  }),
+  findAll: () => client.query({
+    text: 'SELECT * FROM users WHERE "isAdmin"= FALSE',
+  }),
+  updateByEmail: email => client.query({
+    text: "UPDATE  users  SET status = 'verified' WHERE email = $1 RETURNING status",
+    values: [email],
+  }),
 };

@@ -1,23 +1,16 @@
 import jwt from 'jsonwebtoken';
-import client from '../database/connection';
+import userModel from '../database/models/user';
 import config from '../config/index';
 
 export default async (req, res, next) => {
-  const { token } = req.body || req.query || req.headers;
+  const token = req.header('token');
   try {
-    const data = jwt.verify(token, config.jwtSecret);
-    const user = await client.query({
-      text: 'SELECT * FROM users WHERE id = $1',
-      values: [data.id],
-    });
-
-    if (!user.rows) {
-      throw new Error();
-    }
-    // eslint-disable-next-line prefer-destructuring
-    req.user = user.rows[0];
+    const { id } = jwt.verify(token, config.jwtSecret);
+    const { rows } = await userModel.findById(id);
+    const user = rows[0];
+    req.user = user;
     next();
-  } catch (e) {
+  } catch (error) {
     return res.status(401).json({ status: 401, error: 'Unauthenticated User' });
   }
 };

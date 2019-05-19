@@ -15,29 +15,25 @@ export default class AuthController {
     userModel.create(req.body)
       .then(({ rows }) => {
         // eslint-disable-next-line no-param-reassign
-        delete rows[0].password;
+        const user = rows[0];
+        delete user.password;
+        const token = jwt.sign({ id: user.id }, config.jwtSecret);
         return res.status(201).json({
           status: 201,
           success: true,
           message: 'Sign up successful',
-          data: {
-            ...rows[0],
-            token: jwt.sign({
-              id: rows[0].id,
-            }, config.jwtSecret),
-          },
+          data: { ...user, token },
         });
-      }).catch((e) => {
-        if (e.constraint === 'users_email_key') {
-          return res.status(422).json({
-            status: 422,
+      }).catch((error) => {
+        if (error.constraint === 'users_email_key') {
+          return res.status(409).json({
+            status: 409,
             error: 'Email has already been taken',
           });
         }
-
-        return res.status(400).json({
-          status: 400,
-          error: e,
+        return res.status(500).json({
+          status: 500,
+          error,
         });
       });
   }
@@ -55,12 +51,13 @@ export default class AuthController {
       .then((result) => {
         const user = result.rows[0];
         if (!user) {
-          return res.status(404).json({
-            status: 404,
+          return res.status(401).json({
+            status: 401,
             success: false,
             error: 'Invalid email address or password',
           });
         }
+
         if (bcrypt.compareSync(req.body.password, user.password)) {
           const token = jwt.sign({ id: user.id }, config.jwtSecret);
           // eslint-disable-next-line no-param-reassign
@@ -79,10 +76,10 @@ export default class AuthController {
           status: 401,
           error: 'Incorrect login details',
         });
-      // eslint-disable-next-line no-unused-vars
-      }).catch(error => res.status(401).json({
-        status: 401,
-        error: 'Incorrect login details',
+        // eslint-disable-next-line no-unused-vars
+      }).catch(error => res.status(500).json({
+        status: 500,
+        error,
       }));
   }
 }

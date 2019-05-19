@@ -14,11 +14,11 @@ export default class LoanController {
       success: true,
       status: 201,
       loan: rows[0],
-    })).catch((e) => {
+    })).catch((error) => {
       res.status(400).json({
         success: false,
         status: 400,
-        error: e,
+        error,
       });
     });
   }
@@ -30,23 +30,26 @@ export default class LoanController {
  */
   static fetchLoans(req, res) {
     const { status, repaid } = req.query;
+    loanModel.findAll(req.body).then(({ rows }) => {
+     
+      let filteredLoans = rows.slice();
 
-
-    let filteredLoans = Loans.slice();
-
-    if (status && ['approved', 'rejected', 'pending'].includes(status)) {
-      filteredLoans = filteredLoans.filter(loan => loan.status === status);
-    }
-
-    if (repaid && ['true', 'false'].includes(repaid)) {
-      filteredLoans = filteredLoans.filter(loan => loan.repaid.toString() === repaid);
-    }
-
-    return res.status(200).json({
-      status: 200,
-      success: true,
-      data: filteredLoans,
-    });
+      if (status && ['approved', 'rejected', 'pending'].includes(status)) {
+        filteredLoans = filteredLoans.filter(loan => loan.status === status);
+      }     
+      if (repaid && ['true', 'false'].includes(repaid)) {
+        filteredLoans = filteredLoans.filter(loan => loan.repaid.toString() === repaid);
+      }
+      return res.status(200).json({
+        status: 200,
+        success: true,
+        data: filteredLoans,
+      });
+    }).catch(error => res.status(500).json({
+      status: 500,
+      success: false,
+      error,
+    }));
   }
 
   /**
@@ -70,14 +73,11 @@ export default class LoanController {
         status: 404,
         error: 'Loan application not found',
       });
-    }).catch(
-      // eslint-disable-next-line no-unused-vars
-      error => res.status(404).json({
-        status: 404,
-        success: false,
-        error: 'Error, loan application does not exist',
-      }),
-    );
+    }).catch(error => res.status(500).json({
+      status: 500,
+      success: false,
+      error,
+    }));
   }
 
   /**
@@ -125,12 +125,32 @@ export default class LoanController {
     }
 
     const previousbalance = Loans[index].balance;
+    if (previousbalance == 0) {
+      return res.status(400).json({
+        status: 400,
+        success: false,
+        error: 'Loan has been repaid',
+      });
+    }
     const {
       amount, paidAmount, monthlyInstallment, userId,
     } = req.body;
     const createdOn = new Date();
-    const balance = previousbalance - parseInt(paidAmount, 10);
+    const interest = amount * 0.05;
+    const amountPaid = parseInt(paidAmount, 10);
+    if (amountPaid > previousbalance) {
+      return res.status(400).json({
+        status: 400,
+        success: false,
+        error: 'Amount paid can not be more amount borrowed',
+      });
+    }
+
+    const balance = previousbalance - amountPaid;
     Loans[index].balance = balance;
+    if (balance == 0) {
+      Loans[index].repaid = 'true';
+    }
     const data = {
       id: parseInt((Math.random() * 1000000).toFixed(), 10),
       amount,
@@ -140,6 +160,7 @@ export default class LoanController {
       createdOn,
       balance,
       loanId,
+      interest,
     };
     repayments.push(data);
     return res.status(200).json({
