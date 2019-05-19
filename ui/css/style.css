@@ -70,10 +70,9 @@ h1, h2, h3, h4, h5, h6, a.logo-text, a.nav-item, input[type=submit], .primary-bt
 
 .form-content {
     background-color: #ffffff;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 8px;
 }
-
 form label {
     margin-bottom: 1.2em;
     line-height: 30px;
@@ -90,7 +89,7 @@ input {
     border: 1px solid #dddddd;
     padding: 0 1rem;
     height: 40px;
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.6rem;
     font-size: 0.9rem;
     width: 100%;
     outline: none;
@@ -169,6 +168,7 @@ select { border-radius: 0; -webkit-appearance: none;}
 .mr-1h {margin-right: 1.5rem}
 .ml-1h { margin-left: 1.5rem}
 .m-40 {margin: 40px;}
+.mx-40{margin: 0 40px;}
 .mx-auto { margin: 0 auto;}
 .mb-2h {margin-bottom: 2.5rem;}
 .m-0 {margin: 0;}
@@ -198,6 +198,7 @@ select { border-radius: 0; -webkit-appearance: none;}
         margin-bottom: 0 !important;
         margin-top: 2rem;
     }
+    
     section.row.m-40.content-centered.hero {text-align: center;}
     #sidebar {display: none;width: auto !important;}
     i#menu {position: absolute;right: 0;  cursor: pointer;}
@@ -206,7 +207,7 @@ select { border-radius: 0; -webkit-appearance: none;}
     .pl-qt { padding-left: 1.75rem;}
     .row {flex-direction: column;}
     .row .btn-holder {flex-direction: row; justify-content: center; padding: 30px 0 0; }
-    .row.m-40 {margin: 0px 5px 0px;}
+    .row.m-40, .mx-40  {margin: 0px 5px 0px;}
     .form-content {padding: 1.5rem;}
     .hero.item {text-align: center; padding:20px;}
     .nav-container {justify-content: center!important;}

@@ -27,6 +27,7 @@ const getToken = async () => {
 };
 
 
+// eslint-disable-next-line no-undef
 beforeEach(async () => {
   await connection.query('DELETE FROM  loans;');
   await connection.query('DELETE FROM  users;');
@@ -100,7 +101,7 @@ describe('POST /auth/signup', () => {
       bvn: '22307087690',
     };
     const response = await request(app).post('/api/v1/auth/signup').send(payload);
-    assert.equal(response.status, 422);
+    assert.equal(response.status, 409);
     assert.ok(response.body.error);
     assert.equal(response.body.error, 'Email has already been taken');
   });
@@ -131,7 +132,9 @@ describe('POST /auth/signin', () => {
     assert.ok(body.error);
     assert.equal(status, 422);
   });
-  it('POST /auth/signin: returns a 404 ', async () => {
+
+  it('POST /auth/signin: returns a 401 ', async () => {
+
     const payload = {
       email: 'joy6@gmail.com',
       password: 'hello',
@@ -139,23 +142,25 @@ describe('POST /auth/signin', () => {
     const { body, status } = await request(app).post('/api/v1/auth/signin').send(payload);
     assert.equal(body.success, false);
     assert.ok(body.error);
-    assert.equal(status, 404);
+    assert.equal(status, 401);
   });
 });
 
 
 describe('GET /loans/:loanId/repayments', () => {
   it('View loan repayment history', async () => {
-    const { body, status } = await request(app)
-      .get('/api/v1/loans/5661233/repayments');
-    assert.equal(body.success, true);
+    const { token } = await getToken();
+    const { body } = await request(app)
+      .get('/api/v1/loans/5661233/repayments').set('token', token);
     assert.ok(body.data);
-    assert.equal(status, 200);
+    assert.equal(body.status, 200);
   });
 });
 
 describe('the POST /loans/<:loan-id>/repayment', () => {
   it('Create a loan repayment record', async () => {
+    const { user, token } = await getToken();
+    await userModel.updateAdminStatus(user.email);
     const payload = {
       amount: 10000,
       userId: '612332',
@@ -163,7 +168,7 @@ describe('the POST /loans/<:loan-id>/repayment', () => {
       paidAmount: '1000',
     };
     const params = '827350';
-    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send(payload);
+    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send(payload).set('token', token);
     assert.equal(body.success, true);
     assert.ok(body.data);
     assert.ok(body.data.id);
@@ -176,6 +181,9 @@ describe('the POST /loans/<:loan-id>/repayment', () => {
     assert.equal(status, 200);
   });
   it('the POST /loans/<:loan-id>/repayment: Create a loan repayment record', async () => {
+    const { user, token } = await getToken();
+    await userModel.updateAdminStatus(user.email);
+
     const payload = {
       amount: 10000,
       userId: '612332',
@@ -183,7 +191,7 @@ describe('the POST /loans/<:loan-id>/repayment', () => {
       paidAmount: '1000',
     };
     const params = '827350';
-    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send(payload);
+    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send(payload).set('token', token);
     assert.equal(body.success, true);
     assert.ok(body.data);
     assert.ok(body.data.id);
@@ -196,8 +204,12 @@ describe('the POST /loans/<:loan-id>/repayment', () => {
     assert.equal(status, 200);
   });
   it('the POST /loans/<:loan-id>/repayment: returns 400', async () => {
+
+    const { user, token } = await getToken();
+    await userModel.updateAdminStatus(user.email);
+
     const params = '82735099';
-    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send();
+    const { body, status } = await request(app).post(`/api/v1/loans/${params}/repayment`).send().set('token', token);
     assert.equal(body.success, false);
     assert.ok(body.error);
     assert.equal(status, 400);
@@ -206,14 +218,18 @@ describe('the POST /loans/<:loan-id>/repayment', () => {
 });
 describe('GET /loans', () => {
   it('Get all loans', async () => {
-    const { body, status } = await request(app).get('/api/v1/loans');
+    const { token } = await getToken();
+    const { body, status } = await request(app).get('/api/v1/loans').set('token', token);
     assert.equal(body.success, true);
     assert.ok(body.data);
     assert.equal(status, 200);
   });
 
   it('GET /loans: returns 422', async () => {
-    const { body, status } = await request(app).get('/api/v1/loans?status=approveds');
+
+    const { token } = await getToken();
+    const { body, status } = await request(app).get('/api/v1/loans?status=approveds').set('token', token);
+
     assert.equal(body.success, false);
     assert.ok(body.error);
     assert.equal(status, 422);
@@ -221,20 +237,30 @@ describe('GET /loans', () => {
   });
 
   it('GET /loans: returns 422 on invalid querys', async () => {
-    const { body, status } = await request(app).get('/api/v1/loans?status').query({ status: 'approvedy', repaid: 'truei' });
+    const { token } = await getToken();
+    const { body, status } = await request(app).get('/api/v1/loans?status').query({ status: 'approvedy', repaid: 'truei' }).set('token', token);
+
     assert.equal(status, 422);
     assert.equal(body.error, 'Oops, Invalid query parameter');
   });
   it('GET /loans: returns 422 on invalid status query parmeter', async () => {
-    const { body, status } = await request(app).get('/api/v1/loans?status').query({ status: 'approvedy' });
+
+    const { token } = await getToken();
+    const { body, status } = await request(app).get('/api/v1/loans?status').query({ status: 'approvedy' }).set('token', token);
+
     assert.equal(status, 422);
     assert.equal(body.error, 'Oops, Invalid query parameter');
+  });
+  it('GET /loans: returns 401 on unathorized access', async () => {
+    const { body, status } = await request(app).get('/api/v1/loans?status').query({ status: 'approvedy' });
+    assert.equal(status, 401);
+    assert.equal(body.error, 'Unauthenticated User');
   });
 });
 
 describe('POST /loans', () => {
   it('Create a loan application', async () => {
-    const { user } = await getToken();
+    const { user, token } = await getToken();
     const payload = {
       amount: 2000,
       tenor: 6,
@@ -243,33 +269,34 @@ describe('POST /loans', () => {
       accountNo: '2048801364',
       userId: user.id,
     };
-    const { body, status } = await request(app).post('/api/v1/loans/').send(payload);
+    const { body, status } = await request(app).post('/api/v1/loans/').send(payload).set('token', token);
     assert.ok(body.loan);
     assert.equal(status, 201);
   });
-  it('POST /loans: Error', async () => {
+  it('POST /loans: Error 401', async () => {
     const payload = {
       amount: 10000,
       tenor: 8,
       loanType: 'SF',
       accountNo: '2048801364',
-      bankName: 'Skyebank',
+      bankName: 'Skye',
       userId: '612332',
     };
 
     const { body, status } = await request(app).post('/api/v1/loans/').send(payload);
-    assert.equal(body.success, false);
     assert.ok(body.error);
-    assert.equal(status, 400);
+    assert.equal(status, 401);
   });
   it('POST /loans: returns 400', async () => {
+    const { token } = await getToken();
     const payload = {};
-    const { body, status } = await request(app).post('/api/v1/loans/').send(payload);
+    const { body, status } = await request(app).post('/api/v1/loans/').send(payload).set('token', token);
     assert.equal(body.success, false);
     assert.ok(body.error);
     assert.equal(status, 422);
   });
   it('POST /loans: returns 400', async () => {
+    const { token } = await getToken();
     const payload = {
       amount: 10000,
       tenor: 8,
@@ -277,13 +304,14 @@ describe('POST /loans', () => {
       accountNo: '2048801364',
       userId: '6123382',
     };
-    const { body, status } = await request(app).post('/api/v1/loans/').send(payload);
+    const { body, status } = await request(app).post('/api/v1/loans/').send(payload).set('token', token);
     assert.equal(body.success, false);
     assert.ok(body.error);
     assert.equal(status, 400);
     assert.ok(body.error);
   });
   it('POST /loans: negative amount', async () => {
+    const { token } = await getToken();
     const payload = {
       amount: -10000,
       tenor: '',
@@ -292,7 +320,7 @@ describe('POST /loans', () => {
       bankName: 'Skyebank',
       userId: '612332',
     };
-    const { body, status } = await request(app).post('/api/v1/loans/').send(payload);
+    const { body, status } = await request(app).post('/api/v1/loans/').send(payload).set('token', token);
     assert.equal(body.success, false);
     assert.ok(body.error);
     assert.equal(status, 422);
@@ -302,30 +330,36 @@ describe('POST /loans', () => {
 
 describe('PATCH /loans/<:loan-id>', () => {
   it('Approve or reject a loan application', async () => {
+    const { user, token } = await getToken();
+    await userModel.updateAdminStatus(user.email);
     const payload = {
       status: 'rejected',
     };
     const params = '827350';
-    const { body, status } = await request(app).patch(`/api/v1/loans/${params}`).send(payload);
+    const { body, status } = await request(app).patch(`/api/v1/loans/${params}`).send(payload).set('token', token);
     assert.equal(body.success, true);
     assert.ok(body.data);
     assert.equal(status, 200);
   });
   it('Approve or reject a loan application returns 400', async () => {
+    const { user, token } = await getToken();
+    await userModel.updateAdminStatus(user.email);
     const payload = {};
     const params = '827350';
-    const { body, status } = await request(app).patch(`/api/v1/loans/${params}`).send(payload);
+    const { body, status } = await request(app).patch(`/api/v1/loans/${params}`).send(payload).set('token', token);
     assert.equal(body.success, false);
     assert.ok(body.error);
     assert.equal(status, 400);
     assert.equal(body.error, 'Status can only be approved or rejected');
   });
   it('Approve or reject a loan application returns 400', async () => {
+    const { user, token } = await getToken();
+    await userModel.updateAdminStatus(user.email);
     const payload = {
       status: 'rejected',
     };
     const params = '82735099';
-    const { body, status } = await request(app).patch(`/api/v1/loans/${params}`).send(payload);
+    const { body, status } = await request(app).patch(`/api/v1/loans/${params}`).send(payload).set('token', token);
     assert.equal(body.success, false);
     assert.ok(body.error);
     assert.equal(status, 400);
@@ -345,7 +379,7 @@ describe('/GET /loans/<:loan-id>', () => {
       accountNo: '2048801364',
     });
     const params = result.rows[0];
-    const { body, status } = await request(app).get(`/api/v1/loans/${params.id}`).send({ token });
+    const { body, status } = await request(app).get(`/api/v1/loans/${params.id}`).set('token', token);
     // assert.equal(body.success, true);
     assert.ok(body.data);
     assert.equal(status, 200);
@@ -362,23 +396,36 @@ describe('/GET /loans/<:loan-id>', () => {
 
 describe('PATCH /users/<:user-email>/verify', () => {
   it('Mark a user as verified', async () => {
-    const params = 'joy@gmail.com';
-    const { body, status } = await request(app).patch(`/api/v1/users/${params}/verify`);
+    const userData = {
+      firstName: 'Joy',
+      lastName: 'Ujuri',
+      email: 'joy@gmail.com',
+      password: 'hello78090',
+      address: 'ikeja Gra',
+      bvn: '22307087690',
+    };
+
+    const result = await userModel.create(userData);
+    const newUser = result.rows[0];
+    // const token = jwt.sign({ id: user.id }, config.jwtSecret);
+    const { user, token } = await getToken();
+    await userModel.updateAdminStatus(user.email);
+    const { body } = await request(app).patch(`/api/v1/users/${newUser.email}/verify`).set('token', token);
     assert.equal(body.success, true);
-    assert.ok(body.data);
-    assert.equal(status, 200);
+    assert.ok(body.message);
+    assert.equal(body.status, 200);
   });
-  it('Mark a user as verified returns 400', async () => {
+  it('Mark a user as verified returns 401`', async () => {
     const params = '827350';
     const { body, status } = await request(app).patch(`/api/v1/users/${params}/verify`);
-    assert.equal(body.success, false);
     assert.ok(body.error);
-    assert.equal(status, 422);
+    assert.equal(status, 401);
   });
   it('Mark a user as verified returns 404', async () => {
+    const { user, token } = await getToken();
+    await userModel.updateAdminStatus(user.email);
     const params = 'jiiioy@gmail.com';
-    const { body, status } = await request(app).patch(`/api/v1/users/${params}/verify`);
-    assert.equal(body.success, false);
+    const { body, status } = await request(app).patch(`/api/v1/users/${params}/verify`).set('token', token);
     assert.ok(body.error);
     assert.equal(status, 404);
     assert.equal(body.error, 'User does not exist');

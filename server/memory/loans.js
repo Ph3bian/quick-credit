@@ -3,7 +3,7 @@ export default [
     firstName: 'Joey',
     lastName: 'Jane',
     email: 'hello@gmail.com',
-    id: '409163',
+    id: 185,
     createdOn: '2019-05-07T22:56:42.610Z',
     balance: 10500,
     paymentInstallment: 1312.5,
