@@ -260,7 +260,7 @@ describe('GET /loans', () => {
 
 describe('POST /loans', () => {
   it('Create a loan application', async () => {
-    const { user } = await getToken();
+    const { user, token } = await getToken();
     const payload = {
       amount: 2000,
       tenor: 6,
