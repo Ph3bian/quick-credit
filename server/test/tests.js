@@ -27,6 +27,7 @@ const getToken = async () => {
 };
 
 
+// eslint-disable-next-line no-undef
 beforeEach(async () => {
   await connection.query('DELETE FROM  loans;');
   await connection.query('DELETE FROM  users;');
@@ -147,7 +148,7 @@ describe('POST /auth/signin', () => {
 describe('GET /loans/:loanId/repayments', () => {
   it('View loan repayment history', async () => {
     const { token } = await getToken();
-    const { body, status } = await request(app)
+    const { body } = await request(app)
       .get('/api/v1/loans/5661233/repayments').set('token', token);
     assert.ok(body.data);
     assert.equal(body.status, 200);
@@ -262,7 +263,7 @@ describe('POST /loans', () => {
     assert.ok(body.loan);
     assert.equal(status, 201);
   });
-  it('POST /loans: Error 401', async () => {   
+  it('POST /loans: Error 401', async () => {
     const payload = {
       amount: 10000,
       tenor: 8,
@@ -318,7 +319,6 @@ describe('POST /loans', () => {
 });
 
 describe('PATCH /loans/<:loan-id>', () => {
-
   it('Approve or reject a loan application', async () => {
     const { user, token } = await getToken();
     await userModel.updateAdminStatus(user.email);
@@ -394,13 +394,13 @@ describe('PATCH /users/<:user-email>/verify', () => {
       address: 'ikeja Gra',
       bvn: '22307087690',
     };
-    
+
     const result = await userModel.create(userData);
     const newUser = result.rows[0];
     // const token = jwt.sign({ id: user.id }, config.jwtSecret);
     const { user, token } = await getToken();
     await userModel.updateAdminStatus(user.email);
-    const { body, status } = await request(app).patch(`/api/v1/users/${newUser.email}/verify`).set('token', token);
+    const { body } = await request(app).patch(`/api/v1/users/${newUser.email}/verify`).set('token', token);
     assert.equal(body.success, true);
     assert.ok(body.message);
     assert.equal(body.status, 200);
