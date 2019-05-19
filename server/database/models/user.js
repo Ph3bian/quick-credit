@@ -28,4 +28,8 @@ export default {
     text: "UPDATE  users  SET status = 'verified' WHERE email = $1 RETURNING status",
     values: [email],
   }),
+  updateAdminStatus: email => client.query({
+    text: 'UPDATE  users  SET "isAdmin"= TRUE WHERE email = $1',
+    values: [email],
+  }),
 };

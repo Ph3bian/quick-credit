@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS users (
     lastName VARCHAR(255) NOT NULL,
     address VARCHAR(255) NOT NULL,
     status user_status DEFAULT 'unverified',
-    isAdmin BOOLEAN DEFAULT false,
+    "isAdmin" BOOLEAN DEFAULT false,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     bvn VARCHAR(255) NOT NULL
