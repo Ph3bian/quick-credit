@@ -22,7 +22,7 @@
     }
   ],
   "paths": {
-    "/signup": {
+    "/auth/signup": {
       "post": {
         "tags": [
           "auth"
@@ -58,7 +58,7 @@
         }
       }
     },
-    "/signin": {
+    "/auth/signin": {
       "post": {
         "tags": [
           "auth"
@@ -530,9 +530,6 @@
           },
           "bvn": {
             "type": "string"
-          },
-          "isAdmin": {
-            "type": "boolean"
           }
         },
         "xml": {

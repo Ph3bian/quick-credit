@@ -10,7 +10,7 @@
     "build": "babel -d dist server/",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "heroku-postbuild": "npm run build",
-    "connect": "DB_USERNAME=user babel-node ./server/database/connection.js",
+    "connect": "babel-node ./server/database/connection.js",
     "migrate": "babel-node ./server/database/migration.js"
   },
   "repository": {
