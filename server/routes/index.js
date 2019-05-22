@@ -15,9 +15,10 @@ import { requestLoanValidator, fetchLoansValidator } from '../middleware/loanVal
 const router = new Router();
 router.post('/auth/signup', SignUpValidator, AuthController.signUp);
 router.post('/auth/signin', SignInValidator, AuthController.signIn);
+router.post('/users/:email/reset_password', AuthController.resetPassword);
 router.post('/loans', authMiddleware, requestLoanValidator, LoanController.requestLoan);
-router.get('/loans', authMiddleware, fetchLoansValidator, LoanController.fetchLoans);
-router.get('/loans/:id', authMiddleware, LoanController.fetchLoan);
+router.get('/loans', authMiddleware, authorizeMiddleware, fetchLoansValidator, LoanController.fetchLoans);
+router.get('/loans/:id', authMiddleware, authorizeMiddleware, LoanController.fetchLoan);
 // router.get('/loans/users/:id', authMiddleware, authorizeMiddleware, LoanController.fetchUserLoans);
 router.patch('/loans/:id', authMiddleware, authorizeMiddleware, LoanController.updateLoan);
 router.post('/loans/:loanId/repayment', authMiddleware, authorizeMiddleware, LoanController.updateRepayment);

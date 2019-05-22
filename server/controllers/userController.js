@@ -15,7 +15,6 @@ export default class UserController {
       if (!user) {
         return res.status(404).json({
           status: 404,
-          success: false,
           error: 'User does not exist',
         });
       }
@@ -25,14 +24,12 @@ export default class UserController {
 
       return res.status(200).json({
         status: 200,
-        success: true,
         message: `User status ${status}`,
       });
     } catch (error) {
       return res.status(500).json({
         status: 500,
-        success: false,
-        error,
+        error: error.message,
       });
     }
   }
@@ -47,13 +44,11 @@ export default class UserController {
       const users = rows;
       return res.status(200).json({
         status: 200,
-        success: true,
         data: users,
       });
     }).catch(error => res.status(500).json({
       status: 500,
-      success: false,
-      error,
+      error: error.message,
     }));
   }
 }

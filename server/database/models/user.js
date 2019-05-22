@@ -32,4 +32,12 @@ export default {
     text: 'UPDATE  users  SET "isAdmin"= TRUE WHERE email = $1',
     values: [email],
   }),
+  updateActiveLoan: (email, setLoan) => client.query({
+    text: 'UPDATE  users  SET "activeLoan"= $2 WHERE email = $1',
+    values: [email, setLoan],
+  }),
+  findAllLoans: id => client.query({
+    text: ' SELECT * FROM loans, users WHERE loans.userid = $1',
+    values: [id],
+  }),
 };

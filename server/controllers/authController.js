@@ -33,7 +33,7 @@ export default class AuthController {
         }
         return res.status(500).json({
           status: 500,
-          error,
+          error: error.message,
         });
       });
   }
@@ -80,7 +80,44 @@ export default class AuthController {
         // eslint-disable-next-line no-unused-vars
       }).catch(error => res.status(500).json({
         status: 500,
-        error,
+        error: error.message,
       }));
+  }
+
+  /**
+  * POST /users/:email/reset_password
+  * @param {req} req express req object
+  * @param {res} res express res object
+  */
+  static async resetPassword(req, res) {
+    const { email } = req.params;
+
+    try {
+      const { rows } = await userModel.findByEmail(email);
+      const user = rows[0];
+
+      if (!user) {
+        return res.status(404).json({
+          status: 404,
+          success: false,
+          error: `${email} does not have an account, please create an account.`,
+        });
+      }
+      const response = await userModel.resetPassword(email);
+
+      const { status } = response.rows[0];
+
+      return res.status(200).json({
+        status: 200,
+        success: true,
+        message: `User password  ${status}`,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        success: false,
+        error: error.message,
+      });
+    }
   }
 }
