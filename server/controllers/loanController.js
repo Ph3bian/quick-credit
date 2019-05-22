@@ -9,26 +9,28 @@ export default class LoanController {
  * @param {req} req express req object
  * @param {res} res express res object
  */
-  static requestLoan(req, res) {
+  static async requestLoan(req, res) {
     const setLoan = true;
     const { status, activeLoan, email } = req.user;
     if (status === 'unverified') {
-      return res.status(400).json({
+      res.status(400).json({
         status: 400,
         error: 'User must be verified to apply for loan',
       });
+      return;
     }
     if (activeLoan === true) {
-      return res.status(400).json({
+      res.status(400).json({
         status: 400,
         error: 'You can only request for one loan at a time',
       });
+      return;
     }
 
     loanModel.create(req.body).then(({ rows }) => {
       userModel.updateActiveLoan(email, setLoan)
         .then(
-          response => res.status(200).json({
+          () => res.status(200).json({
             status: 200,
             data: 'Loan updated successfully',
           }),
@@ -112,33 +114,37 @@ export default class LoanController {
     try {
       const { rows } = await loanModel.findById(id);
       if (rows.length == 0) {
-        return res.status(404).json({
+        res.status(404).json({
           status: 404,
           error: 'Loan application does not exist',
         });
+        return;
       }
       const loan = rows[0];
       if (loan && ['approved', 'rejected'].includes(status)) {
         try {
           const result = await loanModel.updateLoanStatus(id, status);
           const updatedLoan = result.rows[0];
-          return res.status(200).json({
+          res.status(200).json({
             status: 200,
             data: updatedLoan,
           });
+          return;
         } catch (error) {
-          return res.status(500).json({
+          res.status(500).json({
             error: error.message,
             status: 500,
           });
+          return;
         }
       }
-      return res.status(400).json({
+      res.status(400).json({
         status: 400,
         error: 'Status can only be approved or rejected',
       });
+      return;
     } catch (error) {
-      return res.status(500).json({
+      res.status(500).json({
         status: 500,
         error: error.message,
       });
@@ -155,73 +161,85 @@ export default class LoanController {
     let repaid = false;
     const { loanId } = req.params;
     const { email } = req.user;
-    const {
-      amount, paidAmount,
-    } = req.body;
+    const { paidAmount } = req.body;
     try {
       const { rows } = await loanModel.findById(loanId);
 
       if (rows.length == 0) {
-        return res.status(404).json({
+        res.status(404).json({
           status: 404,
           error: 'Loan application does not exist',
         });
+        return;
       }
       const loan = rows[0];
+      if (loan.status !== 'approved') {
+        res.status(400).json({
+          status: 400,
+          error: 'You can not make repayments on a loan that has not been approved',
+        });
+        return;
+      }
 
       const previousbalance = loan.balance;
       if (previousbalance == 0) {
-        return res.status(400).json({
+        res.status(400).json({
           status: 400,
-          success: false,
           error: 'Loan has been repaid',
         });
+        return;
       }
 
       if (paidAmount > previousbalance) {
-        return res.status(400).json({
+        res.status(400).json({
           status: 400,
-          success: false,
           error: `Amount to be repaid can not be more than amount borrowed, kindly pay installment ${loan.paymentinstallment}`,
         });
+        return;
       }
       if (paidAmount != loan.paymentinstallment) {
-        return res.status(400).json({
+        res.status(400).json({
           status: 400,
-          success: false,
           error: `Amount to be repaid is ${loan.paymentinstallment}, kindly inform user`,
         });
+        return;
       }
       repaymentModel.create({ paidAmount, loanId }).then((result) => {
         const newRepayments = result.rows[0];
         const newLoanBalance = previousbalance - paidAmount;
-        console.log(newLoanBalance, 'loan balance');
+
         // eslint-disable-next-line no-unused-expressions
         if (newLoanBalance == 0) {
           repaid = true;
-          const setLoan = false;
-          console.log(setLoan, 'set the loan');
-          userModel.updateActiveLoan(email, setLoan)
+          userModel.updateActiveLoanFalse(email)
             .then((response) => {
-              console.log(response);
+
               return res.status(200).json({
                 status: 200,
-                data: { message: 'activeLoan status updated successfully' },
+                data: response.rows[0],
               });
-            }).catch(error => res.status(500).json({
+            })
+            .catch(error => res.status(500).json({
               status: 500,
               error: error.message,
             }));
         }
-        loanModel.updateLoanBalance(repaid, newLoanBalance, loanId).then(response => res.status(200).json({
-          status: 200,
-          data: {
-            message: 'Loan status updated successfully',
-          },
-        })).catch(error => res.status(500).json({
-          status: 500,
-          error: error.message,
-        }));
+
+        loanModel.updateLoanBalance(repaid, newLoanBalance, loanId)
+          .then(response => {
+            console.log(response.rows, "loanBalance")
+            res.status(200).json({
+              status: 200,
+              data: {
+                message: 'Loan status updated successfully',
+              },
+            });
+            return;
+          }
+          ).catch(error => res.status(500).json({
+            status: 500,
+            error: error.message,
+          }));
 
         return res.status(200).json({
           status: 200,
@@ -232,7 +250,7 @@ export default class LoanController {
         error: error.message,
       }));
     } catch (error) {
-      return res.status(500).json({
+      res.status(500).json({
         status: 500,
         error: error.message,
       });

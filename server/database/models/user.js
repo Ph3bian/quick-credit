@@ -36,6 +36,10 @@ export default {
     text: 'UPDATE  users  SET "activeLoan"= $2 WHERE email = $1',
     values: [email, setLoan],
   }),
+  updateActiveLoanFalse: email => client.query({
+    text: 'UPDATE  users  SET "activeLoan"= NOT "activeLoan" WHERE email = $1 RETURNING *',
+    values: [email],
+  }),
   findAllLoans: id => client.query({
     text: ' SELECT * FROM loans, users WHERE loans.userid = $1',
     values: [id],

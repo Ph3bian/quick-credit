@@ -13,7 +13,6 @@ export default async (req, res, next) => {
   if (validateErrors) {
     return res.status(422).json({
       status: 422,
-      success: false,
       error: validateErrors.map(e => ({ field: e.param, message: e.msg })),
     });
   }

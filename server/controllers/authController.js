@@ -20,7 +20,6 @@ export default class AuthController {
         const token = jwt.sign({ id: user.id }, config.jwtSecret);
         return res.status(201).json({
           status: 201,
-          success: true,
           message: 'Sign up successful',
           data: { ...user, token },
         });
@@ -53,7 +52,6 @@ export default class AuthController {
         if (!user) {
           return res.status(401).json({
             status: 401,
-            success: false,
             error: 'Invalid email address or password',
           });
         }
@@ -64,7 +62,6 @@ export default class AuthController {
           delete user.password;
           return res.status(200).json({
             status: 200,
-            success: true,
             message: 'Login successful',
             data: {
               ...user,
@@ -99,7 +96,6 @@ export default class AuthController {
       if (!user) {
         return res.status(404).json({
           status: 404,
-          success: false,
           error: `${email} does not have an account, please create an account.`,
         });
       }
@@ -109,13 +105,11 @@ export default class AuthController {
 
       return res.status(200).json({
         status: 200,
-        success: true,
         message: `User password  ${status}`,
       });
     } catch (error) {
       return res.status(500).json({
         status: 500,
-        success: false,
         error: error.message,
       });
     }
