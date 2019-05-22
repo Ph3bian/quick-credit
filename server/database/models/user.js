@@ -22,7 +22,7 @@ export default {
     values: [id],
   }),
   findAll: () => client.query({
-    text: 'SELECT * FROM users WHERE "isAdmin"= FALSE',
+    text: 'SELECT  id, firstname,lastname, address, status, "isAdmin", email,"activeLoan" FROM users WHERE "isAdmin"= FALSE',
   }),
   updateByEmail: email => client.query({
     text: "UPDATE  users  SET status = 'verified' WHERE email = $1 RETURNING status",

@@ -337,33 +337,6 @@ describe('POST /loans', () => {
   });
 });
 
-// describe('PATCH /loans/<:loan-id>', () => {
-//   it('Approve or reject a loan application', async () => {
-//     const { user, token } = await getToken();
-//     await userModel.updateAdminStatus(user.email);
-//     const payload = {
-//       status: 'rejected',
-//     };
-//     const params = '827350';
-//     const { body, status } = await request(app).patch(`/api/v1/loans/${params}`).send(payload).set('token', token);
-//     assert.ok(body.data);
-//     assert.equal(status, 200);
-//   });
-
-//   it('Approve or reject a loan application returns 400', async () => {
-//     const { user, token } = await getToken();
-//     await userModel.updateAdminStatus(user.email);
-//     const payload = {
-//       status: 'rejected',
-//     };
-//     const params = '82735099';
-//     const { body, status } = await request(app).patch(`/api/v1/loans/${params}`).send(payload).set('token', token);
-//     assert.ok(body.error);
-//     assert.equal(status, 400);
-//     assert.equal(body.error, 'Status can only be approved or rejected');
-//   });
-// });
-
 describe('/GET /loans/<:loan-id>', () => {
   it('Get a specific loan application', async () => {
     const { user, token } = await getToken();

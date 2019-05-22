@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS users (
     "isAdmin" BOOLEAN DEFAULT false,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    bvn VARCHAR(255) NOT NULL,
+    bvn VARCHAR(255),
     "activeLoan" BOOLEAN DEFAULT false
 );
 
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS loans (
     id SERIAL PRIMARY KEY,
     "loanId" INTEGER NOT NULL REFERENCES loans (id),
     "createdOn" TIMESTAMP NOT NULL,
-    amount FLOAT NOT NULL
+    amount FLOAT(2) NOT NULL
 );
 `).then((res) => {
   client.end();

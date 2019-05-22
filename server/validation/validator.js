@@ -10,8 +10,6 @@ export default class Validator {
       .matches('[0-9]')
       .withMessage('must be at least  have a number');
     req.checkBody('address', 'Address is required').notEmpty();
-    req.checkBody('bvn', 'BVN is required').notEmpty();
-    req.checkBody('bvn', 'BVN must be 11 characters').isLength({ min: 11, max: 11 });
   }
 
   static userSignIn(req) {
@@ -26,8 +24,6 @@ export default class Validator {
     req.checkBody('loanType', 'Invalid Loan type').isAlpha().isLength({ min: 2, max: 2 });
     req.checkBody('accountNo', 'Account no. is required').notEmpty();
     req.checkBody('accountNo', 'Minimum account no. length is 10 characters').isLength({ min: 10, max: 10 });
-    // req.checkBody('bankName', 'Bank name is required').notEmpty();
-    // req.checkBody('bankName', 'Enter valid name of  bank').isAlpha();
   }
 
   static verifyUser(req) {

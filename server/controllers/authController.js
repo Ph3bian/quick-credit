@@ -52,8 +52,8 @@ export default class AuthController {
         error: 'Invalid email address or password',
       });
     }
-
-    if (bcrypt.compareSync(req.body.password, user.password)) {
+    const password = bcrypt.compareSync(req.body.password, user.password);
+    if (password) {
       const token = jwt.sign({ id: user.id }, config.jwtSecret);
       // eslint-disable-next-line no-param-reassign
       delete user.password;
