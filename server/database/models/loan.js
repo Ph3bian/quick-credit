@@ -1,4 +1,3 @@
-// import bcrypt from 'bcryptjs';
 import client from '../connection';
 
 export default {
@@ -18,5 +17,13 @@ export default {
   findAll: () => client.query({
     text: 'SELECT * FROM loans',
     values: [],
+  }),
+  updateLoanStatus: (id, status) => client.query({
+    text: 'UPDATE  loans  SET status = $2 WHERE id= $1 RETURNING *',
+    values: [id, status],
+  }),
+  updateLoanBalance: (repaid, balance, loanId) => client.query({
+    text: 'UPDATE  loans  SET repaid = $1, balance= $2 WHERE id= $3 RETURNING *',
+    values: [repaid, balance, loanId],
   }),
 };

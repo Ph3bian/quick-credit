@@ -14,8 +14,20 @@ export function requestLoanValidator(req, res, next) {
   if (validateErrors) {
     return res.status(422).json({
       status: 422,
-      success: false,
       error: validateErrors.map(e => ({ field: e.param, message: e.msg })),
+    });
+  }
+  const { status, activeLoan } = req.user;
+  if (status === 'unverified') {
+    return res.status(400).json({
+      status: 400,
+      error: 'User must be verified to apply for loan',
+    });
+  }
+  if (activeLoan === true) {
+    return res.status(400).json({
+      status: 400,
+      error: 'You can only request for one loan at a time',
     });
   }
   return next();
@@ -27,7 +39,6 @@ export function fetchLoansValidator(req, res, next) {
   if (validateErrors) {
     return res.status(422).json({
       status: 422,
-      success: false,
       error: 'Oops, Invalid query parameter',
     });
   }
