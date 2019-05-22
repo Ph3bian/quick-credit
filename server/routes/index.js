@@ -28,4 +28,5 @@ router.get('/users', authMiddleware, authorizeMiddleware, UserController.getAllU
 
 router.use(ErrorHandler);
 
+
 export default router;

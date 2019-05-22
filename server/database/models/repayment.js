@@ -9,7 +9,6 @@ export default {
     paidAmount,
     loanId,
   }) => {
-
     return client.query({
       text: 'INSERT INTO repayments (amount, "loanId", "createdOn") VALUES($1, $2, $3) RETURNING *',
       values: [paidAmount, loanId, new Date()],

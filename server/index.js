@@ -5,7 +5,7 @@ import swaggerUi from 'swagger-ui-express';
 import morgan from 'morgan';
 import swaggerDocument from '../swagger.json';
 import router from './routes';
-
+import asyncWrapper from './middleware/asyncWrapper';
 
 const app = express();
 // morgan is used for logging
@@ -17,7 +17,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get('/', (req, res) => res.status(200).json({ status: 200, message: 'Hello from Quick Credit' }));
 
-app.use('/api/v1', router);
+app.use('/api/v1', asyncWrapper(router));
 app.all('*', (req, res) => res.status(404).json({ status: 404, error: 'Route not found' }));
 
 
