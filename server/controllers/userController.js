@@ -41,4 +41,27 @@ export default class UserController {
       data: users,
     });
   }
+
+  /**
+  *View all users: PATCH/users/admin
+* @param {req} req express req object
+* @param {res} res express res object
+*/
+  static async userIsAdmin(req, res) {
+    const { email } = req.params;
+    const { rows } = await userModel.findByEmail(email);
+    const user = rows[0];
+    if (!user) {
+      return res.status(404).json({
+        status: 404,
+        error: 'User does not exist',
+      });
+    }
+    const response = await userModel.updateAdminStatus(email);
+    const isAdmin = response.rows[0];
+    return res.status(200).json({
+      status: 200,
+      data: isAdmin,
+    });
+  }
 }

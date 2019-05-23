@@ -12,12 +12,28 @@ export default class LoanController {
   static async requestLoan(req, res) {
     const setLoan = true;
     const { email } = req.user;
-    const { rows } = await loanModel.create(req.body);
-    await userModel.updateActiveLoan(email, setLoan);
-    return res.status(201).json({
-      status: 201,
-      loan: rows[0],
-    });
+    try {
+      const { rows } = await userModel.findByEmail(email);
+      const user = rows[0];
+
+      if (!user) {
+        return res.status(404).json({
+          status: 404,
+          error: 'Invalid userId',
+        });
+      }
+      const loans = await loanModel.create(req.body);
+      await userModel.updateActiveLoan(email, setLoan);
+      return res.status(201).json({
+        status: 201,
+        loan: loans.rows[0],
+      });
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: error.message,
+      });
+    }
   }
 
 

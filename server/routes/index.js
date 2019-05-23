@@ -24,6 +24,7 @@ router.patch('/loans/:id', authMiddleware, authorizeMiddleware, LoanController.u
 router.post('/loans/:loanId/repayment', authMiddleware, authorizeMiddleware, LoanController.updateRepayment);
 router.get('/loans/:loanId/repayments', authMiddleware, LoanController.fetchRepayments);
 router.patch('/users/:email/verify', authMiddleware, authorizeMiddleware, UserValidator, UserController.verifyUser);
+router.patch('/users/:email/admin', authMiddleware, authorizeMiddleware, UserValidator, UserController.userIsAdmin);
 router.get('/users', authMiddleware, authorizeMiddleware, UserController.getAllUsers);
 
 router.use(ErrorHandler);
