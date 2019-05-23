@@ -9,7 +9,9 @@
     "test": "nyc --reporter=html --reporter=text  --require @babel/register --require @babel/polyfill mocha server/test/tests.js --exit",
     "build": "babel -d dist server/",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "connect": "babel-node ./server/database/connection.js",
+    "migrate": "babel-node ./server/database/migration.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,8 @@
     "@babel/core": "^7.4.4",
     "@babel/node": "^7.2.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
+    "@babel/plugin-proposal-optional-catch-binding": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "@babel/register": "^7.4.4",
     "babel-polyfill": "^6.26.0",
@@ -39,6 +43,8 @@
     "supertest": "^4.0.2"
   },
   "dependencies": {
+    "@babel/runtime": "^7.4.4",
+    "@sendgrid/mail": "^6.4.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "dotenv": "^8.0.0",
@@ -46,6 +52,7 @@
     "express-validator": "^5.3.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
+    "pg": "^7.11.0",
     "swagger-ui-express": "^4.0.2"
   }
 }

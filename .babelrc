@@ -3,7 +3,9 @@
         "@babel/preset-env"
     ],
     "plugins": [
-        "@babel/plugin-proposal-object-rest-spread"
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-transform-runtime",
+        "@babel/plugin-proposal-optional-catch-binding"
     ],
     "env": {
         "test": {

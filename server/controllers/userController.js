@@ -1,4 +1,4 @@
-import User from '../memory/user';
+import userModel from '../database/models/user';
 
 export default class UserController {
   /**
@@ -6,25 +6,39 @@ export default class UserController {
  * @param {req} req express req object
  * @param {res} res express res object
  */
-  static verifyUser(req, res) {
+  static async verifyUser(req, res) {
     const { email } = req.params;
-    const finder = input => input.email === email;
-    const user = User.find(finder);
+
+    const { rows } = await userModel.findByEmail(email);
+    const user = rows[0];
+
     if (!user) {
       return res.status(404).json({
         status: 404,
-        success: false,
         error: 'User does not exist',
       });
     }
-    user.status = 'verified';
-    const index = User.findIndex(finder);
-    User[index] = user;
+    const response = await userModel.updateByEmail(email);
+
+    const { status } = response.rows[0];
+
     return res.status(200).json({
       status: 200,
-      success: true,
-      message: 'User status updated successfully',
-      data: user,
+      message: `User status ${status}`,
+    });
+  }
+
+  /**
+*View all users: GET/users
+* @param {req} req express req object
+* @param {res} res express res object
+*/
+  static async getAllUsers(req, res) {
+    const { rows } = await userModel.findAll(req.body);
+    const users = rows;
+    return res.status(200).json({
+      status: 200,
+      data: users,
     });
   }
 }

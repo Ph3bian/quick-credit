@@ -4,6 +4,7 @@ const ctrl = document.getElementById('menu');
 const sidebar = document.getElementById('sidebar');
 const defaultTab = document.getElementById('defaultTab');
 
+sidebar.style.display = 'block';
 // eslint-disable-next-line no-unused-vars
 const navControl = () => {
   if (sidebar.style.display === 'block') {

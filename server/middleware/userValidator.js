@@ -12,7 +12,7 @@ export default async (req, res, next) => {
   const validateErrors = req.validationErrors();
   if (validateErrors) {
     return res.status(422).json({
-      success: false,
+      status: 422,
       error: validateErrors.map(e => ({ field: e.param, message: e.msg })),
     });
   }

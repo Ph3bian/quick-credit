@@ -1,7 +1,8 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import config from '../config/index';
-import User from '../memory/user';
+import userModel from '../database/models/user';
+
 
 export default class AuthController {
   /**
@@ -10,30 +11,29 @@ export default class AuthController {
  * @param {res} res express res object
  */
 
-  static signUp(req, res) {
-    const user = req.body;
-    const isAdmin = false;
-    user.password = bcrypt.hashSync(user.password, 10);
-
-    const data = {
-      id: parseInt((Math.random() * 1000000).toFixed(), 10),
-      status: 'unverified',
-      ...user,
-      isAdmin,
-
-    };
-    User.push(data);
-    const token = jwt.sign({ id: data.id }, config.jwtSecret);
-    delete data.password;
-    return res.status(201).json({
-      status: 201,
-      success: true,
-      message: 'Sign up successful',
-      data: {
-        ...data,
-        token,
-      },
-    });
+  static async signUp(req, res) {
+    try {
+      const { rows } = await userModel.create(req.body);
+      const user = rows[0];
+      delete user.password;
+      const token = jwt.sign({ id: user.id }, config.jwtSecret);
+      return res.status(201).json({
+        status: 201,
+        message: 'Sign up successful',
+        data: { ...user, token },
+      });
+    } catch (error) {
+      if (error.constraint === 'users_email_key') {
+        return res.status(409).json({
+          status: 409,
+          error: 'Email has already been taken',
+        });
+      }
+      return res.status(500).json({
+        status: 500,
+        error: error.message,
+      });
+    }
   }
 
   /**
@@ -41,16 +41,24 @@ export default class AuthController {
   * @param {req} req express req object
   * @param {res} res express res object
   */
-  static signIn(req, res) {
+  static async signIn(req, res) {
     const { email } = req.body;
-    const user = User.find(input => input.email === email);
-
-    const token = jwt.sign({ id: user.id }, config.jwtSecret);
-    if (user) {
+    // try {
+    const result = await userModel.findByEmail(email);
+    const user = result.rows[0];
+    if (!user) {
+      return res.status(401).json({
+        status: 401,
+        error: 'Invalid email address or password',
+      });
+    }
+    const password = bcrypt.compareSync(req.body.password, user.password);
+    if (password) {
+      const token = jwt.sign({ id: user.id }, config.jwtSecret);
+      // eslint-disable-next-line no-param-reassign
       delete user.password;
       return res.status(200).json({
         status: 200,
-        success: true,
         message: 'Login successful',
         data: {
           ...user,
@@ -58,10 +66,36 @@ export default class AuthController {
         },
       });
     }
-    return res.status(404).json({
-      status: 404,
-      success: false,
-      error: 'Invalid email address or password',
+    return res.status(401).json({
+      status: 401,
+      error: 'Incorrect login details',
+    });
+  }
+
+  /**
+  * POST /users/:email/reset_password
+  * @param {req} req express req object
+  * @param {res} res express res object
+  */
+  static async resetPassword(req, res) {
+    const { email } = req.params;
+
+    const { rows } = await userModel.findByEmail(email);
+    const user = rows[0];
+
+    if (!user) {
+      return res.status(404).json({
+        status: 404,
+        error: `${email} does not have an account, please create an account.`,
+      });
+    }
+    const response = await userModel.resetPassword(email);
+
+    const { status } = response.rows[0];
+
+    return res.status(200).json({
+      status: 200,
+      message: `User password  ${status}`,
     });
   }
 }
