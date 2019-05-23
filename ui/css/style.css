@@ -211,6 +211,7 @@ select { border-radius: 0; -webkit-appearance: none;}
     }
     .get-started {
         padding: 50px 20px !important;
+        text-align: center;
     }
     .hero-image {
         display: none;

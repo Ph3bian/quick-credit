@@ -109,8 +109,7 @@ describe('POST /auth/signup', () => {
   it('invalid password length ', async () => {
     const payload = {};
     const response = await request(app).post('/api/v1/signup').send(payload);
-    assert.equal(response.status, 400);
-    assert.equal(response.body.success, false);
+    assert.equal(response.status, 404);
     assert.ok(response.body.error);
   });
 });
