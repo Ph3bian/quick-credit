@@ -59,6 +59,7 @@ describe('POST /auth/signup', () => {
       message,
     } = body;
 
+
     assert.equal(status, 201);
     assert.equal(message, 'Sign up successful');
     assert.ok(data.id);
@@ -104,6 +105,13 @@ describe('POST /auth/signup', () => {
     assert.equal(response.status, 409);
     assert.ok(response.body.error);
     assert.equal(response.body.error, 'Email has already been taken');
+  });
+  it('invalid password length ', async () => {
+    const payload = {};
+    const response = await request(app).post('/api/v1/signup').send(payload);
+    assert.equal(response.status, 400);
+    assert.equal(response.body.success, false);
+    assert.ok(response.body.error);
   });
 });
 

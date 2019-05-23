@@ -31,6 +31,7 @@ export default class LoanController {
     const { rows } = await loanModel.findAll(req.body);
     let filteredLoans = rows.slice();
 
+
     if (status && ['approved', 'rejected', 'pending'].includes(status)) {
       filteredLoans = filteredLoans.filter(loan => loan.status === status);
     }
