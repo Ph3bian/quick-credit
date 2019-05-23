@@ -13,9 +13,9 @@
     <div class="wrapper">
         <div id="sidebar">
             <div class="img-holder">
-                    <a href="index.html">
-                            <img src="./img/deal.svg" class="img-logo" alt="">
-                    </a>
+                <a href="index.html">
+                    <img src="./img/deal.svg" class="img-logo" alt="">
+                </a>
             </div>
             <ul class="">
                 <li class="sidenav-item"><a href="admin-dashboard.html"> <i class="material-icons">
@@ -42,7 +42,7 @@
         <div id="rightSideWrapper">
             <header class="d-flx align-items-center pl-qt">
                 <div class="">
-                    <i class="material-icons menu-click"  id="menu" onclick="navControl()">
+                    <i class="material-icons menu-click" id="menu" onclick="navControl()">
                         menu
                     </i>Users
                 </div>
@@ -56,9 +56,9 @@
                             <form action="">
                                 <div class="form-header">
                                     <h3 class="mt-0">
-                                            <a href="users.html"><i class="material-icons">
-                                                    chevron_left
-                                                </i></a>USER VERIFIED </h3>
+                                        <a href="users.html"><i class="material-icons">
+                                                chevron_left
+                                            </i></a>USER VERIFIED </h3>
                                 </div>
                                 <div class="row">
                                     <div class="item sub-item mr-5 ">
@@ -71,8 +71,9 @@
                                         <input type="text" disabled name="mobile" value="08087948222" placeholder="">
                                     </div>
                                     <div class="item sub-item ml-5">
-                                        <label for="bvn">BVN</label>
-                                        <input type="text" disabled name="bvn" value="22339009909" placeholder="">
+                                        <label for="bvn">Email address</label>
+                                        <input type="email" disabled name="email" value="chukwu@gmail.com"
+                                            placeholder="">
                                     </div>
                                 </div>
                                 <div>
@@ -84,24 +85,38 @@
                                                 value="15, Toyin Street, Ikeja GRA, Lagos" placeholder="">
                                         </div>
                                         <div class="item sub-item ml-5">
-                                            <label for="work_address">Work Address</label>
-                                            <input type="text" name="work_address"
-                                                value="15, Oduduwa Crescent, Ikeja GRA, Lagos" placeholder="">
+                                            <label for="reason">Reason for Rejection (If any)</label>
+                                            <input type="text" name="reason" placeholder="">
                                         </div>
 
                                     </div>
                                 </div>
-                                <label for="reason">Reason for Rejection (If any)</label>
-                                <input type="text" name="reason" placeholder="">
 
-                                <div class="row my-1">
-                                    <div class="item sub-item mr-5">
-                                        <button class="secondary-btn">
-                                            RE-OPEN VERIFICATION PROCESS
-                                        </button></div>
-                                  
-                                </div>
+                      
+                                
+                                            <button class="float-right danger sub-button">
+                                                REVERT VERIFICATION
+                                            </button>
+                                   
+                                    
                             </form>
+
+
+                        </div>
+                        <div class=" my-2">
+
+                            <label for="isAdmin">Admin Status</label>
+                            <div class="row">
+                            <select type="text" name="isAdmin" class="form-select input" required placeholder="">
+                                <option value="">User</option>
+                                <option value="isAdmin">Admin</option>
+                                <option value="isSuperAdmin">Super Admin</option>
+
+                            </select>
+                            <button class="secondary-btn sub-button m-0">
+                                UPDATE
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </main>
