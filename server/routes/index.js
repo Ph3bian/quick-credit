@@ -9,7 +9,7 @@ import SignUpValidator from '../middleware/signUpValidator';
 import SignInValidator from '../middleware/signInValidator';
 import UserValidator from '../middleware/userValidator';
 // eslint-disable-next-line import/named
-import { requestLoanValidator, fetchLoansValidator } from '../middleware/loanValidator';
+import { requestLoanValidator, fetchLoansValidator, repaymentValidator } from '../middleware/loanValidator';
 
 
 const router = new Router();
@@ -21,9 +21,10 @@ router.get('/loans', authMiddleware, authorizeMiddleware, fetchLoansValidator, L
 router.get('/loans/:id', authMiddleware, authorizeMiddleware, LoanController.fetchLoan);
 // router.get('/loans/users/:id', authMiddleware, authorizeMiddleware, LoanController.fetchUserLoans);
 router.patch('/loans/:id', authMiddleware, authorizeMiddleware, LoanController.updateLoan);
-router.post('/loans/:loanId/repayment', authMiddleware, authorizeMiddleware, LoanController.updateRepayment);
+router.post('/loans/:loanId/repayment', authMiddleware, authorizeMiddleware, repaymentValidator, LoanController.updateRepayment);
 router.get('/loans/:loanId/repayments', authMiddleware, LoanController.fetchRepayments);
 router.patch('/users/:email/verify', authMiddleware, authorizeMiddleware, UserValidator, UserController.verifyUser);
+router.patch('/users/:email/admin', authMiddleware, authorizeMiddleware, UserValidator, UserController.userIsAdmin);
 router.get('/users', authMiddleware, authorizeMiddleware, UserController.getAllUsers);
 
 router.use(ErrorHandler);

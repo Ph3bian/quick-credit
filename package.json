@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "start:dev": "nodemon --quiet --exec babel-node server/index.js",
-    "test": "nyc --reporter=html --reporter=text  --require @babel/register --require @babel/polyfill mocha server/test/tests.js --exit",
+    "start:dev": "nodemon --exec babel-node server/index.js",
+    "test": "nyc --reporter=html --reporter=text  --require @babel/register --require @babel/polyfill mocha server/test/tests.js --timeout 10000 --exit",
     "build": "babel -d dist server/",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "heroku-postbuild": "npm run build",
