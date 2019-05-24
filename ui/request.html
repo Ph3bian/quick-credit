@@ -11,7 +11,7 @@
 
 <body>
     <div class="wrapper">
-        <div id="sidebar"  class="sidebarCanvasMenu">
+        <div id="sidebar" class="sidebarCanvasMenu">
             <div class="img-holder">
                 <a href="index.html">
                     <img src="./img/deal.svg" class="img-logo" alt="">
@@ -123,12 +123,32 @@
                                             oninput="validity.valid||(value=value.replace(/\D+/g, ''))" />
                                     </div>
                                     <div class="item sub-item ml-5">
-                                        <label for="bank_name">Bank Name<span class="required">*</span></label>
-                                        <input type="text" name="bank_name" placeholder="">
+                                        <label for="bank_name">Bank Name</label>
+                                        <select type="text" name="tenor" class="form-select input" required
+                                            placeholder="">
+                                            <option value="">Select Bank</option>
+                                            <option value="Diamond">Diamond Bank</option>
+                                            <option value="Ecobank">Ecobank</option>
+                                            <option value="First bank">First Bank</option>
+                                            <option value="GTB">Guaranty Trust Bank</option>
+                                            <option value="Fidelity Bank">Fidelity Bank</option>
+                                            <option value="Zenith Bank">Zenith Bank </option>
+               
+                                        </select>
                                     </div>
                                 </div>
-                                <label for="repaymentAmount">Amount to be repaid (Amount + Interest)</label>
-                                <input type="text" name="repaymentAmount" disabled value="&#8358; 440,000.00 ">
+
+                                <div class="row">
+                                    <div class="item sub-item mr-5">
+                                        <label for="repaymentAmount"> Interest</label>
+                                        <input type="text" name="repaymentAmount" disabled value="&#8358; 40,000.00 ">
+                                    </div>
+                                    <div class="item sub-item ml-5">
+                                        <label for="repaymentAmount">Total</label>
+                                        <input type="text" name="repaymentAmount" disabled value="&#8358; 440,000.00 ">
+                                    </div>
+                                </div>
+                              
 
                                 <div class="row mt-2h">
                                     <div class="item sub-item mr-5">
