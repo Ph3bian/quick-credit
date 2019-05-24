@@ -345,7 +345,6 @@ describe('PATCH /users/<:user-email>/verify', () => {
     await userModel.updateAdminStatus(user.email);
     await request(app).patch(`/api/v1/users/${userdetails.email}/verify`).set('token', token);
     const { body } = await request(app).patch(`/api/v1/users/${userdetails.email}/verify`).set('token', token);
-    console.log(body, "here")
     assert.ok(body.message);
     assert.equal(body.status, 200);
   });
@@ -404,7 +403,6 @@ describe('PATCH /loans/:id', () => {
     const newLoan = await loanModel.create(loanData);
 
     const { body } = await request(app).patch(`/api/v1/loans/${newLoan.rows[0].id}`).set('token', token).send({ status: 'approved' });
-    console.log(body)
     assert.ok(body.data);
     assert.equal(body.status, 200);
   });
