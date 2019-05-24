@@ -21,7 +21,10 @@ export default class UserController {
     }
     const response = await userModel.updateByEmail(email);
     const { status } = response.rows[0];
-
+    res.status(200).json({
+      status: 200,
+      message: `User status ${status}`,
+    });
     return sendMail({
       to: user.email,
       subject: 'User Status Update',
@@ -29,10 +32,7 @@ export default class UserController {
       <br>Status ${status}.<br>
       Thank you for choosing Quick credit
       `,
-    }).then(() => res.status(200).json({
-      status: 200,
-      message: `User status ${status}`,
-    })).catch((error) => {
+    }).then(() => {}).catch((error) => {
       res.status(500).json({
         status: 500,
         data: error.message,
