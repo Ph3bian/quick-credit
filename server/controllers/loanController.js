@@ -2,7 +2,6 @@
 import loanModel from '../database/models/loan';
 import userModel from '../database/models/user';
 import repaymentModel from '../database/models/repayment';
-import sendMail from '../mailer/mailer';
 
 export default class LoanController {
   /**
@@ -12,29 +11,13 @@ export default class LoanController {
  */
   static async requestLoan(req, res) {
     const setLoan = true;
-    const { email, id } = req.user;
-    try {
-      const { rows } = await userModel.findByEmail(email);
-      const user = rows[0];
-
-      if (!user) {
-        return res.status(404).json({
-          status: 404,
-          error: 'Invalid userId',
-        });
-      }
-      const loans = await loanModel.create({ ...req.body, userId: id });
-      await userModel.updateActiveLoan(email, setLoan);
-      return res.status(201).json({
-        status: 201,
-        loan: loans.rows[0],
-      });
-    } catch (error) {
-      return res.status(500).json({
-        status: 500,
-        error: error.message,
-      });
-    }
+    const { email } = req.user;
+    const { rows } = await loanModel.create(req.body);
+    await userModel.updateActiveLoan(email, setLoan);
+    return res.status(201).json({
+      status: 201,
+      loan: rows[0],
+    });
   }
 
 
@@ -101,32 +84,26 @@ export default class LoanController {
     }
     const loan = rows[0];
     if (loan && ['approved', 'rejected'].includes(status)) {
-      const result = await loanModel.updateLoanStatus(id, status);
-      const updatedLoan = result.rows[0];
-      if (status === 'rejected') {
-        await userModel.updateActiveLoanFalse(loan.userid);
-      }
-      const resultData = await userModel.findById(loan.userid);
-      const user = resultData.rows[0];
-      sendMail({
-        to: user.email,
-        subject: 'Loan Status Details',
-        html: `Hello ${user.firstname}, <br>the loan for NGN ${loan.amount} been  ${status}`,
-      }).then(() => res.status(200).json({
-        status: 200,
-        data: updatedLoan,
-      })).catch((error) => {
-        res.status(500).json({
-          status: 500,
-          data: error.message,
+      try {
+        const result = await loanModel.updateLoanStatus(id, status);
+        const updatedLoan = result.rows[0];
+        res.status(200).json({
+          status: 200,
+          data: updatedLoan,
         });
-      });
-    } else {
-      res.status(400).json({
-        status: 400,
-        error: 'Status can only be approved or rejected',
-      });
+        return;
+      } catch (error) {
+        res.status(500).json({
+          error: error.message,
+          status: 500,
+        });
+        return;
+      }
     }
+    res.status(400).json({
+      status: 400,
+      error: 'Status can only be approved or rejected',
+    });
   }
 
 
@@ -138,7 +115,7 @@ export default class LoanController {
   static async updateRepayment(req, res) {
     let repaid = false;
     const { loanId } = req.params;
-    const { paidAmount } = req.body;
+    const { paidAmount, userId } = req.body;
     const { rows } = await loanModel.findById(loanId);
 
     if (rows.length == 0) {
@@ -149,7 +126,6 @@ export default class LoanController {
       return;
     }
     const loan = rows[0];
-
     if (loan.status !== 'approved') {
       res.status(400).json({
         status: 400,
@@ -167,14 +143,14 @@ export default class LoanController {
       return;
     }
 
-    if (paidAmount > parseFloat(previousbalance)) {
+    if (paidAmount > previousbalance) {
       res.status(400).json({
         status: 400,
         error: `Amount to be repaid can not be more than amount borrowed, kindly pay installment ${loan.paymentinstallment}`,
       });
       return;
     }
-    if (paidAmount != parseFloat(loan.paymentinstallment)) {
+    if (paidAmount != loan.paymentinstallment) {
       res.status(400).json({
         status: 400,
         error: `Amount to be repaid is ${loan.paymentinstallment}, kindly inform user`,
@@ -188,8 +164,7 @@ export default class LoanController {
     // eslint-disable-next-line no-unused-expressions
     if (newLoanBalance == 0) {
       repaid = true;
-      await userModel.updateActiveLoanFalse(loan.userid);
-      newRepayments.message = 'Loan has been fully repaid';
+      await userModel.updateActiveLoanFalse(userId);
     }
     await loanModel.updateLoanBalance(repaid, newLoanBalance, loanId);
     res.status(200).json({

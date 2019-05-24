@@ -12,12 +12,12 @@ const app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(expressValidator());
-app.use('/api/v1', asyncWrapper(router));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 app.get('/', (req, res) => res.status(200).json({ status: 200, message: 'Hello from Quick Credit' }));
 
-
+app.use('/api/v1', asyncWrapper(router));
 app.all('*', (req, res) => res.status(404).json({ status: 404, error: 'Route not found' }));
 
 
