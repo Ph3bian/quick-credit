@@ -337,21 +337,15 @@ describe('/GET /Users', () => {
 
 describe('PATCH /users/<:user-email>/verify', () => {
   it('Mark a user as verified', async () => {
-    const userData = {
-      firstName: 'joy',
-      lastName: 'ujuri',
-      email: 'joy@gmail.com',
-      password: 'hello78090',
-      address: 'ikeja Gra',
-      bvn: '22307087690',
-    };
-
-    const result = await userModel.create(userData);
-    const newUser = result.rows[0];
-    // const token = jwt.sign({ id: user.id }, config.jwtSecret);
-    const { user, token } = await getToken();
+   
+    const {
+      user,
+      token,
+      userdetails,
+    } = await getToken();
     await userModel.updateAdminStatus(user.email);
-    const { body } = await request(app).patch(`/api/v1/users/${newUser.email}/verify`).set('token', token);
+    await request(app).patch(`/api/v1/users/${userdetails.email}/verify`).set('token', token);
+    const { body } = await request(app).patch(`/api/v1/users/${userdetails.email}/verify`).set('token', token);
     assert.ok(body.message);
     assert.equal(body.status, 200);
   });
@@ -362,7 +356,10 @@ describe('PATCH /users/<:user-email>/verify', () => {
     assert.equal(status, 401);
   });
   it('Mark a user as verified returns 404', async () => {
-    const { user, token } = await getToken();
+    const {
+      user,
+      token,
+    } = await getToken();
     await userModel.updateAdminStatus(user.email);
     const params = 'jiiioy@gmail.com';
     const { body, status } = await request(app).patch(`/api/v1/users/${params}/verify`).set('token', token);
@@ -371,7 +368,7 @@ describe('PATCH /users/<:user-email>/verify', () => {
     assert.equal(body.error, 'User does not exist');
   });
   it('Mark a user as verified fails with 422', async () => {
-    const userData = {
+    const userDataz = {
       firstName: 'j',
       lastName: 'ujuri',
       email: 'joy@gmail.com',
@@ -379,10 +376,8 @@ describe('PATCH /users/<:user-email>/verify', () => {
       address: 'ikeja Gra',
       bvn: '22307087690',
     };
-
-    const result = await userModel.create(userData);
+    const result = await userModel.create(userDataz);
     const newUser = result.rows[0];
-    // const token = jwt.sign({ id: user.id }, config.jwtSecret);
     const { user, token } = await getToken();
     await userModel.updateAdminStatus(user.email);
     const resultData = await request(app).patch(`/api/v1/users/${newUser.email}2/verify`).set('token', token);
@@ -391,18 +386,6 @@ describe('PATCH /users/<:user-email>/verify', () => {
 });
 describe('PATCH /loans/:id', () => {
   it('Approve loan request and request for loan', async () => {
-    const userData = {
-      firstName: 'joy',
-      lastName: 'ujuri',
-      email: 'joy@gmail.com',
-      password: 'hello78090',
-      address: 'ikeja Gra',
-      bvn: '22307087690',
-    };
-
-    const result = await userModel.create(userData);
-    const newUser = result.rows[0];
-    // const token = jwt.sign({ id: user.id }, config.jwtSecret);
     const {
       user,
       token,
@@ -425,7 +408,10 @@ describe('PATCH /loans/:id', () => {
     assert.equal(body.status, 200);
   });
   it('Approve or reject a loan application', async () => {
-    const { user, token } = await getToken();
+    const {
+      user,
+      token,
+    } = await getToken();
     await userModel.updateAdminStatus(user.email);
     const payload = {
       status: 'rejected',
@@ -439,17 +425,6 @@ describe('PATCH /loans/:id', () => {
 });
 describe('POST /loans/:id/repayment', () => {
   it('Approve loan request and request for loan', async () => {
-    const userData = {
-      firstName: 'joy',
-      lastName: 'ujuri',
-      email: 'joy@gmail.com',
-      password: 'hello78090',
-      address: 'ikeja Gra',
-      bvn: '22307087690',
-    };
-
-    const result = await userModel.create(userData);
-    const newUser = result.rows[0];
     const {
       user,
       token,
@@ -469,6 +444,7 @@ describe('POST /loans/:id/repayment', () => {
     await userModel.updateAdminStatus(user.email);
     const repaymentData = {
       loanId: newLoan.rows[0].id,
+      userId: newLoan.rows[0].userid,
       paidAmount: newLoan.rows[0].paymentinstallment,
     };
     const { body } = await request(app).patch(`/api/v1/loans/${newLoan.rows[0].id}`).set('token', token).send({ status: 'approved' });
