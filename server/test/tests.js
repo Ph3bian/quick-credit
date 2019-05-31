@@ -24,6 +24,7 @@ const userData = {
   address: 'ikoyi lagos',
   bvn: '22307087690',
 };
+
 const getToken = async () => {
   const result = await userModel.create(userPayload);
   const details = await userModel.create(userData);
@@ -204,7 +205,7 @@ describe('GET /loans/:loanId/repayments', () => {
 
 
     const { res } = await request(app).get(`/api/v1/loans/${newLoan.rows[0].id}/repayments`).set('token', token);
-    assert.equal(body.status, 401);
+    assert.equal(body.status, 200);
   });
 });
 
@@ -383,12 +384,23 @@ describe('PATCH /users/<:user-email>/verify', () => {
       user,
       token,
       userdetails,
+
     } = await getToken();
+
+    const userData = {
+      firstName: 'nanri',
+      lastName: 'jri',
+      email: 'helllen@gmail.com',
+      password: 'hellouiu780',
+      address: 'ikoyi lagos',
+      bvn: '22307087690',
+    };
+    const details = await userModel.create(userData);
     await userModel.updateAdminStatus(user.email);
-    await request(app).patch(`/api/v1/users/${userdetails.email}/verify`).set('token', token);
-    const { body } = await request(app).patch(`/api/v1/users/${userdetails.email}/verify`).set('token', token);
-    assert.ok(body.message);
-    assert.equal(body.status, 200);
+    const solution = await request(app).patch(`/api/v1/users/${details.rows[0].email}/verify`).set('token', token);
+    assert.ok(solution.body.message);
+    assert.equal(solution.status, 200);
+
   });
   it('Mark a user as verified returns 401`', async () => {
     const params = '827350';
@@ -442,7 +454,7 @@ describe('PATCH /loans/:id', () => {
       userId: userdetails.id,
     };
 
-    const newLoan = await loanModel.create(loanData);
+    const newLoan = await loanModel.create({ ...loanData, userId: userdetails.id });
 
     const { body } = await request(app).patch(`/api/v1/loans/${newLoan.rows[0].id}`).set('token', token).send({ status: 'approved' });
     assert.ok(body.data);
@@ -469,8 +481,16 @@ describe('POST /loans/:id/repayment', () => {
     const {
       user,
       token,
-      userdetails,
+      userdetails
     } = await getToken();
+    const userData = {
+      firstName: 'nanri',
+      lastName: 'jri',
+      email: 'helon@gmail.com',
+      password: 'hello78090',
+      address: 'ikoyi lagos',
+      bvn: '22307087690',
+    };
 
 
     const loanData = {
@@ -478,14 +498,12 @@ describe('POST /loans/:id/repayment', () => {
       tenor: 3,
       loanType: 'BD',
       accountNo: '2048801364',
-      userId: userdetails.id,
     };
 
-    const newLoan = await loanModel.create(loanData);
+    const newLoan = await loanModel.create({ ...loanData, userId: userdetails.id });
     await userModel.updateAdminStatus(user.email);
     const repaymentData = {
       loanId: newLoan.rows[0].id,
-      userId: newLoan.rows[0].userid,
       paidAmount: newLoan.rows[0].paymentinstallment,
     };
     const { body } = await request(app).patch(`/api/v1/loans/${newLoan.rows[0].id}`).set('token', token).send({ status: 'approved' });
@@ -507,14 +525,12 @@ describe('POST /loans/:id/repayment', () => {
       tenor: 1,
       loanType: 'BD',
       accountNo: '2048801364',
-      userId: userdetails.id,
     };
 
-    const newLoan = await loanModel.create(loanData);
+    const newLoan = await loanModel.create({ ...loanData, userId: userdetails.id });
 
     const repaymentData = {
       amount: 10000,
-      userId: userdetails.id,
       paidAmount: 40,
     };
     const { body } = await request(app).patch(`/api/v1/loans/${newLoan.rows[0].id}`).set('token', token).send({ status: 'approved' });
@@ -546,10 +562,9 @@ describe('POST /loans/:id/repayment', () => {
       tenor: 3,
       loanType: 'BD',
       accountNo: '2048801364',
-      userId: newUser.id,
     };
 
-    const newLoan = await loanModel.create(loanData);
+    const newLoan = await loanModel.create({ ...loanData, userId: newUser.id });
 
     const repaymentData = {
       loanId: newLoan.rows[0].id,

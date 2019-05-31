@@ -115,14 +115,15 @@ export default class LoanController {
       }
       const resultData = await userModel.findById(loan.userid);
       const user = resultData.rows[0];
+      res.status(200).json({
+        status: 200,
+        data: updatedLoan,
+      });
       sendMail({
         to: user.email,
         subject: 'Loan Status Details',
         html: `Hello ${user.firstname}, <br>the loan for NGN ${loan.amount} been  ${status}`,
-      }).then(() => res.status(200).json({
-        status: 200,
-        data: updatedLoan,
-      })).catch((error) => {
+      }).then(() => {}).catch((error) => {
         res.status(500).json({
           status: 500,
           data: error.message,
