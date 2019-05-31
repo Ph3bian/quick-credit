@@ -93,6 +93,7 @@ describe('POST /auth/signup', () => {
       bvn: '22307021876',
     };
     const { body, status } = await request(app).post('/api/v1/auth/signup').send(payload);
+    assert.equal(body.status, 422);
     assert.equal(status, 422);
     assert.ok(body.error);
   });
@@ -120,9 +121,8 @@ describe('POST /auth/signup', () => {
   });
   it('invalid password length ', async () => {
     const payload = {};
-    const response = await request(app).post('/api/v1/signup').send(payload);
-    assert.equal(response.status, 400);
-    assert.equal(response.body.success, false);
+    const response = await request(app).post('/api/v1/auth/signup').send(payload);
+    assert.equal(response.status, 422);
     assert.ok(response.body.error);
   });
 });
@@ -166,11 +166,45 @@ describe('POST /auth/signin', () => {
 
 describe('GET /loans/:loanId/repayments', () => {
   it('View loan repayment history', async () => {
-    const { token } = await getToken();
-    const { body } = await request(app)
-      .get('/api/v1/loans/5661233/repayments').set('token', token);
-    assert.ok(body.data);
-    assert.equal(body.status, 200);
+    const {
+      user,
+      token,
+    } = await getToken();
+
+    await userModel.updateAdminStatus(user.email);
+    const userDetail = {
+      firstName: 'joy',
+      lastName: 'ujuri',
+      email: 'joy@gmail.com',
+      password: 'hello78090',
+      address: 'ikeja Gra',
+      bvn: '22307087690',
+    };
+
+    const result = await userModel.create(userDetail);
+    const newUser = result.rows[0];
+
+    const loanData = {
+      amount: 12000,
+      tenor: 3,
+      loanType: 'BD',
+      accountNo: '2048801364',
+      userId: newUser.id,
+    };
+
+    const newLoan = await loanModel.create(loanData);
+
+    const repaymentData = {
+      loanId: newLoan.rows[0].id,
+      paidAmount: 2300000,
+    };
+    const { body } = await request(app).patch(`/api/v1/loans/${newLoan.rows[0].id}`).set('token', token).send({ status: 'approved' });
+
+    await repaymentModel.create(repaymentData);
+
+
+    const { res } = await request(app).get(`/api/v1/loans/${newLoan.rows[0].id}/repayments`).set('token', token);
+    assert.equal(body.status, 401);
   });
 });
 
@@ -516,7 +550,7 @@ describe('POST /loans/:id/repayment', () => {
     };
 
     const newLoan = await loanModel.create(loanData);
- 
+
     const repaymentData = {
       loanId: newLoan.rows[0].id,
       paidAmount: 2300000,

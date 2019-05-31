@@ -50,6 +50,7 @@ export function fetchLoansValidator(req, res, next) {
   }
   return next();
 }
+
 export function repaymentValidator(req, res, next) {
   Validator.repayment(req);
   const validateErrors = req.validationErrors();

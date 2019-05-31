@@ -100,6 +100,13 @@ export default class LoanController {
       return;
     }
     const loan = rows[0];
+    if (loan.repaid) {
+      res.status(400).json({
+        status: 400,
+        error: 'You can not update a loan that has been repaid',
+      });
+      return;
+    }
     if (loan && ['approved', 'rejected'].includes(status)) {
       const result = await loanModel.updateLoanStatus(id, status);
       const updatedLoan = result.rows[0];
@@ -213,6 +220,12 @@ export default class LoanController {
         return res.status(404).json({
           status: 404,
           error: 'Loan application does not exist',
+        });
+      }
+      if (!req.user.isAdmin || req.user.id != rows[0].userid) {
+        return res.status(401).json({
+          status: 401,
+          error: 'Unauthorized User',
         });
       }
       try {

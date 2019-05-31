@@ -1,6 +1,12 @@
 node_modules
 .env
-coverage/
+/coverage.data
+/coverage/
 /coverage
+quick-credit/coverage
 ./coverage
+.nyc_output
+.vscode
+coverage
+dist
 
