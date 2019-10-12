@@ -26,18 +26,22 @@ const userData = {
 };
 
 const getToken = async () => {
-  const result = await userModel.create(userPayload);
-  const details = await userModel.create(userData);
-  const user = result.rows[0];
-  const userdetails = details.rows[0];
-  const token = jwt.sign({ id: user.id }, config.jwtSecret);
-  const usertoken = jwt.sign({ id: userdetails.id }, config.jwtSecret);
-  return {
-    user,
-    token,
-    userdetails,
-    usertoken,
-  };
+  try {
+    const result = await userModel.create(userPayload);
+    const details = await userModel.create(userData);
+    const user = result.rows[0];
+    const userdetails = details.rows[0];
+    const token = jwt.sign({ id: user.id }, config.jwtSecret);
+    const usertoken = jwt.sign({ id: userdetails.id }, config.jwtSecret);
+    return {
+      user,
+      token,
+      userdetails,
+      usertoken,
+    };
+  } catch (e) {
+    return console.log(e);
+  }
 };
 
 

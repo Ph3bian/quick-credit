@@ -52,9 +52,9 @@ CREATE TABLE IF NOT EXISTS loans (
     "createdOn" TIMESTAMP NOT NULL,
     amount DECIMAL(10,2) NOT NULL
 );
-`).then((res) => {
+`).then(() => {
   client.end();
 })
-  .catch((error) => {
+  .catch(() => {
     client.end();
   });

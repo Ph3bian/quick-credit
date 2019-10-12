@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import expressValidator from 'express-validator';
 import swaggerUi from 'swagger-ui-express';
 import morgan from 'morgan';
@@ -8,8 +9,14 @@ import router from './routes';
 import asyncWrapper from './middleware/asyncWrapper';
 
 const app = express();
-// morgan is used for logging
+
+// HTTP REQUEST logging 
 app.use(morgan('combined'));
+
+// CORS for the express server
+app.use(cors());
+app.options('*', cors());
+
 app.use(bodyParser.json());
 app.use(expressValidator());
 
