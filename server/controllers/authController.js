@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import config from '../config/index';
+import config from '../config';
 import userModel from '../database/models/user';
 
 
@@ -54,6 +54,7 @@ export default class AuthController {
     }
     const password = bcrypt.compareSync(req.body.password, user.password);
     if (password) {
+      console.log(config.jwtSecret)
       const token = jwt.sign({ id: user.id }, config.jwtSecret);
       // eslint-disable-next-line no-param-reassign
       delete user.password;
